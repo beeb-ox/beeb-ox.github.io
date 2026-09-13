@@ -151,3 +151,7 @@ Z.ui["about.phon.p"]="主要依据 Proctor、Bresch、Byrd、Nayak 与 Narayanan
 Z.ui["about.contrib.h"]="参与改进";
 Z.ui["about.contrib.p"]="这份目录是起点，不是定稿：所有分类都是对社群声音名称的语音学解读，其中有好几处值得争论。节奏型的名字是我们起的，不是圈内的既有叫法。欢迎提出更正、更好的录音和缺失的声音——请到 github.com/beeb-ox 开 issue。";
 })(window.BBX_I18N.zh);
+(function(Z){
+Z.ui["audio.blocked"]="浏览器阻止了音频播放";
+Z.ui["audio.blockedhint"]="请再点一次，并检查手机侧边的静音开关";
+})(window.BBX_I18N.zh);

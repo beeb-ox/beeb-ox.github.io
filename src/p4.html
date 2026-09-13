@@ -116,64 +116,151 @@ function showTip(x,y,html){tip.innerHTML=html;tip.classList.add('on');
   tip.style.left=lx+'px';tip.style.top=ly+'px';}
 function hideTip(){tip.classList.remove('on')}
 
-/* ---------------- audio ---------------- */
+/* ---------------- audio ----------------
+   Mobile Safari imposes three rules this engine has to respect:
+   1. An AudioContext only starts if it emits something DURING a user gesture, so the first
+      tap synchronously plays a one-sample silent buffer before any async work begins.
+   2. HTMLAudioElement.play() must also be called inside the gesture — never from a load
+      callback — or it rejects with NotAllowedError.
+   3. Decoded buffers are float32 at the hardware rate (48 kHz on iPhone), so sprite files are
+      capped at 45 s (~8 MB decoded) and only a few stay resident. */
 var AudioEngine=(function(){
-  var ctx=null,bufs={},pending={},fallback={},active=[],useFallback=false,rafId=null;
-  function getCtx(){ if(!ctx){var C=window.AudioContext||window.webkitAudioContext;
-    if(!C){useFallback=true;return null} ctx=new C();}
-    if(ctx.state==='suspended')ctx.resume(); return ctx;}
+  var ctx=null,bufs={},order=[],pending={},active=[],useFallback=false,rafId=null;
+  var MAX_BUFS=4, unlocked=false, lastError=null;
+  function getCtx(){
+    if(!ctx){
+      var C=window.AudioContext||window.webkitAudioContext;
+      if(!C){useFallback=true;return null}
+      try{ctx=new C()}catch(e){useFallback=true;lastError=e;return null}
+    }
+    if(ctx.state==='suspended'){ try{ctx.resume()}catch(e){} }
+    return ctx;
+  }
+  /* Must run synchronously inside a real user gesture. */
+  function unlock(){
+    var c=getCtx(); if(!c)return false;
+    if(!unlocked){
+      try{
+        var b=c.createBuffer(1,1,c.sampleRate);
+        var s=c.createBufferSource(); s.buffer=b;
+        s.connect(c.destination); s.start(0);
+        unlocked=true;
+      }catch(e){ lastError=e }
+    }
+    if(c.state==='suspended'){ try{c.resume()}catch(e){} }
+    return c.state!=='suspended';
+  }
+  ['pointerdown','touchend','keydown'].forEach(function(ev){
+    document.addEventListener(ev,function(){unlock()},{capture:true,once:false,passive:true});
+  });
+  function keep(file){
+    var i=order.indexOf(file); if(i>=0)order.splice(i,1);
+    order.push(file);
+    while(order.length>MAX_BUFS){ delete bufs[order.shift()] }
+  }
   function load(file){
-    if(bufs[file])return Promise.resolve(bufs[file]);
+    if(bufs[file]){keep(file);return Promise.resolve(bufs[file])}
     if(pending[file])return pending[file];
-    var c=getCtx(); if(!c)return Promise.reject('no-webaudio');
+    var c=getCtx(); if(!c)return Promise.reject(new Error('no-webaudio'));
     pending[file]=fetch(file).then(function(r){
-        if(!r.ok)throw new Error('http '+r.status); return r.arrayBuffer()})
+        if(!r.ok)throw new Error('HTTP '+r.status+' on '+file); return r.arrayBuffer()})
       .then(function(ab){return new Promise(function(res,rej){
-        var p=c.decodeAudioData(ab,res,rej); if(p&&p.then)p.then(res,rej)})})
-      .then(function(b){bufs[file]=b;delete pending[file];return b})
-      .catch(function(e){delete pending[file];useFallback=true;throw e});
+        var pr=c.decodeAudioData(ab,res,rej); if(pr&&pr.then)pr.then(res,rej)})})
+      .then(function(b){bufs[file]=b;keep(file);delete pending[file];return b})
+      .catch(function(e){delete pending[file];lastError=e;throw e});
     return pending[file];
   }
-  function fbEl(file){ if(!fallback[file]){var a=new Audio(file);a.preload='auto';fallback[file]=a}
-    return fallback[file] }
-  function stopAll(){ active.forEach(function(s){try{s.stop()}catch(e){}}); active=[];
-    for(var f in fallback){try{fallback[f].pause()}catch(e){}}
-    if(rafId){cancelAnimationFrame(rafId);rafId=null} }
-  function playFallback(file,start,dur,onEnd){
-    var a=fbEl(file);
-    var go=function(){ a.play().catch(function(){});
-      var tick=function(){ if(a.paused)return;
-        if(a.currentTime>=start+dur-0.01){a.pause();if(onEnd)onEnd();return}
-        rafId=requestAnimationFrame(tick)};
-      rafId=requestAnimationFrame(tick) };
-    if(a.readyState>=2){ try{a.currentTime=start}catch(e){} go() }
-    else { a.addEventListener('loadeddata',function h(){a.removeEventListener('loadeddata',h);
-      try{a.currentTime=start}catch(e){} go()},{once:true}); a.load() }
-    return function(){a.pause();if(rafId)cancelAnimationFrame(rafId)};
+  /* The element path asks the browser to play the slice itself via a media-fragment URI
+     (#t=start,end), which Safari honours. Setting currentTime by hand is the backstop,
+     because on iOS it throws until the media is seekable and the clip then plays from 0. */
+  var fbCur=null;
+  function playFallback(file,start,dur,onEnd,onFail){
+    if(fbCur){try{fbCur.el.pause()}catch(e){} fbCur=null}
+    var end=start+dur;
+    var a=new Audio(file+'#t='+start.toFixed(3)+','+end.toFixed(3));
+    a.preload='auto'; a.playsInline=true;
+    a.setAttribute('playsinline',''); a.setAttribute('webkit-playsinline','');
+    var stopped=false, seeked=(start<=0.01), started=null, fragOK=null, tries=0;
+    function trySeek(){
+      if(stopped||seeked||a.readyState<1||tries>=10)return;
+      tries++;
+      try{ a.currentTime=start; seeked=Math.abs(a.currentTime-start)<0.4 }
+      catch(e){ seeked=false }
+    }
+    ['loadedmetadata','loadeddata','canplay','playing','progress'].forEach(function(ev){
+      a.addEventListener(ev,function(){
+        /* did the fragment take effect on its own? */
+        if(fragOK===null && a.readyState>=1 && a.currentTime>0.01) fragOK=true;
+        if(fragOK!==true) trySeek();
+      });
+    });
+    function finish(){
+      if(stopped)return; stopped=true;
+      try{a.pause()}catch(e){}
+      if(rafId){cancelAnimationFrame(rafId);rafId=null}
+      if(fbCur&&fbCur.el===a)fbCur=null;
+      if(onEnd)onEnd();
+    }
+    a.addEventListener('ended',finish);
+    function watch(){
+      if(stopped)return;
+      if(a.paused && started!==null){ finish(); return }
+      if(!seeked && fragOK!==true && tries<10) trySeek();
+      if(started===null && (a.currentTime>0||tries>=10)) started=performance.now();
+      /* If neither the fragment nor a manual seek took hold we cannot trust currentTime,
+         so fall back to stopping on wall-clock time from when playback began. */
+      var trust = (fragOK===true)||seeked;
+      var bySlice = trust && a.currentTime>=end-0.03;
+      var byClock = started!==null && (performance.now()-started) > (dur+(trust?1.5:0.35))*1000;
+      if(bySlice||byClock){ finish(); return }
+      rafId=requestAnimationFrame(watch);
+    }
+    var pr=a.play();
+    if(pr&&pr.catch)pr.catch(function(e){ lastError=e; stopped=true; if(onFail)onFail(e) });
+    rafId=requestAnimationFrame(watch);
+    fbCur={el:a};
+    return function(){ if(!stopped){stopped=true; try{a.pause()}catch(e){}
+      if(rafId){cancelAnimationFrame(rafId);rafId=null} if(fbCur&&fbCur.el===a)fbCur=null } };
+  }
+  function stopAll(){
+    active.forEach(function(s){try{s.stop()}catch(e){}}); active=[];
+    if(fbCur){try{fbCur.el.pause()}catch(e){} fbCur=null}
+    if(rafId){cancelAnimationFrame(rafId);rafId=null}
   }
   return {
-    ready:function(){return !useFallback && !!getCtx()},
+    unlock:unlock,
+    ready:function(){return !useFallback && !!ctx && ctx.state==='running'},
+    error:function(){return lastError},
     preload:function(f){return load(f).catch(function(){})},
-    play:function(file,start,dur,onEnd,maxDur){
+    play:function(file,start,dur,onEnd,onFail){
       stopAll();
-      var d=maxDur?Math.min(dur,maxDur):dur, stopped=false;
-      if(useFallback)return playFallback(file,start,d,onEnd);
-      var c=getCtx(); if(!c)return playFallback(file,start,d,onEnd);
+      var running=unlock();            /* synchronous, inside the gesture */
+      var stopped=false, stopFb=null;
+      if(useFallback||!running){
+        stopFb=playFallback(file,start,dur,onEnd,onFail);
+        return function(){if(stopFb)stopFb()};
+      }
+      var c=getCtx();
       load(file).then(function(b){
         if(stopped)return;
         var s=c.createBufferSource(); s.buffer=b;
         var g=c.createGain(); g.gain.value=1;
         s.connect(g); g.connect(c.destination);
         s.onended=function(){if(onEnd)onEnd()};
-        s.start(0,start,d); active.push(s);
-        g.gain.setValueAtTime(1,c.currentTime+Math.max(0,d-0.03));
-        g.gain.linearRampToValueAtTime(0,c.currentTime+d);
-      }).catch(function(){ if(!stopped)playFallback(file,start,d,onEnd) });
-      return function(){stopped=true;stopAll()};
+        s.start(0,start,dur); active.push(s);
+        g.gain.setValueAtTime(1,c.currentTime+Math.max(0,dur-0.03));
+        g.gain.linearRampToValueAtTime(0,c.currentTime+dur);
+      }).catch(function(e){
+        if(stopped)return;
+        useFallback=true;           /* decode or fetch failed — try the element path */
+        stopFb=playFallback(file,start,dur,onEnd,onFail);
+      });
+      return function(){stopped=true;if(stopFb)stopFb();stopAll()};
     },
     trigger:function(file,start,dur,when,gain){
       var c=getCtx(); if(!c||useFallback)return;
       var b=bufs[file]; if(!b)return;
+      keep(file);
       var s=c.createBufferSource(); s.buffer=b;
       var g=c.createGain(); g.gain.value=gain==null?1:gain;
       s.connect(g); g.connect(c.destination);
@@ -182,14 +269,24 @@ var AudioEngine=(function(){
       g.gain.setValueAtTime(g.gain.value,when+Math.max(0,d-0.05));
       g.gain.linearRampToValueAtTime(0,when+d);
     },
+    loaded:function(file){return !!bufs[file]},
     ctx:getCtx, stopAll:stopAll
   };
 })();
 
 var np=$('#np'),npName=$('#np-name'),npMeta=$('#np-meta');
-var curBtn=null,curStop=null;
+var curBtn=null,curStop=null,npTimer=null;
 function clearPlay(){ if(curBtn)curBtn.classList.remove('on'); curBtn=null;
-  np.classList.remove('on'); if(curStop){curStop();curStop=null} }
+  np.classList.remove('on'); np.classList.remove('err');
+  if(curStop){curStop();curStop=null} }
+function playFailed(){
+  clearPlay();
+  npName.textContent=T('audio.blocked','Audio was blocked by the browser');
+  npMeta.textContent=T('audio.blockedhint','tap again · check the silent switch');
+  np.classList.add('on'); np.classList.add('err');
+  if(npTimer)clearTimeout(npTimer);
+  npTimer=setTimeout(function(){np.classList.remove('on');np.classList.remove('err')},6000);
+}
 function playSound(s,btn){
   if(curBtn===btn){AudioEngine.stopAll();clearPlay();return}
   clearPlay();
@@ -199,7 +296,7 @@ function playSound(s,btn){
   npMeta.textContent=(s.ac.dur?s.ac.dur.toFixed(2)+'s':'')+
     (s.ac.f0?'  ·  '+Math.round(s.ac.f0)+' Hz':'');
   np.classList.add('on');
-  curStop=AudioEngine.play(g.file,s.off[0],s.off[1],function(){clearPlay()});
+  curStop=AudioEngine.play(g.file,s.off[0],s.off[1],function(){clearPlay()},playFailed);
 }
 function playPattern(p,btn){
   if(curBtn===btn){AudioEngine.stopAll();clearPlay();return}
@@ -209,7 +306,7 @@ function playPattern(p,btn){
   npName.textContent=TV('patterns',p.id,p.name)+'  ·  '+TV('level',p.level,p.level);
   npMeta.textContent=p.off[1].toFixed(1)+'s';
   np.classList.add('on');
-  curStop=AudioEngine.play(g.file,p.off[0],p.off[1],function(){clearPlay()});
+  curStop=AudioEngine.play(g.file,p.off[0],p.off[1],function(){clearPlay()},playFailed);
 }
 function playIcon(){return '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.2 10.3 6 2.5 10.8Z"/></svg>'}
 function arrow(s){return s.dirs.indexOf('in')>=0?(s.dirs.length>1?'↕':'↓'):(s.dirs[0]==='none'?'·':'↑')}

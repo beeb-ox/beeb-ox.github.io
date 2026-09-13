@@ -152,6 +152,10 @@ Z.ui["about.contrib.h"]="参与改进";
 Z.ui["about.contrib.p"]="这份目录是起点，不是定稿：所有分类都是对社群声音名称的语音学解读，其中有好几处值得争论。节奏型的名字是我们起的，不是圈内的既有叫法。欢迎提出更正、更好的录音和缺失的声音——请到 github.com/beeb-ox 开 issue。";
 })(window.BBX_I18N.zh);
 (function(Z){
+Z.ui["audio.blocked"]="浏览器阻止了音频播放";
+Z.ui["audio.blockedhint"]="请再点一次，并检查手机侧边的静音开关";
+})(window.BBX_I18N.zh);
+(function(Z){
 var U=Z.ui;
 U["lim.1.h"]="最低的那个八度是缺的";
 U["lim.1.p"]="本档案中实测到的最低音高是 {lowHz} Hz，来自「{lowName}」。五弦电贝斯能到 31 Hz，TR-808 底鼓通常调在 40 Hz。次谐波发声能让人声比常态音域再低大约一个八度，但越往下振幅塌得越快，而且声带没法临时变长变重。";

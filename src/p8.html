@@ -112,10 +112,12 @@ function buildSeq(){
     }
     cellEls.push(arr); laneHost.appendChild(row);
   });
-  function preload(){
+  function preload(){ return Promise.all(laneFiles().map(function(f){
+    return AudioEngine.preload(f)})) }
+  function laneFiles(){
     var files={};
     lanes.forEach(function(L){var s=byId[L.id]; if(s&&s.grp)files[D.sprites.sounds[s.grp].file]=1});
-    Object.keys(files).forEach(function(f){AudioEngine.preload(f)});
+    return Object.keys(files);
   }
   function trig(L,when){
     var s=byId[L.id]; if(!s||!s.off)return;
@@ -144,16 +146,23 @@ function buildSeq(){
       btn.textContent=T('seq.play','Play loop');
       cellEls.forEach(function(a){a.forEach(function(b){b.classList.remove('cur')})});
       return }
-    var c=AudioEngine.ctx();
-    if(!c||!AudioEngine.ready()){
+    AudioEngine.unlock();                       /* synchronous, inside the gesture */
+    if(!AudioEngine.ready()){
       status.textContent=T('seq.nowebaudio','This browser cannot schedule sample-accurate audio — use the play buttons instead.');
       return }
-    preload();
     status.textContent=T('seq.loading','loading samples…');
-    setTimeout(function(){status.textContent=''},1400);
-    playing=true; step=0; nextT=c.currentTime+0.12;
-    btn.textContent=T('seq.stop','Stop');
-    timer=setInterval(schedule,25);
+    btn.disabled=true;
+    preload().then(function(){
+      btn.disabled=false;
+      var c=AudioEngine.ctx();
+      if(!c||!laneFiles().every(function(f){return AudioEngine.loaded(f)})){
+        status.textContent=T('seq.nowebaudio','This browser cannot schedule sample-accurate audio — use the play buttons instead.');
+        return }
+      status.textContent='';
+      playing=true; step=0; nextT=c.currentTime+0.12;
+      btn.textContent=T('seq.stop','Stop');
+      timer=setInterval(schedule,25);
+    });
   };
   $('#seq-clear').onclick=function(){
     lanes.forEach(function(L,li){ L.steps=new Array(STEPS).fill(false);

@@ -94,7 +94,8 @@ BUILDERS.home=function(){
     [S.length, T('fig.sounds','sounds recorded, measured and classified')],
     [COV.nCells+' / '+(COV.cells-COV.imposs),
       T('fig.cells','articulatory cells occupied, of those anatomically possible')],
-    [Object.keys(D.sprites.sounds).length, T('fig.families','sound families, from kicks to whistles')],
+    [(function(){var c={};S.forEach(function(s){c[s.cat]=1});return Object.keys(c).length})(),
+      T('fig.families','sound families, from kicks to whistles')],
     [COV.noLung, T('fig.nolung','sounds that need no lung air at all')],
     [P.length, T('fig.patterns','patterns with notation and audio')],
     [COV.bbOnly, T('fig.bbonly','cells beatbox uses that no language does')]

@@ -5,7 +5,7 @@ stops. 200 beatbox sounds, each classified the way a phonetician would classify 
 (place of articulation, manner, airstream mechanism, voicing) and each measured directly
 from its recording (fundamental, spectral centroid, energy band, attack, decay, onset rate).
 
-Live site: **https://beeb-ox.github.io/**
+Live site: **https://beeb-ox.github.io/bbox-atlas/**
 
 ## What's here
 
@@ -21,7 +21,7 @@ Live site: **https://beeb-ox.github.io/**
 | `data/sounds.json` | The 200-sound catalogue as plain JSON, without the per-sound spectrum arrays. |
 | `data/patterns.json` | 94 patterns with Standard Beatbox Notation, audio offsets, and descriptive names. |
 | `data/coverage.json` | The place × manner feasibility matrix (`S` attested in speech, `P` producible but unattested, `X` anatomically impossible) and the reason on each impossible cell. |
-| `audio/` | 13 sprite files. All 200 sounds and 94 patterns are packed into these; `data.js` carries the start time and duration of each clip. |
+| `audio/` | 75 sprite files. All 200 sounds and 94 patterns are packed into these; `data.js` carries the start time and duration of each clip. Each sprite holds at most **45 s** of audio — see Audio below. |
 | `tools/analyze.py` | Acoustic measurement: STFT, spectral percentiles, autocorrelation pitch tracking, envelope analysis. |
 | `tools/build_audio.py` | Silence-trims, normalises and packs the source mp3s into sprites. |
 | `tools/build_data.py` | Joins the taxonomy with the measurements and emits `data.js`. |
@@ -48,6 +48,34 @@ Technical terms are not translated string-by-string. `placeAtom` / `mannerAtom` 
 composes them, because Chinese phonetic terminology stacks modifiers in the same order as English.
 That covers several hundred phrases from about 350 entries and keeps the terminology consistent.
 A `placePhrase` / `mannerPhrase` override wins where composition would read badly.
+
+## Audio, and what mobile Safari demands
+
+Playback is Web Audio first, with an `<audio>` element as the fallback. Three constraints shape
+it, all learned from an iPhone not playing anything:
+
+1. **A sprite is capped at 45 s** (`MAX_CHUNK` in `tools/build_audio.py`), which is why there
+   are 75 files rather than 13. `decodeAudioData` produces float32 PCM at the *hardware* rate —
+   48 kHz on an iPhone — so the old per-category sprites decoded to 40–80 MB each and the
+   largest was ~80 MB. That reliably fails on a phone. At 45 s the worst decode is ~8 MB, and
+   only the four most recently used buffers stay resident (`MAX_BUFS`).
+2. **The AudioContext must emit something during a user gesture.** Creating it inside the tap
+   handler is not enough if the next thing you do is `await fetch(...)`; by the time the buffer
+   resolves the gesture is over and the context can still be suspended. `unlock()` plays a
+   one-sample silent buffer synchronously on the first tap.
+3. **`HTMLAudioElement.play()` must also be called inside the gesture** — never from a
+   `loadedmetadata` handler, which is outside it and rejects with `NotAllowedError`. The
+   fallback therefore calls `play()` immediately and seeks afterwards, asking for the slice with
+   a media-fragment URI (`#t=start,end`) and falling back to setting `currentTime` once the
+   media is seekable, with a capped number of attempts and a wall-clock stop if neither works.
+
+Note that seeking needs HTTP **Range** support. GitHub Pages provides it; Python's
+`http.server` does not, so the element fallback cannot be tested against `python -m http.server`
+— it will appear to play the whole sprite from zero. `tools/rangeserve.py` is a minimal
+Range-capable server for local testing.
+
+When playback is refused the page says so rather than failing silently. On iPhone the other
+thing to check is the hardware silent switch: Safari routes Web Audio through it.
 
 ## The classification fields
 
