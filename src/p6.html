@@ -1,0 +1,310 @@
+/* ---------------- atlas: list + specimen card ---------------- */
+var listEl=$('#list'), openId=null;
+function specBars(s,h){
+  var d=el('div','r-spec'); d.style.height=h+'px';
+  var c=famColor(s.prim);
+  var step=Math.max(1,Math.ceil(s.spec.length/28));
+  for(var i=0;i<s.spec.length;i+=step){
+    var v=0; for(var j=i;j<Math.min(i+step,s.spec.length);j++)v=Math.max(v,s.spec[j]);
+    var b=el('i'); b.style.height=Math.max(6,v*100)+'%'; b.style.background=c;
+    b.style.opacity=0.30+0.70*v; d.appendChild(b);
+  }
+  return d;
+}
+function diffDots(n){var d=el('span','diff');
+  for(var i=1;i<=5;i++){var i2=el('i');if(i<=n)i2.className='on';d.appendChild(i2)}return d}
+function specChartFor(s){
+  var W=470,H=96,PL=30,PR=6,PT=8,PB=20;
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.spectrum','Measured spectrum')+': '+SNAME(s)});
+  svg.style.display='block'; svg.style.marginTop='10px';
+  var iw=W-PL-PR, ih=H-PT-PB, n=s.spec.length;
+  var lo=Math.log(D.edges[0]), hi=Math.log(D.edges[n]);
+  for(var i=0;i<n;i++){
+    var x0=PL+iw*(Math.log(D.edges[i])-lo)/(hi-lo);
+    var x1=PL+iw*(Math.log(D.edges[i+1])-lo)/(hi-lo);
+    var h=Math.max(0.8,s.spec[i]*ih);
+    svg.appendChild(sv('rect',{x:x0.toFixed(1),y:(PT+ih-h).toFixed(1),
+      width:Math.max(0.8,x1-x0-0.7).toFixed(1),height:h.toFixed(1),
+      fill:famColor(s.prim),opacity:(0.35+0.65*s.spec[i]).toFixed(2),rx:0.6}));
+  }
+  svg.appendChild(sv('line',{x1:PL,y1:PT+ih,x2:PL+iw,y2:PT+ih,stroke:'var(--rule-2)','stroke-width':1}));
+  [50,100,200,500,1000,2000,5000,10000].forEach(function(f){
+    var x=PL+iw*(Math.log(f)-lo)/(hi-lo); if(x<PL-1||x>PL+iw+1)return;
+    svg.appendChild(sv('line',{x1:x,y1:PT+ih,x2:x,y2:PT+ih+3,stroke:'var(--rule-2)','stroke-width':1}));
+    var t=sv('text',{x:x,y:H-7,'text-anchor':'middle','font-size':8.5,fill:'var(--faint)'});
+    t.textContent=fmtHz(f); svg.appendChild(t);
+  });
+  var xl=sv('text',{x:PL,y:PT+7,'font-size':8.5,fill:'var(--faint)'});
+  xl.textContent=T('cap.spectrum','measured spectrum (Hz, log)'); svg.appendChild(xl);
+  return svg;
+}
+function detailFor(s){
+  var wrap=el('div','detail'); var inn=el('div','detail-in');
+  var left=el('div'), card=el('div','spec-card');
+  var ipa=el('div','ipa-big'); ipa.textContent=s.ipa; card.appendChild(ipa);
+  var sbnline=el('div'); sbnline.style.marginTop='7px';
+  sbnline.appendChild(el('span','sbn',s.sbn));
+  var bg=el('span','badge',FAMLABEL(s.prim)+' '+arrow(s));
+  bg.style.color=famColor(s.prim); bg.style.marginLeft='7px'; sbnline.appendChild(bg);
+  card.appendChild(sbnline);
+  var dl=el('dl','dl');
+  [[T('lab.place','Place'),compose('place',s.place)],
+   [T('lab.manner','Manner'),compose('manner',s.manner)],
+   [T('lab.airstream','Airstream'),s.air.split('+').map(function(t){
+      return TV('air',t,AIR_EN[t]||t)}).join(' + ')],
+   [T('lab.voicing','Voicing'),TD('voiceStr',s.voice)],
+   [T('lab.inst','Stands in for'),compose('inst',s.inst)],
+   [T('lab.family','Family'),CAT(s.cat)]
+  ].forEach(function(kv){dl.appendChild(el('dt',null,kv[0]));dl.appendChild(el('dd',null,kv[1]))});
+  dl.appendChild(el('dt',null,T('lab.diff','Difficulty')));
+  var dd=el('dd'); dd.appendChild(diffDots(s.diff)); dl.appendChild(dd);
+  card.appendChild(dl);
+  var a=s.ac, meas=el('div','meas');
+  [[a.f0?Math.round(a.f0)+' Hz':'—',T('m.f0','fundamental')],
+   [fmtHz(a.centroid)+' Hz',T('m.bright','brightness')],
+   [fmtHz(a.f05)+'–'+fmtHz(a.f95),T('m.band','energy band')],
+   [(a.attack_ms<1000?Math.round(a.attack_ms)+' ms':(a.attack_ms/1000).toFixed(1)+' s'),T('m.attack','attack')],
+   [(a.decay_ms<1000?Math.round(a.decay_ms)+' ms':(a.decay_ms/1000).toFixed(1)+' s'),T('m.decay','decay')],
+   [a.dur.toFixed(2)+' s',T('m.dur','recording')],
+   [(a.flatness<0.001?'<0.1%':(a.flatness*100).toFixed(1)+'%'),T('m.noise','noisiness')],
+   [a.ev_rate?a.ev_rate.toFixed(1)+'/s':'—',T('m.rate','hit rate')]
+  ].forEach(function(kv){var d=el('div');d.appendChild(el('b',null,kv[0]));
+    d.appendChild(el('span',null,kv[1]));meas.appendChild(d)});
+  card.appendChild(meas);
+  var wb=el('div','wavebox');
+  s.wave.forEach(function(v){var i=el('i');i.style.height=Math.max(2,v*100)+'%';
+    i.style.background=famColor(s.prim);wb.appendChild(i)});
+  card.appendChild(wb);
+  var wcap=el('p','figcaption',T('cap.env','Envelope of the recording · spectrum below'));
+  wcap.style.marginTop='4px'; card.appendChild(wcap);
+  card.appendChild(specChartFor(s));
+  left.appendChild(card);
+  var right=el('div');
+  var h1=el('p','eyebrow',T('lab.howto','How it is made')); h1.style.marginBottom='7px';
+  right.appendChild(h1);
+  right.appendChild(el('p','howto',TS(s.id,'howto',s.howto)));
+  if(s.notes){ var n=el('p','note',TS(s.id,'notes',s.notes)); n.style.marginTop='14px';
+    right.appendChild(n) }
+  var lw=el('div'); lw.style.marginTop='16px';
+  var h2=el('p','eyebrow',T('lab.lang','In human language')); h2.style.marginBottom='7px';
+  lw.appendChild(h2); lw.appendChild(el('p','howto',TD('lang',s.lang)));
+  right.appendChild(lw);
+  if(s.alias.length){
+    var al=el('p','figcaption',T('lab.alias','Also known as')+': '+
+      s.alias.map(function(x){return TV('alias',x,x)}).join('、'));
+    al.style.marginTop='14px'; right.appendChild(al);
+  }
+  inn.appendChild(left); inn.appendChild(right);
+  wrap.appendChild(inn);
+  wrap.style.borderLeftColor=famColor(s.prim);
+  return wrap;
+}
+function renderList(){
+  var out=S.filter(match);
+  $('#count').textContent=out.length+' '+(out.length===1?T('u.sound','sound'):T('u.sounds','sounds'));
+  $('#empty').style.display=out.length?'none':'block';
+  listEl.innerHTML='';
+  var frag=document.createDocumentFragment();
+  out.forEach(function(s){
+    var row=el('div','row'); row.setAttribute('role','button'); row.tabIndex=0;
+    row.setAttribute('aria-expanded', openId===s.id?'true':'false');
+    row.style.borderLeftColor=famColor(s.prim);
+    var pb=el('span','play'); pb.innerHTML=playIcon(); pb.tabIndex=0;
+    pb.setAttribute('role','button');
+    pb.setAttribute('aria-label',T('a11y.play','Play')+' '+SNAME(s));
+    pb.addEventListener('click',function(ev){ev.stopPropagation();playSound(s,pb)});
+    pb.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){
+      ev.preventDefault();ev.stopPropagation();playSound(s,pb)}});
+    row.appendChild(pb);
+    var nm=el('span','r-name'); nm.appendChild(el('b',null,SNAME(s)));
+    nm.appendChild(el('span',null,CAT(s.cat)+' · '+ROLELABEL(s.role)+' · '+compose('inst',s.inst)));
+    row.appendChild(nm);
+    var sbw=el('span'); sbw.appendChild(el('span','sbn',s.sbn)); row.appendChild(sbw);
+    row.appendChild(el('span','r-ipa',s.ipa));
+    row.appendChild(specBars(s,26));
+    var n1=el('span','r-num r-n1');
+    n1.innerHTML=(s.ac.f0?Math.round(s.ac.f0):'—')+'<u>'+esc(T('m.f0short','f0 Hz'))+'</u>';
+    row.appendChild(n1);
+    var n2=el('span','r-num r-n2');
+    n2.innerHTML=fmtHz(s.ac.centroid)+'<u>'+esc(T('m.brightshort','bright'))+'</u>';
+    row.appendChild(n2);
+    row.addEventListener('click',function(){
+      openId = openId===s.id ? null : s.id; renderList();
+      if(openId===s.id) setTimeout(function(){
+        var d=document.getElementById('det-'+s.id);
+        if(d){var r=d.getBoundingClientRect(); if(r.bottom>innerHeight)
+          d.scrollIntoView({behavior:'smooth',block:'nearest'})}},30);
+    });
+    row.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){
+      ev.preventDefault(); row.click()}});
+    frag.appendChild(row);
+    if(openId===s.id){ var d=detailFor(s); d.id='det-'+s.id; frag.appendChild(d) }
+  });
+  listEl.appendChild(frag);
+}
+
+/* ---------------- coverage grid + anatomy ---------------- */
+BUILDERS.coverage=function(){
+  var t=$('#cov'); t.innerHTML='';
+  var thead=el('thead'), tr=el('tr');
+  tr.appendChild(el('th','rh',''));
+  D.places.forEach(function(p){tr.appendChild(el('th',null,PLACE(p)))});
+  thead.appendChild(tr); t.appendChild(thead);
+  var tb=el('tbody');
+  D.manners.forEach(function(m){
+    var r=el('tr');
+    r.appendChild(el('th','rh',MANNER(m)));
+    D.places.forEach(function(p,i){
+      var td=el('td'), st=D.grid[m][i], n=COV.bbCells[m+'|'+p]||0, c=el('div','cell');
+      var where=MANNER(m)+' · '+PLACE(p);
+      if(n>0){
+        c.className='cell bb'+(st==='P'?' bbonly':'');
+        var f={}; S.filter(function(s){return s.gmanner===m&&s.gplace===p})
+          .forEach(function(s){f[s.prim]=(f[s.prim]||0)+1});
+        c.style.background=famColor(Object.keys(f).sort(function(a,b){return f[b]-f[a]})[0]);
+        c.textContent=n;
+        c.setAttribute('role','button'); c.tabIndex=0;
+        c.title=where+' — '+n+' '+(n>1?T('u.sounds','sounds'):T('u.sound','sound'))+
+          (st==='P'?' · '+T('cov.bbonlynote','used by beatboxers but by no known language'):'');
+        var act=function(){setCellFilter(m,p)};
+        c.addEventListener('click',act);
+        c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){
+          e.preventDefault();act()}});
+      } else if(st==='S'){ c.className='cell speech'; c.textContent='·';
+        c.title=where+' — '+T('cov.speechnote','a phoneme in some spoken language, absent from this archive');
+      } else if(st==='P'){ c.className='cell none';
+        c.title=where+' — '+T('cov.unusednote','physically producible, but neither language nor this archive uses it');
+      } else { c.className='cell x'; c.textContent='×';
+        var note=TV('gridNotes',m+'|'+p,D.gridNotes[m+'|'+p]||'');
+        c.title=note||(where+' — '+T('cov.imposs','anatomically impossible'));
+        if(note){
+          c.addEventListener('mouseenter',function(e){showTip(e.clientX,e.clientY,
+            '<b>'+esc(where)+'</b><span class="m">'+esc(T('cov.imposs','anatomically impossible'))+
+            '</span>'+esc(note))});
+          c.addEventListener('mouseleave',hideTip);
+        }
+      }
+      td.appendChild(c); r.appendChild(td);
+    });
+    tb.appendChild(r);
+  });
+  t.appendChild(tb);
+  var tally=$('#tally'); tally.innerHTML='';
+  [[COV.nCells+' / '+(COV.cells-COV.imposs),
+    T('tally.1','place–manner combinations this archive reaches, of the {n} a human body allows')
+      .replace('{n}',COV.cells-COV.imposs)],
+   [COV.imposs, T('tally.2','combinations no human can produce, on this chart of {n}')
+      .replace('{n}',COV.cells)],
+   [COV.bbOnly, T('tally.3','cells beatboxers use that no documented language uses as a phoneme')],
+   [COV.speech, T('tally.4','cells attested as phonemes somewhere in the world’s languages')]
+  ].forEach(function(kv){var d=el('div');d.appendChild(el('b',null,String(kv[0])));
+    d.appendChild(el('span',null,kv[1]));tally.appendChild(d)});
+  buildAnatomy();
+};
+function buildAnatomy(){
+  var host=$('#anatsvg'); host.innerHTML='';
+  var W=660,H=470;
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.anat','Mid-sagittal schematic of the vocal tract with the ten places of articulation')});
+  svg.style.display='block';
+  var ink='var(--ink-2)', soft='var(--rule-2)';
+  var g=sv('g',{}); svg.appendChild(g);
+  g.appendChild(sv('path',{d:
+    'M 104 236 C 142 208 200 190 252 190 C 294 192 320 206 342 228 L 350 254 '+
+    'C 344 274 340 306 346 338 L 326 340 C 330 304 320 272 298 250 '+
+    'C 266 226 198 228 148 244 C 130 250 114 250 104 252 Z',
+    fill:'color-mix(in srgb, var(--pulmonic) 9%, var(--surface))',stroke:'none'}));
+  g.appendChild(sv('path',{d:'M 104 206 C 160 150 268 142 332 164 C 358 173 380 176 404 168',
+    fill:'none',stroke:soft,'stroke-width':1.6}));
+  g.appendChild(sv('path',{d:'M 108 228 C 160 186 262 178 324 200 C 350 209 376 212 400 204',
+    fill:'none',stroke:soft,'stroke-width':1.6}));
+  var nl=sv('text',{x:196,y:186,'font-size':10.5,fill:'var(--faint)'});
+  nl.textContent=T('anat.nasal','nasal cavity'); g.appendChild(nl);
+  g.appendChild(sv('path',{d:'M 104 236 C 142 208 200 190 252 190 C 294 192 320 206 342 228',
+    fill:'none',stroke:ink,'stroke-width':2.3}));
+  g.appendChild(sv('path',{d:'M 342 228 C 350 238 352 248 350 256',fill:'none',
+    stroke:ink,'stroke-width':2.3}));
+  g.appendChild(sv('path',{d:'M 404 196 C 412 258 408 314 400 356',fill:'none',
+    stroke:ink,'stroke-width':2.3}));
+  g.appendChild(sv('path',{d:
+    'M 112 252 C 152 236 210 226 262 232 C 300 238 324 262 338 298 '+
+    'C 346 320 348 338 346 354 L 158 356 C 136 334 118 298 112 252 Z',
+    fill:'color-mix(in srgb, var(--glottalic) 7%, var(--surface))',stroke:ink,'stroke-width':2}));
+  var tl=sv('text',{x:232,y:312,'font-size':11.5,fill:'var(--ink-2)','text-anchor':'middle'});
+  tl.textContent=T('anat.tongue','tongue'); g.appendChild(tl);
+  g.appendChild(sv('path',{d:'M 102 234 L 98 256 L 112 256 L 115 236 Z',fill:'var(--surface-2)',
+    stroke:ink,'stroke-width':1.5}));
+  g.appendChild(sv('path',{d:'M 100 262 L 97 240 L 111 240 L 113 262 Z',fill:'var(--surface-2)',
+    stroke:ink,'stroke-width':1.5}));
+  g.appendChild(sv('path',{d:'M 88 238 C 70 248 70 262 86 270',fill:'none',stroke:ink,'stroke-width':2.6}));
+  g.appendChild(sv('path',{d:'M 88 292 C 70 282 70 268 86 262',fill:'none',stroke:ink,'stroke-width':2.6}));
+  g.appendChild(sv('path',{d:'M 344 358 L 400 354 L 406 410 L 340 414 Z',fill:'var(--sunk)',
+    stroke:ink,'stroke-width':1.8}));
+  g.appendChild(sv('path',{d:'M 346 416 L 350 452 M 402 412 L 400 452',fill:'none',
+    stroke:soft,'stroke-width':1.6}));
+  var ll=sv('text',{x:420,y:436,'font-size':10.5,fill:'var(--faint)'});
+  ll.textContent=T('anat.trachea','trachea · from the lungs'); g.appendChild(ll);
+  var lx=sv('text',{x:330,y:378,'font-size':10.5,fill:'var(--ink-2)','text-anchor':'end'});
+  lx.textContent=T('anat.larynx','larynx'); g.appendChild(lx);
+  g.appendChild(sv('path',{d:'M 334 378 L 350 378',fill:'none',stroke:soft,'stroke-width':1}));
+  var ZONES=[
+    ['bilabial',86,262,24,334,'start','the two lips'],
+    ['labiodental',112,248,24,368,'start','lower lip against the upper teeth'],
+    ['dental',124,240,24,402,'start','tongue against the teeth'],
+    ['alveolar',158,218,132,116,'middle','tongue tip on the ridge behind the teeth'],
+    ['postalveolar',196,204,236,88,'middle','just behind the alveolar ridge'],
+    ['palatal',250,196,330,74,'middle','the hard palate'],
+    ['velar',310,208,424,96,'middle','the soft palate'],
+    ['uvular',346,246,486,176,'start','the uvula'],
+    ['pharyngeal',378,306,486,286,'start','the throat above the larynx'],
+    ['glottal',374,382,486,392,'start','the vocal folds themselves']
+  ];
+  ZONES.forEach(function(z){
+    var name=z[0],dx=z[1],dy=z[2],lx2=z[3],ly=z[4],anch=z[5],descEn=z[6];
+    var n=S.filter(function(s){return s.gplace===name}).length;
+    var desc=TV('zoneDesc',name,descEn);
+    var grp=sv('g',{class:'zonebtn',role:'button',tabindex:'0'});
+    grp.setAttribute('aria-label',PLACE(name)+': '+n);
+    var lx3 = anch==='start' ? lx2-6 : lx2;
+    var ly3 = anch==='middle' ? ly+6 : ly-4;
+    grp.appendChild(sv('path',{d:'M '+lx3+' '+ly3+' L '+dx+' '+dy,fill:'none',
+      stroke:soft,'stroke-width':1,'stroke-dasharray':'2.5 2.5'}));
+    grp.appendChild(sv('circle',{class:'hit',cx:dx,cy:dy,r:Math.max(7,Math.min(17,6+n*0.15)),
+      fill:'var(--pulmonic)',opacity:0.15}));
+    grp.appendChild(sv('circle',{cx:dx,cy:dy,r:4.2,fill:'var(--pulmonic)',
+      stroke:'var(--surface)','stroke-width':1.6}));
+    var tx=sv('text',{x:lx2,y:ly,'text-anchor':anch,'font-size':11,fill:'var(--ink-2)',
+      'font-weight':600}); tx.textContent=PLACE(name); grp.appendChild(tx);
+    var tn=sv('text',{x:lx2,y:ly+12,'text-anchor':anch,'font-size':9.5,fill:'var(--faint)'});
+    tn.textContent=n+' '+(n===1?T('u.sound','sound'):T('u.sounds','sounds'));
+    grp.appendChild(tn);
+    var act=function(){setFilter('place',name)};
+    grp.addEventListener('click',act);
+    grp.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();act()}});
+    grp.addEventListener('mouseenter',function(e){
+      showTip(e.clientX,e.clientY,'<b>'+esc(PLACE(name))+'</b><span class="m">'+n+' '+
+        esc(n===1?T('u.sound','sound'):T('u.sounds','sounds'))+'</span>'+esc(desc));
+      var b=document.querySelector('.zonelist button[data-z="'+name+'"]');
+      if(b)b.classList.add('hi')});
+    grp.addEventListener('mouseleave',function(){hideTip();
+      var b=document.querySelector('.zonelist button[data-z="'+name+'"]');
+      if(b)b.classList.remove('hi')});
+    g.appendChild(grp);
+  });
+  host.appendChild(svg);
+  var maxN=Math.max.apply(null,D.places.map(function(p){
+    return S.filter(function(s){return s.gplace===p}).length}));
+  var zl=$('#zonelist'); zl.innerHTML='';
+  D.places.forEach(function(p){
+    var n=S.filter(function(s){return s.gplace===p}).length;
+    var b=el('button'); b.type='button'; b.dataset.z=p;
+    b.appendChild(el('b',null,PLACE(p)));
+    var bar=el('span','bar-mini'), fillb=el('i');
+    fillb.style.width=(maxN?100*n/maxN:0)+'%'; bar.appendChild(fillb); b.appendChild(bar);
+    b.appendChild(el('span','n',String(n)));
+    b.addEventListener('click',function(){setFilter('place',p)});
+    zl.appendChild(b);
+  });
+}

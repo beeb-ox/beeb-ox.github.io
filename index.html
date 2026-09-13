@@ -1,0 +1,1903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An open archive of 200 beatbox sounds, measured and classified by place of articulation, airstream mechanism and acoustics.">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Beatbox Sound Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#EFF3F4; --surface:#FFFFFF; --surface-2:#F7FAFA; --sunk:#E4EBEC;
+  --ink:#122029; --ink-2:#3C5260; --muted:#5E7481; --faint:#8A9CA6;
+  --rule:#D7E1E4; --rule-2:#C3D1D6;
+  --pulmonic:#1F6FB2; --glottalic:#C2410C; --lingual:#7E22CE;
+  --buccal:#0E9384; --aerodynamic:#A16207; --external:#BE185D;
+  --ok:#0E7A4F; --warn:#A16207; --stop:#B3261E;
+  --shadow:0 1px 2px rgba(18,32,41,.05),0 8px 24px -12px rgba(18,32,41,.16);
+  --shadow-lift:0 2px 4px rgba(18,32,41,.06),0 18px 44px -18px rgba(18,32,41,.26);
+  --sans:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --serif:'Gentium Book Plus','Charis SIL','Times New Roman',serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --ipafont:'Gentium Book Plus','Charis SIL','Doulos SIL','Times New Roman',serif;
+  --grid-speech:#C3D1D6; --grid-none:#EDF2F3; --grid-x:#F9E7E4; --grid-x-line:#E4B9B1;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0E1518; --surface:#161F23; --surface-2:#1B2529; --sunk:#0A1013;
+  --ink:#E7EEF0; --ink-2:#BCCBD1; --muted:#93A6AE; --faint:#6C8189;
+  --rule:#27353A; --rule-2:#364750;
+  --pulmonic:#4E94D4; --glottalic:#D6702F; --lingual:#A578E0;
+  --buccal:#22A692; --aerodynamic:#B28418; --external:#E05C88;
+  --ok:#3FBF88; --warn:#D2A23C; --stop:#E7776C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.5),0 18px 44px -18px rgba(0,0,0,.8);
+  --grid-speech:#36474F; --grid-none:#1A2428; --grid-x:#2E1D1C; --grid-x-line:#5A3833;
+}}
+:root[data-theme="dark"]{
+  --paper:#0E1518; --surface:#161F23; --surface-2:#1B2529; --sunk:#0A1013;
+  --ink:#E7EEF0; --ink-2:#BCCBD1; --muted:#93A6AE; --faint:#6C8189;
+  --rule:#27353A; --rule-2:#364750;
+  --pulmonic:#4E94D4; --glottalic:#D6702F; --lingual:#A578E0;
+  --buccal:#22A692; --aerodynamic:#B28418; --external:#E05C88;
+  --ok:#3FBF88; --warn:#D2A23C; --stop:#E7776C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.5),0 18px 44px -18px rgba(0,0,0,.8);
+  --grid-speech:#36474F; --grid-none:#1A2428; --grid-x:#2E1D1C; --grid-x-line:#5A3833;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px}
+h1,h2,h3,h4{margin:0;font-weight:600;text-wrap:balance;letter-spacing:-.018em}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ipa{font-family:var(--ipafont);font-size:1.06em}
+/* Chinese typography: swap the text faces, keep IPA and data in their own faces */
+:root[lang="zh"] body,:root[lang="zh"] button,:root[lang="zh"] input,:root[lang="zh"] select{
+  font-family:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',var(--sans)}
+:root[lang="zh"] .prose,:root[lang="zh"] .howto,:root[lang="zh"] .note,
+:root[lang="zh"] .limit p,:root[lang="zh"] .zonelist em,:root[lang="zh"] .legend-note{
+  font-family:'Noto Serif SC','Songti SC','SimSun',var(--serif);line-height:1.78}
+:root[lang="zh"] h1,:root[lang="zh"] h2,:root[lang="zh"] h3,:root[lang="zh"] h4{letter-spacing:0}
+:root[lang="zh"] .eyebrow,:root[lang="zh"] .fl,:root[lang="zh"] .meas span{letter-spacing:.06em}
+:root[lang="zh"] .mast h1{letter-spacing:-.01em;line-height:1.12}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.prose{font-family:var(--serif);font-size:16.5px;line-height:1.62;color:var(--ink-2);max-width:66ch}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--rule);background:
+  linear-gradient(180deg,var(--surface) 0%,var(--surface) 62%,var(--surface-2) 100%)}
+.mast-in{display:grid;gap:34px;padding-block:52px 40px}
+.mast-body{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:40px;align-items:end}
+@media (max-width:880px){.mast-body{grid-template-columns:1fr;gap:26px}}
+.mast-body .lede{margin-top:20px}
+.keycard{border:1px solid var(--rule);border-radius:4px;background:var(--surface-2);padding:15px 16px}
+.keycard .eyebrow{margin-bottom:10px;display:block}
+.keyrow{display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:baseline;
+  padding:6px 0;border-top:1px solid var(--rule)}
+.keyrow:first-child{border-top:0}
+.keyrow .sw2{width:10px;height:10px;border-radius:50%;margin-top:4px}
+.keyrow b{font-size:12.5px;font-weight:600;display:block}
+.keyrow em{font-size:11.5px;color:var(--muted);font-style:normal;display:block;line-height:1.4}
+.keyrow .n{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.keyfoot{font-size:11.5px;color:var(--muted);line-height:1.45;border-top:1px solid var(--rule);
+  margin-top:10px;padding-top:10px}
+.org{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint);font-weight:600}
+.org .dot{width:7px;height:7px;border-radius:50%;background:var(--glottalic)}
+.mast h1{font-size:clamp(38px,6.4vw,68px);line-height:.98;letter-spacing:-.035em}
+.mast h1 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.mast .lede{max-width:62ch}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.fig{background:var(--surface);padding:16px 18px}
+.fig b{display:block;font-family:var(--mono);font-size:27px;font-weight:500;
+  letter-spacing:-.03em;line-height:1.1}
+.fig span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+.mast-nav{display:flex;flex-wrap:wrap;gap:2px 0;border-top:1px solid var(--rule);
+  padding-top:14px;margin-top:-8px}
+.mast-nav a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:6px 13px 6px 0;border-right:1px solid var(--rule);margin-right:13px}
+.mast-nav a:last-child{border-right:0}
+.mast-nav a:hover{color:var(--ink)}
+
+/* ---------- sections ---------- */
+section{padding-block:34px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+  flex-wrap:wrap;margin-bottom:26px;padding-bottom:14px;border-bottom:2px solid var(--ink)}
+.sec-head h2{font-size:clamp(22px,3vw,31px);letter-spacing:-.028em}
+.sec-head .sub{font-size:13px;color:var(--muted);max-width:48ch;text-align:right}
+@media (max-width:700px){.sec-head .sub{text-align:left}}
+
+/* ---------- filter rail ---------- */
+.atlas{display:grid;grid-template-columns:238px minmax(0,1fr);gap:26px;align-items:start}
+@media (max-width:900px){.atlas{grid-template-columns:1fr}}
+.rail{position:sticky;top:12px;display:grid;gap:16px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:4px;padding:16px;box-shadow:var(--shadow)}
+@media (max-width:900px){.rail{position:static}}
+.rail label.fl{display:block;font-size:10.5px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+.search{width:100%;padding:9px 11px;border:1px solid var(--rule-2);border-radius:3px;
+  background:var(--surface-2);color:var(--ink);font-size:14px}
+.search:focus{outline:2px solid var(--pulmonic);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{border:1px solid var(--rule-2);background:var(--surface-2);border-radius:2px;
+  padding:4px 8px;font-size:11.5px;font-weight:500;cursor:pointer;color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:5px;line-height:1.3}
+.chip:hover{border-color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip .sw{width:8px;height:8px;border-radius:50%;flex:none}
+.chip .n{font-family:var(--mono);font-size:10px;opacity:.6}
+.rail-foot{display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--rule);padding-top:12px;font-size:12px;color:var(--muted)}
+.linkbtn{background:none;border:0;padding:0;font-size:12px;font-weight:600;
+  color:var(--pulmonic);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+
+/* ---------- sound list ---------- */
+.list{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.row{display:grid;grid-template-columns:38px minmax(120px,1.5fr) 74px minmax(90px,1.05fr) 104px 62px 62px;
+  gap:12px;align-items:center;background:var(--surface);padding:9px 13px;cursor:pointer;
+  border-left:3px solid transparent;text-align:left;border-top:0;border-right:0;border-bottom:0;width:100%}
+.row:hover{background:var(--surface-2)}
+.row[aria-expanded="true"]{background:var(--surface-2)}
+.row:focus-visible{outline:2px solid var(--pulmonic);outline-offset:-2px}
+@media (max-width:820px){
+  .row{grid-template-columns:34px minmax(0,1fr) 68px;row-gap:4px}
+  .row .r-ipa,.row .r-spec,.row .r-n1,.row .r-n2{display:none}
+}
+.play{width:28px;height:28px;border-radius:50%;border:1px solid var(--rule-2);
+  background:var(--surface);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ink-2)}
+.play:hover{border-color:var(--ink);color:var(--ink)}
+.play svg{width:11px;height:11px}
+.play.on{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.r-name{min-width:0}
+.r-name b{display:block;font-size:14px;font-weight:600;letter-spacing:-.012em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-name span{display:block;font-size:11px;color:var(--muted);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.sbn{font-family:var(--mono);font-size:11.5px;font-weight:500;padding:2px 6px;border-radius:2px;
+  background:var(--sunk);color:var(--ink-2);display:inline-block;max-width:100%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-ipa{font-family:var(--serif);font-size:15px;color:var(--ink-2);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.r-spec{display:flex;align-items:flex-end;gap:1px;height:26px;
+  border-bottom:1px solid var(--rule);padding-bottom:1px}
+.r-spec i{flex:1;min-width:0;border-radius:1px 1px 0 0;display:block}
+.r-num{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:right;
+  font-variant-numeric:tabular-nums}
+.r-num u{display:block;font-size:9px;text-decoration:none;color:var(--faint);letter-spacing:.04em}
+
+/* ---------- detail ---------- */
+.detail{background:var(--surface-2);padding:0 13px 20px 13px;border-left:3px solid var(--ink)}
+.detail-in{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:26px;padding-top:4px}
+@media (max-width:820px){.detail-in{grid-template-columns:1fr;gap:20px}}
+.spec-card{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:14px}
+.ipa-big{font-family:var(--serif);font-size:31px;line-height:1.15;letter-spacing:.01em}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px;margin-top:12px}
+.dl dt{color:var(--faint);font-size:10.5px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;padding-top:3px}
+.dl dd{margin:0;color:var(--ink-2)}
+.meas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:12px}
+.meas div{background:var(--surface);padding:7px 9px}
+.meas b{display:block;font-family:var(--mono);font-size:14px;font-weight:500}
+.meas span{display:block;font-size:9.5px;color:var(--faint);letter-spacing:.05em;text-transform:uppercase}
+.howto{font-family:var(--serif);font-size:15.5px;line-height:1.58;color:var(--ink-2)}
+.note{border-left:2px solid var(--aerodynamic);padding-left:11px;font-size:13.5px;
+  color:var(--ink-2);font-family:var(--serif);line-height:1.55}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:2px;
+  border:1px solid currentColor}
+.diff{display:inline-flex;gap:2px;vertical-align:middle}
+.diff i{width:5px;height:11px;border-radius:1px;background:var(--rule-2);display:block}
+.diff i.on{background:var(--ink-2)}
+.wavebox{height:54px;display:flex;align-items:center;gap:1px;margin-top:10px}
+.wavebox i{flex:1;background:var(--ink-2);opacity:.55;border-radius:1px;display:block;min-height:1px}
+figure{margin:0}
+figcaption,.figcaption{font-size:12px;color:var(--muted);margin-top:8px;max-width:70ch}
+</style>
+<style>
+/* ---------- coverage grid ---------- */
+.gridwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table.cov{border-collapse:separate;border-spacing:2px;padding:10px;min-width:760px;width:100%}
+table.cov th{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:4px 6px;text-align:center;white-space:nowrap;font-family:var(--sans)}
+table.cov th.rh{text-align:left;padding-right:10px;color:var(--ink-2);font-size:11.5px;
+  text-transform:none;letter-spacing:0}
+table.cov td{padding:0}
+.cell{width:100%;height:34px;min-width:52px;border:1px solid transparent;border-radius:2px;
+  display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:600;
+  cursor:default;background:var(--grid-none);color:var(--faint)}
+.cell.speech{background:var(--grid-speech);color:var(--surface)}
+.cell.none{background:var(--grid-none)}
+.cell.x{background:var(--grid-x);border-color:var(--grid-x-line);color:var(--grid-x-line)}
+.cell.bb{cursor:pointer;color:#fff;border-color:rgba(0,0,0,.14)}
+.cell.bb:hover{outline:2px solid var(--ink);outline-offset:1px}
+.cell.bbonly{box-shadow:inset 0 0 0 2px var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:12px;color:var(--muted)}
+.legend i{width:18px;height:13px;border-radius:2px;display:inline-block;vertical-align:-2px;margin-right:6px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:18px}
+.tally div{background:var(--surface);padding:12px 14px}
+.tally b{display:block;font-family:var(--mono);font-size:22px;font-weight:500;letter-spacing:-.02em}
+.tally span{display:block;font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:2px}
+
+/* ---------- charts ---------- */
+.chartcard{background:var(--surface);border:1px solid var(--rule);border-radius:4px;
+  padding:18px;box-shadow:var(--shadow)}
+.chartcard.wide{overflow-x:auto}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--ink);color:var(--paper);
+  font-size:12px;padding:7px 9px;border-radius:3px;box-shadow:var(--shadow-lift);
+  max-width:270px;line-height:1.4;opacity:0;transition:opacity .1s}
+.tip b{font-size:12.5px}
+.tip .m{font-family:var(--mono);font-size:11px;opacity:.85;display:block;margin-top:2px}
+.tip.on{opacity:1}
+svg text{font-family:var(--sans)}
+
+/* ---------- anatomy ---------- */
+.anat{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.anat{grid-template-columns:1fr}}
+.zonebtn{cursor:pointer}
+.zonebtn circle{transition:r .12s}
+.zonebtn:hover circle.hit{r:13}
+.zonelist{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden}
+.zonelist button{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
+  background:var(--surface);border:0;padding:9px 13px;cursor:pointer;text-align:left;width:100%}
+.zonelist button:hover,.zonelist button.hi{background:var(--surface-2)}
+.zonelist b{font-size:13px;font-weight:600}
+.zonelist em{font-family:var(--serif);font-size:13px;color:var(--muted);font-style:italic}
+.zonelist .n{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.bar-mini{height:5px;background:var(--sunk);border-radius:3px;overflow:hidden;width:64px}
+.bar-mini i{display:block;height:100%;background:var(--pulmonic)}
+
+/* ---------- limits ---------- */
+.limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:16px}
+.limit{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:16px 17px;
+  display:grid;gap:9px;align-content:start}
+.limit h4{font-size:15px;letter-spacing:-.015em}
+.limit .n{font-family:var(--mono);font-size:24px;font-weight:500;letter-spacing:-.03em;color:var(--stop)}
+.limit p{font-size:13.5px;color:var(--ink-2);font-family:var(--serif);line-height:1.55}
+.limit .v{font-size:11.5px;color:var(--faint);border-top:1px solid var(--rule);padding-top:8px}
+
+/* ---------- patterns ---------- */
+.pat-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  margin-bottom:18px}
+.pat-search{flex:0 1 230px}
+.pat-search .search{padding:7px 10px;font-size:13px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.tabs{display:flex;flex-wrap:wrap;gap:4px}
+.tab{border:1px solid var(--rule-2);background:var(--surface);border-radius:2px;padding:6px 12px;
+  font-size:12.5px;font-weight:500;cursor:pointer;color:var(--ink-2)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.pats{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.pat{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:14px;
+  display:grid;gap:10px;align-content:start}
+.pat-top{display:flex;align-items:center;gap:10px}
+.pat-top .pn{flex:1;min-width:0}
+.pat-top b{font-size:13.5px;font-weight:600;letter-spacing:-.012em;display:block}
+.pat-top .n{font-family:var(--mono);font-size:10.5px;color:var(--faint);display:block;margin-top:1px}
+.pat .legend-note{font-size:11.5px;color:var(--muted);font-family:var(--serif);line-height:1.45;
+  border-left:2px solid var(--rule-2);padding-left:9px}
+.pat-empty{grid-column:1/-1;color:var(--muted);font-size:13.5px;padding:16px 2px}
+.steps{display:flex;flex-wrap:wrap;gap:3px}
+.step{font-family:var(--mono);font-size:11.5px;font-weight:500;padding:3px 6px;border-radius:2px;
+  background:var(--sunk);color:var(--ink-2);border:1px solid transparent}
+.step.k{background:color-mix(in srgb,var(--glottalic) 16%,var(--surface));border-color:color-mix(in srgb,var(--glottalic) 34%,var(--surface))}
+.step.s{background:color-mix(in srgb,var(--pulmonic) 15%,var(--surface));border-color:color-mix(in srgb,var(--pulmonic) 32%,var(--surface))}
+.step.h{background:color-mix(in srgb,var(--buccal) 15%,var(--surface));border-color:color-mix(in srgb,var(--buccal) 32%,var(--surface))}
+.step.b{background:color-mix(in srgb,var(--lingual) 15%,var(--surface));border-color:color-mix(in srgb,var(--lingual) 32%,var(--surface))}
+.step.br{background:none;border:0;width:100%;height:0;padding:0}
+.pat .wavebox{height:30px;margin:0}
+.pat .wavebox i{background:var(--ink-2);opacity:.4}
+
+/* ---------- sequencer ---------- */
+.seq{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:16px;
+  box-shadow:var(--shadow);display:grid;gap:14px}
+.seq-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--surface);border-radius:3px;
+  padding:7px 15px;font-size:13px;font-weight:600;cursor:pointer}
+.btn.ghost{background:var(--surface);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.seq-grid{display:grid;gap:5px;overflow-x:auto}
+.lane{display:grid;grid-template-columns:152px repeat(16,minmax(19px,1fr));gap:3px;align-items:center;min-width:580px}
+.lane select{width:100%;padding:4px 6px;border:1px solid var(--rule-2);border-radius:2px;
+  background:var(--surface-2);color:var(--ink);font-size:11.5px;font-family:var(--sans)}
+.cellbtn{height:26px;border:1px solid var(--rule-2);border-radius:2px;background:var(--surface-2);
+  cursor:pointer;padding:0}
+.cellbtn.beat{background:var(--sunk)}
+.cellbtn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+.cellbtn.cur{box-shadow:inset 0 0 0 2px var(--glottalic)}
+.seq-head{display:grid;grid-template-columns:152px repeat(16,minmax(19px,1fr));gap:3px;
+  font-family:var(--mono);font-size:9.5px;color:var(--faint);text-align:center;min-width:580px}
+.slider{accent-color:var(--pulmonic)}
+
+/* ---------- top bar + routing ---------- */
+.topbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--rule)}
+.topbar-in{display:flex;align-items:center;gap:18px;padding-block:9px;min-height:52px}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;flex:none}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--glottalic);flex:none}
+.brand b{font-size:13.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.brand span{font-size:10.5px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap}
+@media (max-width:1080px){.brand span{display:none}}
+.mainnav{display:flex;flex-wrap:wrap;gap:2px;flex:1;min-width:0}
+.mainnav a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:5px 9px;border-radius:3px;white-space:nowrap}
+.mainnav a:hover{color:var(--ink);background:var(--surface-2)}
+.mainnav a[aria-current="page"]{color:var(--ink);background:var(--sunk);font-weight:600}
+.topbar-tools{display:flex;align-items:center;gap:6px;flex:none}
+.iconbtn{width:32px;height:32px;border-radius:3px;border:1px solid var(--rule-2);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;display:grid;place-items:center;
+  padding:0;font-size:12px;font-weight:600}
+.iconbtn:hover{border-color:var(--ink-2);color:var(--ink)}
+.iconbtn.lang{width:auto;padding:0 9px;gap:5px;display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.02em}
+.iconbtn.lang svg{width:13px;height:13px;flex:none}
+.navtoggle{display:none}
+@media (max-width:900px){
+  .topbar-in{flex-wrap:wrap;gap:10px}
+  .navtoggle{display:grid}
+  .mainnav{order:3;flex-basis:100%;display:none;border-top:1px solid var(--rule);padding-top:8px}
+  .mainnav.open{display:flex}
+  .mainnav a{flex:1 1 40%}
+}
+[data-page]{display:none}
+[data-page].on{display:block}
+.pagehead{padding-block:34px 6px}
+.pagehead .kicker{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);display:block;margin-bottom:9px}
+.pagehead h2{font-size:clamp(25px,3.6vw,38px);letter-spacing:-.03em;margin-bottom:12px}
+.pagehead .prose{font-size:16px}
+.pagenav{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--rule);
+  padding-block:22px 4px;margin-top:44px;flex-wrap:wrap}
+.pagenav a{text-decoration:none;font-size:13px;color:var(--muted);display:grid;gap:2px;max-width:46%}
+.pagenav a:hover{color:var(--ink)}
+.pagenav a b{font-size:14.5px;font-weight:600;color:var(--ink);letter-spacing:-.012em}
+.pagenav a.next{text-align:right;justify-items:end}
+.homecards{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:14px;
+  margin-top:6px}
+.homecard{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:16px 17px;
+  text-decoration:none;display:grid;gap:7px;align-content:start;box-shadow:var(--shadow)}
+.homecard:hover{box-shadow:var(--shadow-lift);border-color:var(--rule-2)}
+.homecard .num{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.homecard b{font-size:16px;font-weight:600;letter-spacing:-.018em}
+.homecard p{font-size:13px;color:var(--ink-2);line-height:1.5}
+.homecard .go{font-size:12px;font-weight:600;color:var(--pulmonic)}
+
+/* ---------- notation + footer ---------- */
+.keygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.keygrid div{background:var(--surface);padding:10px 13px;display:grid;
+  grid-template-columns:auto 1fr;gap:10px;align-items:baseline}
+.keygrid code{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)}
+.keygrid span{font-size:12.5px;color:var(--muted);line-height:1.4}
+footer{border-top:1px solid var(--rule);background:var(--surface);padding-block:38px 44px;margin-top:20px}
+.foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px}
+.foot h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
+.foot p,.foot li{font-size:13px;color:var(--ink-2);line-height:1.58}
+.foot ul{margin:0;padding-left:17px}
+.foot a{color:var(--pulmonic);text-decoration:underline;text-underline-offset:2px}
+.nowplaying{position:fixed;left:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);
+  border-radius:3px;padding:8px 12px;font-size:12px;box-shadow:var(--shadow-lift);
+  display:none;align-items:center;gap:9px;max-width:min(76vw,340px)}
+.nowplaying.on{display:flex}
+.nowplaying b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nowplaying .mono{opacity:.75;font-size:11px;flex:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:2px solid var(--pulmonic);outline-offset:2px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#/" data-route="/">
+      <span class="dot"></span><b>Beatbox Sound Atlas</b>
+      <span data-i18n="brand.org">beeb ox · open beatbox research</span>
+    </a>
+    <nav class="mainnav" id="mainnav" aria-label="Sections"></nav>
+    <div class="topbar-tools">
+      <button class="iconbtn navtoggle" id="navtoggle" type="button" aria-label="Sections"
+        aria-expanded="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <button class="iconbtn lang" id="lang" type="button" aria-label="Switch language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>
+          <path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"/></svg>
+        <span id="lang-label">中文</span>
+      </button>
+      <button class="iconbtn" id="theme" type="button" aria-label="Switch colour theme">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="view">
+
+<!-- ========================= HOME ========================= -->
+<div data-page="home">
+  <header class="mast">
+    <div class="wrap mast-in">
+      <div class="mast-body">
+        <div>
+          <h1 data-i18n-html="home.title">Beatbox<br>Sound&nbsp;<em>Atlas</em></h1>
+          <p class="prose lede" data-i18n="home.lede">Every sound the archive holds, measured and
+            classified the way a phonetician would classify it: where in the mouth it is made, which
+            airstream drives it, what it does acoustically, and which instrument it stands in for.
+            Two hundred recordings were analysed directly — the pitch, brightness, attack and decay
+            figures on this site are measured from the audio, not estimated. The point of the
+            exercise is the edge: where the human mouth reaches an instrument's territory, and where
+            it simply cannot go.</p>
+        </div>
+        <aside class="keycard">
+          <p class="eyebrow" data-i18n="home.keytitle">Six ways to move air</p>
+          <div id="keylist"></div>
+          <p class="keyfoot" data-i18n="home.keyfoot">Colour on every chart and card follows this
+            key. Speech uses four of these mechanisms; beatboxing uses all six, and two of them
+            leave the lungs free.</p>
+        </aside>
+      </div>
+      <div class="figs" id="figs"></div>
+    </div>
+  </header>
+  <section class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="home.explore">Start anywhere</h2>
+      <p class="sub" data-i18n="home.exploresub">Seven sections. The atlas is the catalogue; the
+        rest are arguments made out of it.</p>
+    </div>
+    <div class="homecards" id="homecards"></div>
+  </section>
+</div>
+
+<!-- ========================= ATLAS ========================= -->
+<div data-page="atlas">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.atlas">Section 01 · The catalogue</span>
+      <h2 data-i18n="atlas.title">The atlas</h2>
+      <p class="prose" data-i18n="atlas.intro">Two hundred sounds. Filter them, play them, and open
+        any one for its full specimen card: the IPA reading, the airstream mechanism, the measured
+        acoustics, how it is produced, and whether any spoken language uses the same articulation.
+        Colour throughout encodes the airstream mechanism; the arrow marks airflow direction.</p>
+    </div>
+    <div class="atlas">
+      <aside class="rail">
+        <div>
+          <label class="fl" for="q" data-i18n="f.search">Search</label>
+          <input class="search" id="q" type="search" placeholder="name, IPA, instrument…"
+            data-i18n-ph="f.searchph" autocomplete="off">
+        </div>
+        <div><label class="fl" data-i18n="f.fam">Airstream mechanism</label>
+          <div class="chips" id="f-fam"></div></div>
+        <div><label class="fl" data-i18n="f.dir">Airflow</label>
+          <div class="chips" id="f-dir"></div></div>
+        <div><label class="fl" data-i18n="f.role">Musical role</label>
+          <div class="chips" id="f-role"></div></div>
+        <div><label class="fl" data-i18n="f.manner">Manner</label>
+          <div class="chips" id="f-manner"></div></div>
+        <div><label class="fl" data-i18n="f.place">Place</label>
+          <div class="chips" id="f-place"></div></div>
+        <div><label class="fl" data-i18n="f.cat">Family</label>
+          <div class="chips" id="f-cat"></div></div>
+        <div><label class="fl" data-i18n="f.diff">Difficulty</label>
+          <div class="chips" id="f-diff"></div></div>
+        <div class="rail-foot">
+          <span id="count" class="mono">200</span>
+          <button class="linkbtn" id="reset" type="button" data-i18n="f.clear">Clear all</button>
+        </div>
+      </aside>
+      <div>
+        <div class="list" id="list"></div>
+        <p class="figcaption" id="empty" style="display:none;padding:22px 4px;color:var(--muted)"
+          data-i18n="atlas.empty">No sound matches those filters.</p>
+      </div>
+    </div>
+    <div class="pagenav" data-pagenav="atlas"></div>
+  </section>
+</div>
+
+<!-- ========================= COVERAGE ========================= -->
+<div data-page="coverage">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.coverage">Section 02 · Coverage</span>
+      <h2 data-i18n="cov.title">Articulatory coverage</h2>
+      <p class="prose" data-i18n="cov.intro">Place of articulation across the top, manner down the
+        side — the layout of an IPA consonant chart. Every cell is one way of making a sound. A
+        shaded cell means spoken languages use that combination as a phoneme somewhere in the world.
+        A coloured cell means this archive contains it, and the number is how many sounds. Cells
+        outlined in ink are made by beatboxers but by no known language. Cells in pink are ruled out
+        by anatomy: no human can make them at all. Hover a ruled-out cell to see why, and click any
+        coloured cell to filter the atlas to it.</p>
+    </div>
+    <div class="gridwrap"><table class="cov" id="cov"></table></div>
+    <div class="legend">
+      <span><i style="background:var(--grid-speech)"></i><span data-i18n="cov.l1">used in spoken language</span></span>
+      <span><i style="background:var(--pulmonic)"></i><span data-i18n="cov.l2">in this archive</span></span>
+      <span><i style="background:var(--surface);box-shadow:inset 0 0 0 2px var(--ink)"></i><span data-i18n="cov.l3">beatbox only</span></span>
+      <span><i style="background:var(--grid-none);border:1px solid var(--rule-2)"></i><span data-i18n="cov.l4">producible, unused</span></span>
+      <span><i style="background:var(--grid-x);border:1px solid var(--grid-x-line)"></i><span data-i18n="cov.l5">anatomically impossible</span></span>
+    </div>
+    <div class="tally" id="tally"></div>
+  </section>
+  <section class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="anat.title">Where in the mouth</h2>
+      <p class="sub" data-i18n="anat.sub">A mid-sagittal schematic of the vocal tract. Click a zone
+        to filter the atlas to sounds articulated there.</p>
+    </div>
+    <div class="anat">
+      <div class="chartcard"><div id="anatsvg"></div></div>
+      <div>
+        <p class="eyebrow" style="margin-bottom:10px" data-i18n="anat.per">Sounds per place of articulation</p>
+        <div class="zonelist" id="zonelist"></div>
+        <p class="prose" style="font-size:14.5px;margin-top:16px" data-i18n="anat.note">The
+          distribution is lopsided on purpose. Beatboxing leans on the lips and the tongue tip
+          because those are the two articulators fast enough to keep sixteenth notes, and free enough
+          to work while the throat holds a bass note underneath.</p>
+      </div>
+    </div>
+    <div class="pagenav" data-pagenav="coverage"></div>
+  </section>
+</div>
+
+<!-- ========================= ACOUSTICS ========================= -->
+<div data-page="acoustics">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.acoustics">Section 03 · Measured sound</span>
+      <h2 data-i18n="ac.title">Pitch and spectrum</h2>
+      <p class="prose" data-i18n="ac.intro">Both charts on this page are measurements, not
+        estimates. Every recording was decoded and analysed: the fundamental by autocorrelation over
+        the voiced frames of each file, the energy band by percentiles of the mean power spectrum.
+        Read together they say where the mouth reaches an instrument's territory and where it
+        falls short.</p>
+    </div>
+    <div class="sec-head">
+      <h2 data-i18n="ac.pitch">Pitch reach</h2>
+      <p class="sub" data-i18n="ac.pitchsub">Measured fundamental of every pitched sound, against
+        the playing ranges of real instruments. Logarithmic axis; one octave per equal step.</p>
+    </div>
+    <figure class="chartcard wide">
+      <div id="ch-pitch"></div>
+      <figcaption data-i18n="ac.pitchcap">Instrument bars are nominal playing ranges of the
+        fundamental. Dots are individual archive recordings, placed at the median fundamental
+        measured over the voiced frames of each file. Unpitched sounds — kicks, hats, most snares
+        and clicks — have no fundamental and are excluded here; they appear in the spectral chart
+        below.</figcaption>
+    </figure>
+    <div class="sec-head" style="margin-top:48px">
+      <h2 data-i18n="ac.spec">Spectral footprint</h2>
+      <p class="sub" data-i18n="ac.specsub">Where each sound puts its energy. Bars span the 5th to
+        95th percentile of measured spectral energy, with the median marked.</p>
+    </div>
+    <figure class="chartcard wide">
+      <div id="ch-spec"></div>
+      <figcaption data-i18n="ac.speccap">Percussion reference ranges at the top are the frequency
+        bands those instruments actually occupy in a mix. Below them, archive sounds are grouped by
+        musical role and ordered by median frequency. This is the chart that shows the hi-hat
+        imitation landing squarely on target while the cymbal falls short.</figcaption>
+    </figure>
+    <div class="pagenav" data-pagenav="acoustics"></div>
+  </section>
+</div>
+
+<!-- ========================= LIMITS ========================= -->
+<div data-page="limits">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.limits">Section 04 · The edge</span>
+      <h2 data-i18n="lim.title">Hard limits</h2>
+      <p class="prose" data-i18n="lim.intro">What the mouth cannot do, with the numbers from this
+        archive next to the physical reason. Every figure below is computed from the recordings, and
+        where something is not measurable from this dataset the card says so rather than guessing.</p>
+    </div>
+    <div class="limits" id="limit-list"></div>
+    <div class="pagenav" data-pagenav="limits"></div>
+  </section>
+</div>
+
+<!-- ========================= PATTERNS ========================= -->
+<div data-page="patterns">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.patterns">Section 05 · Patterns</span>
+      <h2 data-i18n="pat.title">Patterns to play</h2>
+      <p class="prose" data-i18n="pat.intro">Build a loop out of the archive's own recordings, then
+        work through ninety-four recorded patterns with their notation — from six beginner bars to
+        fifty technical ones.</p>
+    </div>
+    <div class="sec-head">
+      <h2 data-i18n="seq.title">Pattern builder</h2>
+      <p class="sub" data-i18n="seq.sub">Four lanes, sixteen steps. Pick any sound from the archive
+        per lane and build a loop out of real recordings.</p>
+    </div>
+    <div class="seq">
+      <div class="seq-top">
+        <button class="btn" id="seq-play" type="button" data-i18n="seq.play">Play loop</button>
+        <button class="btn ghost" id="seq-clear" type="button" data-i18n="seq.clear">Clear</button>
+        <label style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted)">
+          <span data-i18n="seq.tempo">Tempo</span>
+          <input class="slider" id="seq-bpm" type="range" min="60" max="180" value="96" step="1">
+          <span class="mono" id="seq-bpm-v" style="width:56px">96 bpm</span>
+        </label>
+        <span class="mono" id="seq-status" style="font-size:11.5px;color:var(--faint)"></span>
+      </div>
+      <div class="seq-grid">
+        <div class="seq-head" id="seq-head"></div>
+        <div id="seq-lanes"></div>
+      </div>
+    </div>
+    <div class="sec-head" style="margin-top:48px">
+      <h2 data-i18n="pat.lib">Pattern library</h2>
+      <p class="sub" data-i18n="pat.libsub">The source archive numbers these patterns; the names
+        here describe what each one does. The original number is kept under every name.</p>
+    </div>
+    <div class="pat-bar">
+      <div class="tabs" id="pat-tabs" role="tablist"></div>
+      <label class="pat-search"><span class="sr" data-i18n="pat.searchsr">Search patterns</span>
+        <input class="search" id="pq" type="search" placeholder="search patterns…"
+          data-i18n-ph="pat.searchph" autocomplete="off">
+      </label>
+    </div>
+    <div class="pats" id="pat-list"></div>
+    <div class="pagenav" data-pagenav="patterns"></div>
+  </section>
+</div>
+
+<!-- ========================= NOTATION ========================= -->
+<div data-page="notation">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.notation">Section 06 · How to read this</span>
+      <h2 data-i18n="not.title">Notation key</h2>
+      <p class="prose" data-i18n="not.intro">Standard Beatbox Notation is the community shorthand
+        used in the pattern library and on every specimen card. It is not a standard in the
+        institutional sense — it grew out of forum posts — but it is what beatboxers actually
+        write.</p>
+    </div>
+    <div class="keygrid" id="keygrid"></div>
+    <p class="prose" style="margin-top:20px" data-i18n-html="not.ipa">IPA transcriptions on the
+      specimen cards use the standard diacritics: <span class="ipa">ʼ</span> for an ejective,
+      <span class="ipa">↓</span> for ingressive airflow, <span class="ipa">ˤ</span> for
+      pharyngealisation, <span class="ipa">̥</span> for voicelessness, and the click letters
+      <span class="ipa">ʘ ǀ ǃ ǂ ǁ</span>. They are phonetic approximations of a musical gesture,
+      not claims that a beatbox sound is a phoneme.</p>
+    <div class="sec-head" style="margin-top:48px">
+      <h2 data-i18n="not.about">About the data</h2>
+      <p class="sub" data-i18n="not.aboutsub">Where the recordings came from, how they were
+        measured, and what this catalogue gets wrong.</p>
+    </div>
+    <div class="foot" id="aboutgrid"></div>
+    <div class="pagenav" data-pagenav="notation"></div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap foot" id="footgrid"></div>
+</footer>
+
+<div class="nowplaying" id="np"><b id="np-name"></b><span class="mono" id="np-meta"></span></div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script>
+(function(){
+"use strict";
+var D=window.BBX, S=D.sounds, P=D.patterns, I=window.BBX_I18N||{};
+var FAMS=['pulmonic','glottalic','lingual','buccal','aerodynamic','external'];
+var FAM_EN={pulmonic:'Pulmonic',glottalic:'Glottalic',lingual:'Lingual (click)',
+  buccal:'Buccal',aerodynamic:'Aerodynamic',external:'External'};
+var FAMDESC_EN={
+  pulmonic:'Powered by the lungs — the mechanism behind almost all speech.',
+  glottalic:'Powered by the larynx acting as a piston: ejectives and implosives.',
+  lingual:'Powered by the tongue rarefying a sealed pocket: clicks.',
+  buccal:'Powered by the cheeks and tongue alone. The lungs stay free.',
+  aerodynamic:'A whistle: a narrow jet exciting a cavity, with no vibrating tissue.',
+  external:'No airstream at all — the energy comes from outside the body.'};
+var ROLES=['kick','snare','hat','cymbal','bass','melody','fx','bass+melody'];
+var ROLE_EN={kick:'Kick',snare:'Snare',hat:'Hi-hat',cymbal:'Cymbal',bass:'Bass',
+  melody:'Melodic',fx:'Effect','bass+melody':'Bass + melody'};
+var AIR_EN={PE:'pulmonic egressive',PI:'pulmonic ingressive',GE:'glottalic egressive (ejective)',
+  GI:'glottalic ingressive (implosive)',LI:'lingual ingressive (click)',LE:'lingual egressive',
+  BE:'buccal egressive',BI:'buccal ingressive',AE:'aerodynamic (whistle)',
+  AI:'aerodynamic ingressive'};
+var $=function(s){return document.querySelector(s)};
+var el=function(t,c,x){var e=document.createElement(t);if(c)e.className=c;
+  if(x!=null)e.textContent=x;return e};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){
+  return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})};
+var famColor=function(f){return 'var(--'+f+')'};
+var fmtHz=function(v){return v>=1000?(v/1000).toFixed(v>=10000?0:1)+'k':Math.round(v)+''};
+var SVGNS='http://www.w3.org/2000/svg';
+function sv(t,a){var e=document.createElementNS(SVGNS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+
+/* ---------------- i18n ---------------- */
+var LANG='en';
+try{var sl=localStorage.getItem('bbx-lang'); if(sl==='zh'||sl==='en')LANG=sl;}catch(e){}
+function dict(g){return (I[LANG]&&I[LANG][g])||null}
+function T(k,en){ if(LANG==='en')return en; var d=dict('ui'); var v=d&&d[k];
+  return (v==null||v==='')?en:v }
+function TV(g,k,en){ if(LANG==='en')return en; var d=dict(g); var v=d&&d[k];
+  return (v==null||v==='')?en:v }
+function TS(id,f,en){ if(LANG==='en')return en; var d=dict('sounds'); var s=d&&d[id];
+  var v=s&&s[f]; return (v==null||v==='')?en:v }
+function TD(g,en){ if(LANG==='en')return en; var d=dict(g); var v=d&&d[en];
+  return (v==null||v==='')?en:v }
+/* Technical terms compose the same way in both languages (modifier first), so a small
+   atom dictionary covers hundreds of phrases consistently. A phrase override wins. */
+function compose(group,en){
+  if(LANG==='en')return en;
+  var ph=dict(group+'Phrase'); if(ph&&ph[en])return ph[en];
+  var d=dict(group+'Atom'); if(!d)return en;
+  var parts=en.split(/(\s*\+\s*|\s*→\s*|\s*\/\s*)/), out='', any=false;
+  for(var i=0;i<parts.length;i++){
+    var p=parts[i];
+    if(/^\s*\+\s*$/.test(p)){out+=' + ';continue}
+    if(/^\s*→\s*$/.test(p)){out+=' → ';continue}
+    if(/^\s*\/\s*$/.test(p)){out+='／';continue}
+    p=p.trim(); if(!p)continue;
+    var m=/^([^(]*?)\s*\(([^)]*)\)$/.exec(p);
+    if(m){
+      var head=m[1].trim();
+      var h=head?(d[head.toLowerCase()]||head):'';
+      if(head&&d[head.toLowerCase()])any=true;
+      var ms=m[2].split(',').map(function(x){
+        var k='('+x.trim().toLowerCase()+')', v=d[k]; if(v)any=true; return v||x.trim()});
+      out+=h+'（'+ms.join('、')+'）';
+    } else {
+      var v2=d[p.toLowerCase()]; if(v2)any=true; out+=v2||p;
+    }
+  }
+  return any?out:en;
+}
+var FAMLABEL=function(f){return TV('fam',f,FAM_EN[f])};
+var FAMDESC=function(f){return TV('famDesc',f,FAMDESC_EN[f])};
+var ROLELABEL=function(r){return TV('role',r,ROLE_EN[r]||r)};
+var SNAME=function(s){return TS(s.id,'name',s.name)};
+var PLACE=function(p){return TV('place',p,p[0].toUpperCase()+p.slice(1))};
+var MANNER=function(m){return TV('manner',m,m[0].toUpperCase()+m.slice(1))};
+var CAT=function(c){return TV('cat',c,c)};
+
+function applyI18n(root){
+  (root||document).querySelectorAll('[data-i18n]').forEach(function(n){
+    if(n.dataset.en==null)n.dataset.en=n.textContent.replace(/\s+/g,' ').trim();
+    n.textContent=T(n.dataset.i18n,n.dataset.en);
+  });
+  (root||document).querySelectorAll('[data-i18n-html]').forEach(function(n){
+    if(n.dataset.enHtml==null)n.dataset.enHtml=n.innerHTML;
+    var k=n.dataset.i18nHtml, d=dict('html'), v=(LANG!=='en'&&d)?d[k]:null;
+    n.innerHTML=(v==null||v==='')?n.dataset.enHtml:v;
+  });
+  (root||document).querySelectorAll('[data-i18n-ph]').forEach(function(n){
+    if(n.dataset.enPh==null)n.dataset.enPh=n.getAttribute('placeholder')||'';
+    n.setAttribute('placeholder',T(n.dataset.i18nPh,n.dataset.enPh));
+  });
+  document.documentElement.lang = LANG==='zh'?'zh':'en';
+  $('#lang-label').textContent = LANG==='zh'?'EN':'中文';
+  $('#lang').setAttribute('aria-label', LANG==='zh'?'Switch to English':'切换到中文');
+}
+
+/* ---------------- theme ---------------- */
+try{var st=localStorage.getItem('bbx-theme'); if(st)document.documentElement.dataset.theme=st;}catch(e){}
+$('#theme').addEventListener('click',function(){
+  var cur=document.documentElement.dataset.theme;
+  if(!cur)cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  var nxt=cur==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=nxt;
+  try{localStorage.setItem('bbx-theme',nxt)}catch(e){}
+});
+
+/* ---------------- tooltip ---------------- */
+var tip=$('#tip');
+function showTip(x,y,html){tip.innerHTML=html;tip.classList.add('on');
+  var r=tip.getBoundingClientRect();
+  var lx=Math.min(Math.max(8,x+13),innerWidth-r.width-8);
+  var ly=y-r.height-12; if(ly<8)ly=y+18;
+  tip.style.left=lx+'px';tip.style.top=ly+'px';}
+function hideTip(){tip.classList.remove('on')}
+
+/* ---------------- audio ---------------- */
+var AudioEngine=(function(){
+  var ctx=null,bufs={},pending={},fallback={},active=[],useFallback=false,rafId=null;
+  function getCtx(){ if(!ctx){var C=window.AudioContext||window.webkitAudioContext;
+    if(!C){useFallback=true;return null} ctx=new C();}
+    if(ctx.state==='suspended')ctx.resume(); return ctx;}
+  function load(file){
+    if(bufs[file])return Promise.resolve(bufs[file]);
+    if(pending[file])return pending[file];
+    var c=getCtx(); if(!c)return Promise.reject('no-webaudio');
+    pending[file]=fetch(file).then(function(r){
+        if(!r.ok)throw new Error('http '+r.status); return r.arrayBuffer()})
+      .then(function(ab){return new Promise(function(res,rej){
+        var p=c.decodeAudioData(ab,res,rej); if(p&&p.then)p.then(res,rej)})})
+      .then(function(b){bufs[file]=b;delete pending[file];return b})
+      .catch(function(e){delete pending[file];useFallback=true;throw e});
+    return pending[file];
+  }
+  function fbEl(file){ if(!fallback[file]){var a=new Audio(file);a.preload='auto';fallback[file]=a}
+    return fallback[file] }
+  function stopAll(){ active.forEach(function(s){try{s.stop()}catch(e){}}); active=[];
+    for(var f in fallback){try{fallback[f].pause()}catch(e){}}
+    if(rafId){cancelAnimationFrame(rafId);rafId=null} }
+  function playFallback(file,start,dur,onEnd){
+    var a=fbEl(file);
+    var go=function(){ a.play().catch(function(){});
+      var tick=function(){ if(a.paused)return;
+        if(a.currentTime>=start+dur-0.01){a.pause();if(onEnd)onEnd();return}
+        rafId=requestAnimationFrame(tick)};
+      rafId=requestAnimationFrame(tick) };
+    if(a.readyState>=2){ try{a.currentTime=start}catch(e){} go() }
+    else { a.addEventListener('loadeddata',function h(){a.removeEventListener('loadeddata',h);
+      try{a.currentTime=start}catch(e){} go()},{once:true}); a.load() }
+    return function(){a.pause();if(rafId)cancelAnimationFrame(rafId)};
+  }
+  return {
+    ready:function(){return !useFallback && !!getCtx()},
+    preload:function(f){return load(f).catch(function(){})},
+    play:function(file,start,dur,onEnd,maxDur){
+      stopAll();
+      var d=maxDur?Math.min(dur,maxDur):dur, stopped=false;
+      if(useFallback)return playFallback(file,start,d,onEnd);
+      var c=getCtx(); if(!c)return playFallback(file,start,d,onEnd);
+      load(file).then(function(b){
+        if(stopped)return;
+        var s=c.createBufferSource(); s.buffer=b;
+        var g=c.createGain(); g.gain.value=1;
+        s.connect(g); g.connect(c.destination);
+        s.onended=function(){if(onEnd)onEnd()};
+        s.start(0,start,d); active.push(s);
+        g.gain.setValueAtTime(1,c.currentTime+Math.max(0,d-0.03));
+        g.gain.linearRampToValueAtTime(0,c.currentTime+d);
+      }).catch(function(){ if(!stopped)playFallback(file,start,d,onEnd) });
+      return function(){stopped=true;stopAll()};
+    },
+    trigger:function(file,start,dur,when,gain){
+      var c=getCtx(); if(!c||useFallback)return;
+      var b=bufs[file]; if(!b)return;
+      var s=c.createBufferSource(); s.buffer=b;
+      var g=c.createGain(); g.gain.value=gain==null?1:gain;
+      s.connect(g); g.connect(c.destination);
+      var d=Math.min(dur,0.55);
+      s.start(when,start,d);
+      g.gain.setValueAtTime(g.gain.value,when+Math.max(0,d-0.05));
+      g.gain.linearRampToValueAtTime(0,when+d);
+    },
+    ctx:getCtx, stopAll:stopAll
+  };
+})();
+
+var np=$('#np'),npName=$('#np-name'),npMeta=$('#np-meta');
+var curBtn=null,curStop=null;
+function clearPlay(){ if(curBtn)curBtn.classList.remove('on'); curBtn=null;
+  np.classList.remove('on'); if(curStop){curStop();curStop=null} }
+function playSound(s,btn){
+  if(curBtn===btn){AudioEngine.stopAll();clearPlay();return}
+  clearPlay();
+  var g=D.sprites.sounds[s.grp]; if(!g||!s.off)return;
+  btn.classList.add('on'); curBtn=btn;
+  npName.textContent=SNAME(s);
+  npMeta.textContent=(s.ac.dur?s.ac.dur.toFixed(2)+'s':'')+
+    (s.ac.f0?'  ·  '+Math.round(s.ac.f0)+' Hz':'');
+  np.classList.add('on');
+  curStop=AudioEngine.play(g.file,s.off[0],s.off[1],function(){clearPlay()});
+}
+function playPattern(p,btn){
+  if(curBtn===btn){AudioEngine.stopAll();clearPlay();return}
+  clearPlay();
+  var g=D.sprites.patterns[p.grp]; if(!g||!p.off)return;
+  btn.classList.add('on'); curBtn=btn;
+  npName.textContent=TV('patterns',p.id,p.name)+'  ·  '+TV('level',p.level,p.level);
+  npMeta.textContent=p.off[1].toFixed(1)+'s';
+  np.classList.add('on');
+  curStop=AudioEngine.play(g.file,p.off[0],p.off[1],function(){clearPlay()});
+}
+function playIcon(){return '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.2 10.3 6 2.5 10.8Z"/></svg>'}
+function arrow(s){return s.dirs.indexOf('in')>=0?(s.dirs.length>1?'↕':'↓'):(s.dirs[0]==='none'?'·':'↑')}
+
+/* ---------------- coverage stats (needed by several pages) ---------------- */
+var COV=(function(){
+  var cells=0,imposs=0,speech=0,bbCells={},bbOnly=0;
+  D.manners.forEach(function(m){ var row=D.grid[m];
+    for(var i=0;i<D.places.length;i++){cells++;
+      if(row[i]==='X')imposs++; else if(row[i]==='S')speech++} });
+  S.forEach(function(s){var k=s.gmanner+'|'+s.gplace; bbCells[k]=(bbCells[k]||0)+1});
+  Object.keys(bbCells).forEach(function(k){ var p=k.split('|');
+    if(D.grid[p[0]][D.places.indexOf(p[1])]==='P')bbOnly++ });
+  return {cells:cells,imposs:imposs,speech:speech,bbCells:bbCells,
+          nCells:Object.keys(bbCells).length,bbOnly:bbOnly,
+          noLung:S.filter(function(s){return s.fams.indexOf('pulmonic')<0}).length};
+})();
+/* ---------------- routes + nav ---------------- */
+var ROUTES=[
+  {id:'home',path:'/',navKey:'nav.home',navEn:'Home',
+   titleKey:'home.title.plain',titleEn:'Beatbox Sound Atlas',
+   blurbKey:'home.blurb',blurbEn:'What the human mouth can do as a drum machine, measured.'},
+  {id:'atlas',path:'/atlas',navKey:'nav.atlas',navEn:'The atlas',
+   titleKey:'atlas.title',titleEn:'The atlas',
+   blurbKey:'card.atlas',blurbEn:'All 200 sounds, filterable, each with a full specimen card.'},
+  {id:'coverage',path:'/coverage',navKey:'nav.coverage',navEn:'Coverage',
+   titleKey:'cov.title',titleEn:'Articulatory coverage',
+   blurbKey:'card.coverage',blurbEn:'The IPA grid with beatbox overlaid, and the vocal tract mapped.'},
+  {id:'acoustics',path:'/acoustics',navKey:'nav.acoustics',navEn:'Acoustics',
+   titleKey:'ac.title',titleEn:'Pitch and spectrum',
+   blurbKey:'card.acoustics',blurbEn:'Measured pitch and spectral energy against real instruments.'},
+  {id:'limits',path:'/limits',navKey:'nav.limits',navEn:'Hard limits',
+   titleKey:'lim.title',titleEn:'Hard limits',
+   blurbKey:'card.limits',blurbEn:'What the mouth cannot do, and the physics behind each wall.'},
+  {id:'patterns',path:'/patterns',navKey:'nav.patterns',navEn:'Patterns',
+   titleKey:'pat.title',titleEn:'Patterns to play',
+   blurbKey:'card.patterns',blurbEn:'A 16-step loop builder plus 94 recorded patterns with notation.'},
+  {id:'notation',path:'/notation',navKey:'nav.notation',navEn:'Notation & sources',
+   titleKey:'not.title',titleEn:'Notation key',
+   blurbKey:'card.notation',blurbEn:'How to read SBN and IPA here, where the audio came from, what is wrong.'}
+];
+var BUILT={};
+function routeById(id){for(var i=0;i<ROUTES.length;i++)if(ROUTES[i].id===id)return ROUTES[i];return null}
+function curRouteId(){
+  var h=(location.hash||'').replace(/^#/,'');
+  for(var i=0;i<ROUTES.length;i++)if(ROUTES[i].path===h)return ROUTES[i].id;
+  return 'home';
+}
+function buildNav(){
+  var nav=$('#mainnav'); nav.innerHTML='';
+  var cur=curRouteId();
+  ROUTES.forEach(function(r){
+    var a=el('a',null,T(r.navKey,r.navEn)); a.href='#'+r.path;
+    if(r.id===cur)a.setAttribute('aria-current','page');
+    a.addEventListener('click',function(){nav.classList.remove('open');
+      $('#navtoggle').setAttribute('aria-expanded','false')});
+    nav.appendChild(a);
+  });
+}
+$('#navtoggle').addEventListener('click',function(){
+  var nav=$('#mainnav'); var open=nav.classList.toggle('open');
+  this.setAttribute('aria-expanded',open?'true':'false');
+});
+function buildPageNav(){
+  document.querySelectorAll('[data-pagenav]').forEach(function(box){
+    box.innerHTML='';
+    var id=box.dataset.pagenav;
+    var i=ROUTES.map(function(r){return r.id}).indexOf(id);
+    var prev=ROUTES[i-1], next=ROUTES[i+1];
+    if(prev){ var a=el('a','prev'); a.href='#'+prev.path;
+      a.appendChild(el('span',null,T('nav.prev','← Previous')));
+      a.appendChild(el('b',null,T(prev.navKey,prev.navEn))); box.appendChild(a) }
+    else { box.appendChild(el('span')) }
+    if(next){ var b=el('a','next'); b.href='#'+next.path;
+      b.appendChild(el('span',null,T('nav.next','Next →')));
+      b.appendChild(el('b',null,T(next.navKey,next.navEn))); box.appendChild(b) }
+  });
+}
+var BUILDERS={};
+function show(id){
+  document.querySelectorAll('[data-page]').forEach(function(n){
+    n.classList.toggle('on', n.dataset.page===id);
+  });
+  if(BUILDERS[id] && !BUILT[id]){ BUILT[id]=true; BUILDERS[id]() }
+  buildNav();
+  var r=routeById(id);
+  document.title = (r&&r.id!=='home' ? T(r.titleKey,r.titleEn)+' · ' : '')+'Beatbox Sound Atlas';
+}
+function onRoute(){ var id=curRouteId(); show(id);
+  if(!window.__firstRoute){window.__firstRoute=true} else window.scrollTo(0,0) }
+window.addEventListener('hashchange',onRoute);
+
+/* ---------------- language switch ---------------- */
+$('#lang').addEventListener('click',function(){
+  LANG = LANG==='zh' ? 'en' : 'zh';
+  try{localStorage.setItem('bbx-lang',LANG)}catch(e){}
+  applyI18n();
+  /* drop every built page and rebuild the visible one */
+  Object.keys(BUILT).forEach(function(k){delete BUILT[k]});
+  ['#keylist','#figs','#homecards','#cov','#tally','#ch-pitch','#ch-spec','#anatsvg',
+   '#zonelist','#limit-list','#pat-tabs','#pat-list','#seq-head','#seq-lanes','#keygrid',
+   '#footgrid','#aboutgrid','#list','#f-fam','#f-dir','#f-role','#f-manner','#f-place',
+   '#f-cat','#f-diff'].forEach(function(sel){var n=$(sel); if(n)n.innerHTML=''});
+  buildChrome();
+  show(curRouteId());
+});
+
+/* ---------------- home ---------------- */
+BUILDERS.home=function(){
+  var figs=[
+    [S.length, T('fig.sounds','sounds recorded, measured and classified')],
+    [COV.nCells+' / '+(COV.cells-COV.imposs),
+      T('fig.cells','articulatory cells occupied, of those anatomically possible')],
+    [Object.keys(D.sprites.sounds).length, T('fig.families','sound families, from kicks to whistles')],
+    [COV.noLung, T('fig.nolung','sounds that need no lung air at all')],
+    [P.length, T('fig.patterns','patterns with notation and audio')],
+    [COV.bbOnly, T('fig.bbonly','cells beatbox uses that no language does')]
+  ];
+  var box=$('#figs'); box.innerHTML='';
+  figs.forEach(function(f){var d=el('div','fig');
+    d.appendChild(el('b',null,String(f[0]))); d.appendChild(el('span',null,f[1])); box.appendChild(d)});
+  var kl=$('#keylist'); kl.innerHTML='';
+  FAMS.forEach(function(f){
+    var n=S.filter(function(s){return s.prim===f}).length;
+    var r=el('div','keyrow');
+    var sw=el('span','sw2'); sw.style.background=famColor(f); r.appendChild(sw);
+    var mid=el('span'); mid.appendChild(el('b',null,FAMLABEL(f)));
+    mid.appendChild(el('em',null,FAMDESC(f))); r.appendChild(mid);
+    r.appendChild(el('span','n',String(n)));
+    kl.appendChild(r);
+  });
+  var hc=$('#homecards'); hc.innerHTML='';
+  ROUTES.slice(1).forEach(function(r,i){
+    var a=el('a','homecard'); a.href='#'+r.path;
+    a.appendChild(el('span','num','0'+(i+1)));
+    a.appendChild(el('b',null,T(r.titleKey,r.titleEn)));
+    a.appendChild(el('p',null,T(r.blurbKey,r.blurbEn)));
+    a.appendChild(el('span','go',T('card.go','Open →')));
+    hc.appendChild(a);
+  });
+};
+
+/* ---------------- atlas: filters ---------------- */
+var F={q:'',fam:new Set(),dir:new Set(),role:new Set(),manner:new Set(),place:new Set(),
+       cat:new Set(),diff:new Set()};
+function countBy(key,val){
+  return S.filter(function(s){
+    if(key==='fam')return s.prim===val;
+    if(key==='dir')return s.dirs.indexOf(val)>=0;
+    if(key==='role')return s.role===val;
+    if(key==='manner')return s.gmanner===val;
+    if(key==='place')return s.gplace===val;
+    if(key==='cat')return s.cat===val;
+    if(key==='diff')return s.diff===val;
+    return false}).length;
+}
+function chipSet(host,key,items,swatch){
+  var box=$(host); box.innerHTML='';
+  items.forEach(function(it){
+    var b=el('button','chip'); b.type='button';
+    b.setAttribute('aria-pressed', F[key].has(it.v)?'true':'false');
+    if(swatch){var sw=el('span','sw'); sw.style.background=famColor(it.v); b.appendChild(sw)}
+    b.appendChild(document.createTextNode(it.l));
+    b.appendChild(el('span','n',String(countBy(key,it.v))));
+    if(it.t)b.title=it.t;
+    b.dataset.key=key; b.dataset.val=it.v;
+    b.addEventListener('click',function(){
+      var on=b.getAttribute('aria-pressed')==='true';
+      b.setAttribute('aria-pressed',on?'false':'true');
+      if(on)F[key].delete(it.v); else F[key].add(it.v);
+      renderList();
+    });
+    box.appendChild(b);
+  });
+}
+function buildChips(){
+  chipSet('#f-fam','fam',FAMS.map(function(f){return{v:f,l:FAMLABEL(f),t:FAMDESC(f)}}),true);
+  chipSet('#f-dir','dir',[{v:'out',l:T('dir.out','Egressive (out)')},
+    {v:'in',l:T('dir.in','Ingressive (in)')},{v:'none',l:T('dir.none','None')}]);
+  chipSet('#f-role','role',ROLES.filter(function(r){return countBy('role',r)>0})
+    .map(function(r){return{v:r,l:ROLELABEL(r)}}));
+  chipSet('#f-manner','manner',D.manners.filter(function(m){return countBy('manner',m)>0})
+    .map(function(m){return{v:m,l:MANNER(m)}}));
+  chipSet('#f-place','place',D.places.filter(function(p){return countBy('place',p)>0})
+    .map(function(p){return{v:p,l:PLACE(p)}}));
+  var cats=[]; S.forEach(function(s){if(cats.indexOf(s.cat)<0)cats.push(s.cat)});
+  chipSet('#f-cat','cat',cats.map(function(c){return{v:c,l:CAT(c)}}));
+  chipSet('#f-diff','diff',[1,2,3,4,5].map(function(d){return{v:d,l:'★'.repeat(d)}}));
+}
+$('#q').addEventListener('input',function(e){F.q=e.target.value.toLowerCase().trim();renderList()});
+$('#reset').addEventListener('click',function(){
+  F.q='';$('#q').value='';
+  ['fam','dir','role','manner','place','cat','diff'].forEach(function(k){F[k].clear()});
+  document.querySelectorAll('.chip[aria-pressed="true"]').forEach(function(b){
+    b.setAttribute('aria-pressed','false')});
+  renderList();
+});
+function setFilter(key,val){
+  ['fam','dir','role','manner','place','cat','diff'].forEach(function(k){F[k].clear()});
+  F[key].add(val); F.q=''; $('#q').value='';
+  location.hash='#/atlas';
+  BUILT.atlas=true; buildChips(); renderList();
+  document.querySelectorAll('.chip').forEach(function(b){
+    b.setAttribute('aria-pressed', (b.dataset.key===key&&b.dataset.val===String(val))?'true':'false')});
+  setTimeout(function(){window.scrollTo(0,0)},0);
+}
+function setCellFilter(m,p){
+  ['fam','dir','role','cat','diff'].forEach(function(k){F[k].clear()});
+  F.manner.clear(); F.place.clear(); F.manner.add(m); F.place.add(p);
+  F.q=''; $('#q').value='';
+  location.hash='#/atlas';
+  BUILT.atlas=true; buildChips(); renderList();
+  document.querySelectorAll('.chip').forEach(function(b){
+    var on=(b.dataset.key==='manner'&&b.dataset.val===m)||(b.dataset.key==='place'&&b.dataset.val===p);
+    b.setAttribute('aria-pressed',on?'true':'false')});
+  setTimeout(function(){window.scrollTo(0,0)},0);
+}
+function focusSound(s){
+  ['fam','dir','role','manner','place','cat','diff'].forEach(function(k){F[k].clear()});
+  openId=s.id; F.q=SNAME(s).toLowerCase(); $('#q').value=SNAME(s);
+  location.hash='#/atlas';
+  BUILT.atlas=true; buildChips(); renderList();
+  setTimeout(function(){window.scrollTo(0,0)},0);
+}
+function match(s){
+  if(F.fam.size&&!F.fam.has(s.prim))return false;
+  if(F.dir.size&&!s.dirs.some(function(d){return F.dir.has(d)}))return false;
+  if(F.role.size&&!F.role.has(s.role))return false;
+  if(F.manner.size&&!F.manner.has(s.gmanner))return false;
+  if(F.place.size&&!F.place.has(s.gplace))return false;
+  if(F.cat.size&&!F.cat.has(s.cat))return false;
+  if(F.diff.size&&!F.diff.has(s.diff))return false;
+  if(F.q){
+    var h=(s.name+' '+s.alias.join(' ')+' '+s.sbn+' '+s.ipa+' '+s.inst+' '+s.place+' '+
+           s.manner+' '+s.cat+' '+s.role+' '+s.howto+' '+SNAME(s)+' '+
+           TS(s.id,'howto','')+' '+compose('inst',s.inst)+' '+CAT(s.cat)).toLowerCase();
+    if(h.indexOf(F.q)<0)return false;
+  }
+  return true;
+}
+BUILDERS.atlas=function(){ buildChips(); renderList() };
+/* ---------------- atlas: list + specimen card ---------------- */
+var listEl=$('#list'), openId=null;
+function specBars(s,h){
+  var d=el('div','r-spec'); d.style.height=h+'px';
+  var c=famColor(s.prim);
+  var step=Math.max(1,Math.ceil(s.spec.length/28));
+  for(var i=0;i<s.spec.length;i+=step){
+    var v=0; for(var j=i;j<Math.min(i+step,s.spec.length);j++)v=Math.max(v,s.spec[j]);
+    var b=el('i'); b.style.height=Math.max(6,v*100)+'%'; b.style.background=c;
+    b.style.opacity=0.30+0.70*v; d.appendChild(b);
+  }
+  return d;
+}
+function diffDots(n){var d=el('span','diff');
+  for(var i=1;i<=5;i++){var i2=el('i');if(i<=n)i2.className='on';d.appendChild(i2)}return d}
+function specChartFor(s){
+  var W=470,H=96,PL=30,PR=6,PT=8,PB=20;
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.spectrum','Measured spectrum')+': '+SNAME(s)});
+  svg.style.display='block'; svg.style.marginTop='10px';
+  var iw=W-PL-PR, ih=H-PT-PB, n=s.spec.length;
+  var lo=Math.log(D.edges[0]), hi=Math.log(D.edges[n]);
+  for(var i=0;i<n;i++){
+    var x0=PL+iw*(Math.log(D.edges[i])-lo)/(hi-lo);
+    var x1=PL+iw*(Math.log(D.edges[i+1])-lo)/(hi-lo);
+    var h=Math.max(0.8,s.spec[i]*ih);
+    svg.appendChild(sv('rect',{x:x0.toFixed(1),y:(PT+ih-h).toFixed(1),
+      width:Math.max(0.8,x1-x0-0.7).toFixed(1),height:h.toFixed(1),
+      fill:famColor(s.prim),opacity:(0.35+0.65*s.spec[i]).toFixed(2),rx:0.6}));
+  }
+  svg.appendChild(sv('line',{x1:PL,y1:PT+ih,x2:PL+iw,y2:PT+ih,stroke:'var(--rule-2)','stroke-width':1}));
+  [50,100,200,500,1000,2000,5000,10000].forEach(function(f){
+    var x=PL+iw*(Math.log(f)-lo)/(hi-lo); if(x<PL-1||x>PL+iw+1)return;
+    svg.appendChild(sv('line',{x1:x,y1:PT+ih,x2:x,y2:PT+ih+3,stroke:'var(--rule-2)','stroke-width':1}));
+    var t=sv('text',{x:x,y:H-7,'text-anchor':'middle','font-size':8.5,fill:'var(--faint)'});
+    t.textContent=fmtHz(f); svg.appendChild(t);
+  });
+  var xl=sv('text',{x:PL,y:PT+7,'font-size':8.5,fill:'var(--faint)'});
+  xl.textContent=T('cap.spectrum','measured spectrum (Hz, log)'); svg.appendChild(xl);
+  return svg;
+}
+function detailFor(s){
+  var wrap=el('div','detail'); var inn=el('div','detail-in');
+  var left=el('div'), card=el('div','spec-card');
+  var ipa=el('div','ipa-big'); ipa.textContent=s.ipa; card.appendChild(ipa);
+  var sbnline=el('div'); sbnline.style.marginTop='7px';
+  sbnline.appendChild(el('span','sbn',s.sbn));
+  var bg=el('span','badge',FAMLABEL(s.prim)+' '+arrow(s));
+  bg.style.color=famColor(s.prim); bg.style.marginLeft='7px'; sbnline.appendChild(bg);
+  card.appendChild(sbnline);
+  var dl=el('dl','dl');
+  [[T('lab.place','Place'),compose('place',s.place)],
+   [T('lab.manner','Manner'),compose('manner',s.manner)],
+   [T('lab.airstream','Airstream'),s.air.split('+').map(function(t){
+      return TV('air',t,AIR_EN[t]||t)}).join(' + ')],
+   [T('lab.voicing','Voicing'),TD('voiceStr',s.voice)],
+   [T('lab.inst','Stands in for'),compose('inst',s.inst)],
+   [T('lab.family','Family'),CAT(s.cat)]
+  ].forEach(function(kv){dl.appendChild(el('dt',null,kv[0]));dl.appendChild(el('dd',null,kv[1]))});
+  dl.appendChild(el('dt',null,T('lab.diff','Difficulty')));
+  var dd=el('dd'); dd.appendChild(diffDots(s.diff)); dl.appendChild(dd);
+  card.appendChild(dl);
+  var a=s.ac, meas=el('div','meas');
+  [[a.f0?Math.round(a.f0)+' Hz':'—',T('m.f0','fundamental')],
+   [fmtHz(a.centroid)+' Hz',T('m.bright','brightness')],
+   [fmtHz(a.f05)+'–'+fmtHz(a.f95),T('m.band','energy band')],
+   [(a.attack_ms<1000?Math.round(a.attack_ms)+' ms':(a.attack_ms/1000).toFixed(1)+' s'),T('m.attack','attack')],
+   [(a.decay_ms<1000?Math.round(a.decay_ms)+' ms':(a.decay_ms/1000).toFixed(1)+' s'),T('m.decay','decay')],
+   [a.dur.toFixed(2)+' s',T('m.dur','recording')],
+   [(a.flatness<0.001?'<0.1%':(a.flatness*100).toFixed(1)+'%'),T('m.noise','noisiness')],
+   [a.ev_rate?a.ev_rate.toFixed(1)+'/s':'—',T('m.rate','hit rate')]
+  ].forEach(function(kv){var d=el('div');d.appendChild(el('b',null,kv[0]));
+    d.appendChild(el('span',null,kv[1]));meas.appendChild(d)});
+  card.appendChild(meas);
+  var wb=el('div','wavebox');
+  s.wave.forEach(function(v){var i=el('i');i.style.height=Math.max(2,v*100)+'%';
+    i.style.background=famColor(s.prim);wb.appendChild(i)});
+  card.appendChild(wb);
+  var wcap=el('p','figcaption',T('cap.env','Envelope of the recording · spectrum below'));
+  wcap.style.marginTop='4px'; card.appendChild(wcap);
+  card.appendChild(specChartFor(s));
+  left.appendChild(card);
+  var right=el('div');
+  var h1=el('p','eyebrow',T('lab.howto','How it is made')); h1.style.marginBottom='7px';
+  right.appendChild(h1);
+  right.appendChild(el('p','howto',TS(s.id,'howto',s.howto)));
+  if(s.notes){ var n=el('p','note',TS(s.id,'notes',s.notes)); n.style.marginTop='14px';
+    right.appendChild(n) }
+  var lw=el('div'); lw.style.marginTop='16px';
+  var h2=el('p','eyebrow',T('lab.lang','In human language')); h2.style.marginBottom='7px';
+  lw.appendChild(h2); lw.appendChild(el('p','howto',TD('lang',s.lang)));
+  right.appendChild(lw);
+  if(s.alias.length){
+    var al=el('p','figcaption',T('lab.alias','Also known as')+': '+
+      s.alias.map(function(x){return TV('alias',x,x)}).join('、'));
+    al.style.marginTop='14px'; right.appendChild(al);
+  }
+  inn.appendChild(left); inn.appendChild(right);
+  wrap.appendChild(inn);
+  wrap.style.borderLeftColor=famColor(s.prim);
+  return wrap;
+}
+function renderList(){
+  var out=S.filter(match);
+  $('#count').textContent=out.length+' '+(out.length===1?T('u.sound','sound'):T('u.sounds','sounds'));
+  $('#empty').style.display=out.length?'none':'block';
+  listEl.innerHTML='';
+  var frag=document.createDocumentFragment();
+  out.forEach(function(s){
+    var row=el('div','row'); row.setAttribute('role','button'); row.tabIndex=0;
+    row.setAttribute('aria-expanded', openId===s.id?'true':'false');
+    row.style.borderLeftColor=famColor(s.prim);
+    var pb=el('span','play'); pb.innerHTML=playIcon(); pb.tabIndex=0;
+    pb.setAttribute('role','button');
+    pb.setAttribute('aria-label',T('a11y.play','Play')+' '+SNAME(s));
+    pb.addEventListener('click',function(ev){ev.stopPropagation();playSound(s,pb)});
+    pb.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){
+      ev.preventDefault();ev.stopPropagation();playSound(s,pb)}});
+    row.appendChild(pb);
+    var nm=el('span','r-name'); nm.appendChild(el('b',null,SNAME(s)));
+    nm.appendChild(el('span',null,CAT(s.cat)+' · '+ROLELABEL(s.role)+' · '+compose('inst',s.inst)));
+    row.appendChild(nm);
+    var sbw=el('span'); sbw.appendChild(el('span','sbn',s.sbn)); row.appendChild(sbw);
+    row.appendChild(el('span','r-ipa',s.ipa));
+    row.appendChild(specBars(s,26));
+    var n1=el('span','r-num r-n1');
+    n1.innerHTML=(s.ac.f0?Math.round(s.ac.f0):'—')+'<u>'+esc(T('m.f0short','f0 Hz'))+'</u>';
+    row.appendChild(n1);
+    var n2=el('span','r-num r-n2');
+    n2.innerHTML=fmtHz(s.ac.centroid)+'<u>'+esc(T('m.brightshort','bright'))+'</u>';
+    row.appendChild(n2);
+    row.addEventListener('click',function(){
+      openId = openId===s.id ? null : s.id; renderList();
+      if(openId===s.id) setTimeout(function(){
+        var d=document.getElementById('det-'+s.id);
+        if(d){var r=d.getBoundingClientRect(); if(r.bottom>innerHeight)
+          d.scrollIntoView({behavior:'smooth',block:'nearest'})}},30);
+    });
+    row.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){
+      ev.preventDefault(); row.click()}});
+    frag.appendChild(row);
+    if(openId===s.id){ var d=detailFor(s); d.id='det-'+s.id; frag.appendChild(d) }
+  });
+  listEl.appendChild(frag);
+}
+
+/* ---------------- coverage grid + anatomy ---------------- */
+BUILDERS.coverage=function(){
+  var t=$('#cov'); t.innerHTML='';
+  var thead=el('thead'), tr=el('tr');
+  tr.appendChild(el('th','rh',''));
+  D.places.forEach(function(p){tr.appendChild(el('th',null,PLACE(p)))});
+  thead.appendChild(tr); t.appendChild(thead);
+  var tb=el('tbody');
+  D.manners.forEach(function(m){
+    var r=el('tr');
+    r.appendChild(el('th','rh',MANNER(m)));
+    D.places.forEach(function(p,i){
+      var td=el('td'), st=D.grid[m][i], n=COV.bbCells[m+'|'+p]||0, c=el('div','cell');
+      var where=MANNER(m)+' · '+PLACE(p);
+      if(n>0){
+        c.className='cell bb'+(st==='P'?' bbonly':'');
+        var f={}; S.filter(function(s){return s.gmanner===m&&s.gplace===p})
+          .forEach(function(s){f[s.prim]=(f[s.prim]||0)+1});
+        c.style.background=famColor(Object.keys(f).sort(function(a,b){return f[b]-f[a]})[0]);
+        c.textContent=n;
+        c.setAttribute('role','button'); c.tabIndex=0;
+        c.title=where+' — '+n+' '+(n>1?T('u.sounds','sounds'):T('u.sound','sound'))+
+          (st==='P'?' · '+T('cov.bbonlynote','used by beatboxers but by no known language'):'');
+        var act=function(){setCellFilter(m,p)};
+        c.addEventListener('click',act);
+        c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){
+          e.preventDefault();act()}});
+      } else if(st==='S'){ c.className='cell speech'; c.textContent='·';
+        c.title=where+' — '+T('cov.speechnote','a phoneme in some spoken language, absent from this archive');
+      } else if(st==='P'){ c.className='cell none';
+        c.title=where+' — '+T('cov.unusednote','physically producible, but neither language nor this archive uses it');
+      } else { c.className='cell x'; c.textContent='×';
+        var note=TV('gridNotes',m+'|'+p,D.gridNotes[m+'|'+p]||'');
+        c.title=note||(where+' — '+T('cov.imposs','anatomically impossible'));
+        if(note){
+          c.addEventListener('mouseenter',function(e){showTip(e.clientX,e.clientY,
+            '<b>'+esc(where)+'</b><span class="m">'+esc(T('cov.imposs','anatomically impossible'))+
+            '</span>'+esc(note))});
+          c.addEventListener('mouseleave',hideTip);
+        }
+      }
+      td.appendChild(c); r.appendChild(td);
+    });
+    tb.appendChild(r);
+  });
+  t.appendChild(tb);
+  var tally=$('#tally'); tally.innerHTML='';
+  [[COV.nCells+' / '+(COV.cells-COV.imposs),
+    T('tally.1','place–manner combinations this archive reaches, of the {n} a human body allows')
+      .replace('{n}',COV.cells-COV.imposs)],
+   [COV.imposs, T('tally.2','combinations no human can produce, on this chart of {n}')
+      .replace('{n}',COV.cells)],
+   [COV.bbOnly, T('tally.3','cells beatboxers use that no documented language uses as a phoneme')],
+   [COV.speech, T('tally.4','cells attested as phonemes somewhere in the world’s languages')]
+  ].forEach(function(kv){var d=el('div');d.appendChild(el('b',null,String(kv[0])));
+    d.appendChild(el('span',null,kv[1]));tally.appendChild(d)});
+  buildAnatomy();
+};
+function buildAnatomy(){
+  var host=$('#anatsvg'); host.innerHTML='';
+  var W=660,H=470;
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.anat','Mid-sagittal schematic of the vocal tract with the ten places of articulation')});
+  svg.style.display='block';
+  var ink='var(--ink-2)', soft='var(--rule-2)';
+  var g=sv('g',{}); svg.appendChild(g);
+  g.appendChild(sv('path',{d:
+    'M 104 236 C 142 208 200 190 252 190 C 294 192 320 206 342 228 L 350 254 '+
+    'C 344 274 340 306 346 338 L 326 340 C 330 304 320 272 298 250 '+
+    'C 266 226 198 228 148 244 C 130 250 114 250 104 252 Z',
+    fill:'color-mix(in srgb, var(--pulmonic) 9%, var(--surface))',stroke:'none'}));
+  g.appendChild(sv('path',{d:'M 104 206 C 160 150 268 142 332 164 C 358 173 380 176 404 168',
+    fill:'none',stroke:soft,'stroke-width':1.6}));
+  g.appendChild(sv('path',{d:'M 108 228 C 160 186 262 178 324 200 C 350 209 376 212 400 204',
+    fill:'none',stroke:soft,'stroke-width':1.6}));
+  var nl=sv('text',{x:196,y:186,'font-size':10.5,fill:'var(--faint)'});
+  nl.textContent=T('anat.nasal','nasal cavity'); g.appendChild(nl);
+  g.appendChild(sv('path',{d:'M 104 236 C 142 208 200 190 252 190 C 294 192 320 206 342 228',
+    fill:'none',stroke:ink,'stroke-width':2.3}));
+  g.appendChild(sv('path',{d:'M 342 228 C 350 238 352 248 350 256',fill:'none',
+    stroke:ink,'stroke-width':2.3}));
+  g.appendChild(sv('path',{d:'M 404 196 C 412 258 408 314 400 356',fill:'none',
+    stroke:ink,'stroke-width':2.3}));
+  g.appendChild(sv('path',{d:
+    'M 112 252 C 152 236 210 226 262 232 C 300 238 324 262 338 298 '+
+    'C 346 320 348 338 346 354 L 158 356 C 136 334 118 298 112 252 Z',
+    fill:'color-mix(in srgb, var(--glottalic) 7%, var(--surface))',stroke:ink,'stroke-width':2}));
+  var tl=sv('text',{x:232,y:312,'font-size':11.5,fill:'var(--ink-2)','text-anchor':'middle'});
+  tl.textContent=T('anat.tongue','tongue'); g.appendChild(tl);
+  g.appendChild(sv('path',{d:'M 102 234 L 98 256 L 112 256 L 115 236 Z',fill:'var(--surface-2)',
+    stroke:ink,'stroke-width':1.5}));
+  g.appendChild(sv('path',{d:'M 100 262 L 97 240 L 111 240 L 113 262 Z',fill:'var(--surface-2)',
+    stroke:ink,'stroke-width':1.5}));
+  g.appendChild(sv('path',{d:'M 88 238 C 70 248 70 262 86 270',fill:'none',stroke:ink,'stroke-width':2.6}));
+  g.appendChild(sv('path',{d:'M 88 292 C 70 282 70 268 86 262',fill:'none',stroke:ink,'stroke-width':2.6}));
+  g.appendChild(sv('path',{d:'M 344 358 L 400 354 L 406 410 L 340 414 Z',fill:'var(--sunk)',
+    stroke:ink,'stroke-width':1.8}));
+  g.appendChild(sv('path',{d:'M 346 416 L 350 452 M 402 412 L 400 452',fill:'none',
+    stroke:soft,'stroke-width':1.6}));
+  var ll=sv('text',{x:420,y:436,'font-size':10.5,fill:'var(--faint)'});
+  ll.textContent=T('anat.trachea','trachea · from the lungs'); g.appendChild(ll);
+  var lx=sv('text',{x:330,y:378,'font-size':10.5,fill:'var(--ink-2)','text-anchor':'end'});
+  lx.textContent=T('anat.larynx','larynx'); g.appendChild(lx);
+  g.appendChild(sv('path',{d:'M 334 378 L 350 378',fill:'none',stroke:soft,'stroke-width':1}));
+  var ZONES=[
+    ['bilabial',86,262,24,334,'start','the two lips'],
+    ['labiodental',112,248,24,368,'start','lower lip against the upper teeth'],
+    ['dental',124,240,24,402,'start','tongue against the teeth'],
+    ['alveolar',158,218,132,116,'middle','tongue tip on the ridge behind the teeth'],
+    ['postalveolar',196,204,236,88,'middle','just behind the alveolar ridge'],
+    ['palatal',250,196,330,74,'middle','the hard palate'],
+    ['velar',310,208,424,96,'middle','the soft palate'],
+    ['uvular',346,246,486,176,'start','the uvula'],
+    ['pharyngeal',378,306,486,286,'start','the throat above the larynx'],
+    ['glottal',374,382,486,392,'start','the vocal folds themselves']
+  ];
+  ZONES.forEach(function(z){
+    var name=z[0],dx=z[1],dy=z[2],lx2=z[3],ly=z[4],anch=z[5],descEn=z[6];
+    var n=S.filter(function(s){return s.gplace===name}).length;
+    var desc=TV('zoneDesc',name,descEn);
+    var grp=sv('g',{class:'zonebtn',role:'button',tabindex:'0'});
+    grp.setAttribute('aria-label',PLACE(name)+': '+n);
+    var lx3 = anch==='start' ? lx2-6 : lx2;
+    var ly3 = anch==='middle' ? ly+6 : ly-4;
+    grp.appendChild(sv('path',{d:'M '+lx3+' '+ly3+' L '+dx+' '+dy,fill:'none',
+      stroke:soft,'stroke-width':1,'stroke-dasharray':'2.5 2.5'}));
+    grp.appendChild(sv('circle',{class:'hit',cx:dx,cy:dy,r:Math.max(7,Math.min(17,6+n*0.15)),
+      fill:'var(--pulmonic)',opacity:0.15}));
+    grp.appendChild(sv('circle',{cx:dx,cy:dy,r:4.2,fill:'var(--pulmonic)',
+      stroke:'var(--surface)','stroke-width':1.6}));
+    var tx=sv('text',{x:lx2,y:ly,'text-anchor':anch,'font-size':11,fill:'var(--ink-2)',
+      'font-weight':600}); tx.textContent=PLACE(name); grp.appendChild(tx);
+    var tn=sv('text',{x:lx2,y:ly+12,'text-anchor':anch,'font-size':9.5,fill:'var(--faint)'});
+    tn.textContent=n+' '+(n===1?T('u.sound','sound'):T('u.sounds','sounds'));
+    grp.appendChild(tn);
+    var act=function(){setFilter('place',name)};
+    grp.addEventListener('click',act);
+    grp.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();act()}});
+    grp.addEventListener('mouseenter',function(e){
+      showTip(e.clientX,e.clientY,'<b>'+esc(PLACE(name))+'</b><span class="m">'+n+' '+
+        esc(n===1?T('u.sound','sound'):T('u.sounds','sounds'))+'</span>'+esc(desc));
+      var b=document.querySelector('.zonelist button[data-z="'+name+'"]');
+      if(b)b.classList.add('hi')});
+    grp.addEventListener('mouseleave',function(){hideTip();
+      var b=document.querySelector('.zonelist button[data-z="'+name+'"]');
+      if(b)b.classList.remove('hi')});
+    g.appendChild(grp);
+  });
+  host.appendChild(svg);
+  var maxN=Math.max.apply(null,D.places.map(function(p){
+    return S.filter(function(s){return s.gplace===p}).length}));
+  var zl=$('#zonelist'); zl.innerHTML='';
+  D.places.forEach(function(p){
+    var n=S.filter(function(s){return s.gplace===p}).length;
+    var b=el('button'); b.type='button'; b.dataset.z=p;
+    b.appendChild(el('b',null,PLACE(p)));
+    var bar=el('span','bar-mini'), fillb=el('i');
+    fillb.style.width=(maxN?100*n/maxN:0)+'%'; bar.appendChild(fillb); b.appendChild(bar);
+    b.appendChild(el('span','n',String(n)));
+    b.addEventListener('click',function(){setFilter('place',p)});
+    zl.appendChild(b);
+  });
+}
+/* ---------------- acoustics ---------------- */
+BUILDERS.acoustics=function(){ buildPitch(); buildSpec() };
+function buildPitch(){
+  var host=$('#ch-pitch'); host.innerHTML='';
+  var pitched=S.filter(function(s){return s.ac.f0>0 && s.ac.voiced>=0.35});
+  var LO=25,HI=5200,W=980,PL=190,PR=26,PT=26,PB=34,rowH=19,gap=26,famH=30;
+  var H=PT+D.instr.length*rowH+gap+FAMS.length*famH+PB+14;
+  var iw=W-PL-PR, lo=Math.log(LO), hi=Math.log(HI);
+  var X=function(f){return PL+iw*(Math.log(f)-lo)/(hi-lo)};
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.pitch','Measured fundamental frequency of archive sounds against instrument ranges')});
+  svg.style.display='block'; svg.style.minWidth='640px';
+  [25,50,100,200,400,800,1600,3200,5000].forEach(function(f){
+    svg.appendChild(sv('line',{x1:X(f),y1:PT-8,x2:X(f),y2:H-PB+4,stroke:'var(--rule)','stroke-width':1}));
+    var t=sv('text',{x:X(f),y:H-PB+17,'text-anchor':'middle','font-size':10,fill:'var(--muted)'});
+    t.textContent=fmtHz(f)+(f===25?' Hz':''); svg.appendChild(t);
+  });
+  var y=PT;
+  var lab=sv('text',{x:PL,y:PT-12,'font-size':10.5,fill:'var(--faint)','font-weight':600});
+  lab.textContent=T('pitch.band1','INSTRUMENT PLAYING RANGE (fundamental)'); svg.appendChild(lab);
+  D.instr.forEach(function(ins){
+    var t=sv('text',{x:PL-10,y:y+rowH/2+3.5,'text-anchor':'end','font-size':11,fill:'var(--ink-2)'});
+    t.textContent=TV('instr',ins.n,ins.n); svg.appendChild(t);
+    var x0=X(ins.lo),x1=X(ins.hi);
+    svg.appendChild(sv('rect',{x:x0,y:y+4,width:Math.max(3,x1-x0),height:rowH-9,rx:3.5,
+      fill:ins.k==='perc'?'var(--rule-2)':'var(--ink-2)',opacity:ins.k==='perc'?0.85:0.3}));
+    var lv=sv('text',{x:x1+6,y:y+rowH/2+3.5,'font-size':9.5,fill:'var(--faint)'});
+    lv.textContent=fmtHz(ins.lo)+'–'+fmtHz(ins.hi); svg.appendChild(lv);
+    y+=rowH;
+  });
+  y+=gap;
+  var lab2=sv('text',{x:PL,y:y-12,'font-size':10.5,fill:'var(--faint)','font-weight':600});
+  lab2.textContent=T('pitch.band2','ARCHIVE: MEASURED FUNDAMENTAL')+' ('+pitched.length+')';
+  svg.appendChild(lab2);
+  FAMS.forEach(function(f){
+    var set=pitched.filter(function(s){return s.prim===f});
+    var t=sv('text',{x:PL-10,y:y+famH/2+3.5,'text-anchor':'end','font-size':11,fill:'var(--ink-2)'});
+    t.textContent=FAMLABEL(f); svg.appendChild(t);
+    var t2=sv('text',{x:PL-10,y:y+famH/2+15,'text-anchor':'end','font-size':9,fill:'var(--faint)'});
+    t2.textContent=set.length+' '+(set.length===1?T('u.sound','sound'):T('u.sounds','sounds'));
+    svg.appendChild(t2);
+    svg.appendChild(sv('line',{x1:PL,y1:y+famH/2,x2:PL+iw,y2:y+famH/2,
+      stroke:'var(--rule)','stroke-width':1}));
+    set.sort(function(a,b){return a.ac.f0-b.ac.f0});
+    set.forEach(function(s,i){
+      var c=sv('circle',{cx:X(s.ac.f0),cy:y+famH/2+((i%3)-1)*5.4,r:4.2,fill:famColor(f),
+        opacity:0.75,stroke:'var(--surface)','stroke-width':1.4});
+      c.style.cursor='pointer';
+      c.addEventListener('mouseenter',function(e){ c.setAttribute('r',6);
+        showTip(e.clientX,e.clientY,'<b>'+esc(SNAME(s))+'</b><span class="m">'+
+          Math.round(s.ac.f0)+' Hz · '+esc(FAMLABEL(f))+' '+arrow(s)+'</span>'+
+          esc(compose('inst',s.inst)))});
+      c.addEventListener('mouseleave',function(){c.setAttribute('r',4.2);hideTip()});
+      c.addEventListener('click',function(){focusSound(s)});
+      svg.appendChild(c);
+    });
+    y+=famH;
+  });
+  var loF=Math.min.apply(null,pitched.map(function(s){return s.ac.f0}));
+  var hiF=Math.max.apply(null,pitched.map(function(s){return s.ac.f0}));
+  [[loF,T('pitch.lowest','lowest measured'),1],[hiF,T('pitch.highest','highest measured'),-1]]
+   .forEach(function(m){
+    svg.appendChild(sv('line',{x1:X(m[0]),y1:PT-2,x2:X(m[0]),y2:H-PB-2,
+      stroke:'var(--glottalic)','stroke-width':1.4,'stroke-dasharray':'3 3'}));
+    var t=sv('text',{x:X(m[0])+6*m[2],y:H-PB-7,'font-size':9.5,fill:'var(--glottalic)',
+      'font-weight':600,'text-anchor':m[2]>0?'start':'end'});
+    t.textContent=m[1]+': '+Math.round(m[0])+' Hz'; svg.appendChild(t);
+  });
+  host.appendChild(svg);
+}
+function buildSpec(){
+  var host=$('#ch-spec'); host.innerHTML='';
+  var LO=28,HI=17000;
+  var groups=[{k:'__ref',l:T('spec.ref','Percussion reference')}].concat(
+    ['kick','snare','hat','cymbal','bass','bass+melody','melody','fx'].map(function(r){
+      return {k:r,l:ROLELABEL(r)}}));
+  var W=1400,PL=186,PR=132,PT=34,PB=34,bh=2.2,bg=1.0,gh=26,refBh=7,refBg=4.5;
+  var H=PT+D.spectral.length*(refBh+refBg)+gh;
+  groups.forEach(function(g){ if(g.k==='__ref')return;
+    H += S.filter(function(s){return s.role===g.k}).length*(bh+bg)+gh });
+  H+=PB;
+  var iw=W-PL-PR, lo=Math.log(LO), hi=Math.log(HI);
+  var X=function(f){return PL+iw*(Math.log(Math.max(LO,f))-lo)/(hi-lo)};
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.spec','Spectral energy band of every archive sound, grouped by musical role')});
+  svg.style.display='block'; svg.style.minWidth='640px';
+  [30,60,125,250,500,1000,2000,4000,8000,16000].forEach(function(f){
+    svg.appendChild(sv('line',{x1:X(f),y1:PT-10,x2:X(f),y2:H-PB+4,stroke:'var(--rule)','stroke-width':1}));
+    var t=sv('text',{x:X(f),y:H-PB+17,'text-anchor':'middle','font-size':10,fill:'var(--muted)'});
+    t.textContent=fmtHz(f)+(f===30?' Hz':''); svg.appendChild(t);
+    var t2=sv('text',{x:X(f),y:PT-15,'text-anchor':'middle','font-size':9,fill:'var(--faint)'});
+    t2.textContent=fmtHz(f); svg.appendChild(t2);
+  });
+  var y=PT, band=0;
+  groups.forEach(function(g){
+    var count = g.k==='__ref' ? D.spectral.length
+      : S.filter(function(s){return s.role===g.k}).length;
+    var bandH = g.k==='__ref' ? count*(refBh+refBg) : count*(bh+bg);
+    if(band%2===1) svg.appendChild(sv('rect',{x:PL-6,y:y-7,width:iw+12,height:bandH+10,
+      fill:'var(--ink)',opacity:0.026}));
+    band++;
+    var cy=y+bandH/2;
+    var gl=sv('text',{x:PL-14,y:cy-1,'text-anchor':'end','font-size':11.5,fill:'var(--ink-2)',
+      'font-weight':600}); gl.textContent=g.l; svg.appendChild(gl);
+    var n0=sv('text',{x:PL-14,y:cy+12,'text-anchor':'end','font-size':9.5,fill:'var(--faint)'});
+    n0.textContent = g.k==='__ref' ? T('spec.real','real instruments')
+      : count+' '+(count===1?T('u.sound','sound'):T('u.sounds','sounds'));
+    svg.appendChild(n0);
+    if(g.k==='__ref'){
+      D.spectral.forEach(function(r){
+        var x0=X(r.lo),x1=X(r.hi);
+        svg.appendChild(sv('rect',{x:x0,y:y,width:Math.max(2,x1-x0),height:refBh,rx:2.5,
+          fill:'var(--ink-2)',opacity:0.5}));
+        var t=sv('text',{x:x1+7,y:y+refBh-0.6,'font-size':9.4,fill:'var(--muted)'});
+        t.textContent=TV('instr',r.n,r.n); svg.appendChild(t);
+        y+=refBh+refBg;
+      });
+    } else {
+      S.filter(function(s){return s.role===g.k})
+       .sort(function(a,b){return a.ac.f50-b.ac.f50})
+       .forEach(function(s){
+        var x0=X(s.ac.f05),x1=X(s.ac.f95);
+        var r=sv('rect',{x:x0,y:y,width:Math.max(2,x1-x0),height:bh,rx:1.1,
+          fill:famColor(s.prim),opacity:0.78});
+        r.style.cursor='pointer';
+        var md=sv('rect',{x:X(s.ac.f50)-0.9,y:y-0.9,width:1.8,height:bh+1.8,
+          fill:famColor(s.prim),opacity:1});
+        var hit=sv('rect',{x:PL,y:y-0.7,width:iw,height:bh+bg+0.7,fill:'transparent'});
+        hit.style.cursor='pointer';
+        var enter=function(e){ r.setAttribute('opacity',1);
+          showTip(e.clientX,e.clientY,'<b>'+esc(SNAME(s))+'</b><span class="m">'+
+            fmtHz(s.ac.f05)+'–'+fmtHz(s.ac.f95)+' Hz · '+T('spec.median','median')+' '+
+            fmtHz(s.ac.f50)+'</span>'+esc(compose('inst',s.inst)))};
+        var leave=function(){ r.setAttribute('opacity',0.78); hideTip() };
+        [r,hit].forEach(function(nd){
+          nd.addEventListener('mouseenter',enter); nd.addEventListener('mousemove',enter);
+          nd.addEventListener('mouseleave',leave);
+          nd.addEventListener('click',function(){focusSound(s)})});
+        svg.appendChild(r); svg.appendChild(md); svg.appendChild(hit);
+        y+=bh+bg;
+      });
+    }
+    y+=gh;
+  });
+  host.appendChild(svg);
+}
+
+/* ---------------- hard limits ---------------- */
+BUILDERS.limits=function(){
+  var pitched=S.filter(function(s){return s.ac.f0>0 && s.ac.voiced>=0.35});
+  var lowest=pitched.reduce(function(a,b){return b.ac.f0<a.ac.f0?b:a});
+  var highest=pitched.reduce(function(a,b){return b.ac.f0>a.ac.f0?b:a});
+  var cym=S.filter(function(s){return s.role==='cymbal'});
+  var longestCym=cym.reduce(function(a,b){return b.ac.decay_ms>a.ac.decay_ms?b:a});
+  var bright=S.reduce(function(a,b){return b.ac.centroid>a.ac.centroid?b:a});
+  var poly=S.filter(function(s){return /\+/.test(s.role)||
+    /polyphon|two-pitch|two-source|three-source/i.test(s.manner)});
+  var fastest=S.reduce(function(a,b){return (b.ac.ev_rate>a.ac.ev_rate&&b.ac.dur>2)?b:a});
+  function fill(str,map){ return str.replace(/\{(\w+)\}/g,function(_,k){
+    return map[k]==null?'':String(map[k])}) }
+  var V={lowHz:Math.round(lowest.ac.f0), lowName:SNAME(lowest),
+    nPitched:pitched.length, cymS:(longestCym.ac.decay_ms/1000).toFixed(2),
+    cymName:SNAME(longestCym), brightHz:fmtHz(bright.ac.centroid), brightName:SNAME(bright),
+    highHz:Math.round(highest.ac.f0), imposs:COV.imposs, cells:COV.cells,
+    noLung:COV.noLung, poly:poly.length, rate:fastest.ac.ev_rate.toFixed(1),
+    rateName:SNAME(fastest)};
+  var items=[
+    {n:V.lowHz+' Hz', h:T('lim.1.h','The bottom octave is missing'),
+     p:fill(T('lim.1.p','The lowest pitch measured anywhere in this archive is {lowHz} Hz, from {lowName}. A five-string bass guitar reaches 31 Hz and a TR-808 kick is commonly tuned to 40. Subharmonic phonation buys the voice roughly an octave below its modal range, but amplitude collapses as it goes and the folds cannot be made longer or heavier on demand.'),V),
+     v:fill(T('lim.1.v','measured: lowest fundamental across {nPitched} pitched recordings'),V)},
+    {n:V.cymS+' s', h:T('lim.2.h','Cymbals will not ring'),
+     p:fill(T('lim.2.p','The longest cymbal decay in the archive is {cymS} seconds, from {cymName}. A real 18-inch crash rings for two to four seconds because a metal plate stores energy and releases it slowly. Breath noise has no store: when the air stops, the sound stops.'),V),
+     v:T('lim.2.v','measured: time from peak to −20 dB on the first onset')},
+    {n:V.brightHz+' Hz', h:T('lim.3.h','The top end is thinner than it sounds'),
+     p:fill(T('lim.3.p','The brightest sound here, {brightName}, centres at {brightHz} Hz — genuinely in hi-hat territory. But the highest pitched sound tops out at {highHz} Hz, below a piccolo’s top note, and nothing in the archive carries usable energy above about 16 kHz where real cymbals still have content.'),V),
+     v:T('lim.3.v','measured: spectral centroid and fundamental across all 200 recordings')},
+    {n:'2–3', h:T('lim.4.h','Polyphony stops at three voices'),
+     p:T('lim.4.p','The mouth has exactly three independent sound sources: the vocal folds, a buccal or lingual oscillator, and a whistle. Combining all three at once is the ceiling, reached by a handful of sounds here. A string quartet has four players and an orchestra sixty; one performer cannot voice a triad with independent timbres.'),
+     v:fill(T('lim.4.v','derived: {poly} sounds in the archive stack two or more simultaneous sources'),V)},
+    {n:V.imposs+' '+T('u.cells','cells'), h:T('lim.5.h','Some articulations are simply unbuilt'),
+     p:fill(T('lim.5.p','On the coverage chart, {imposs} of {cells} place-and-manner combinations are ruled out by anatomy rather than by practice. There is no lateral channel at the lips, no cavity behind the velar closure of a click, and the glottis cannot be both the piston of an ejective and its valve. No amount of training opens these.'),V),
+     v:T('lim.5.v','anatomical: see the coverage chart for the reason on each cell')},
+    {n:V.noLung+' '+T('u.sounds','sounds'), h:T('lim.6.h','Breath is the real constraint — and the clever workaround'),
+     p:fill(T('lim.6.p','{noLung} of the 200 sounds need no lung air at all: they run on tongue air, cheek air, or the inhale. That is not a curiosity, it is the whole engineering solution. It is why a beatboxer can hold a bass line under a sixteenth-note pattern for minutes, and why a purely pulmonic performer cannot.'),V),
+     v:T('lim.6.v','derived: sounds whose airstream mechanism excludes the lungs')},
+    {n:V.rate+'/s', h:T('lim.7.h','Articulation rate has a mechanical ceiling'),
+     p:fill(T('lim.7.p','The fastest sustained roll measured here runs at {rate} events per second ({rateName}). Ordinary speech manages six to eight syllables per second; rolls beat that only because the tongue tip or lip travels a fraction of the distance. Push further and the articulator cannot reset in time.'),V),
+     v:T('lim.7.v','measured: onset detection with a 60 ms minimum gap, on recordings over 2 s')},
+    {n:'0 dB', h:T('lim.8.h','Loudness is not in this dataset'),
+     p:T('lim.8.p','These recordings carry no calibration, so nothing here can tell you how loud a mouth kick is against a real bass drum. The honest answer is that it is not close: a kick drum moves a large membrane and a 30-litre shell of air. Live beatboxing exists because the microphone does, and any claim otherwise on this page would be made up.'),
+     v:T('lim.8.v','not measurable from this archive — stated as a known gap')}
+  ];
+  var box=$('#limit-list'); box.innerHTML='';
+  items.forEach(function(it){
+    var d=el('div','limit');
+    d.appendChild(el('span','n',it.n));
+    d.appendChild(el('h4',null,it.h));
+    d.appendChild(el('p',null,it.p));
+    d.appendChild(el('p','v',it.v));
+    box.appendChild(d);
+  });
+};
+/* ---------------- patterns: library + builder ---------------- */
+var PLEVELS=[]; P.forEach(function(p){if(PLEVELS.indexOf(p.level)<0)PLEVELS.push(p.level)});
+var patCur=PLEVELS[0], patQ='';
+function stepClass(tok){
+  var t=tok.toLowerCase();
+  if(/^bb|^brr|^bm/.test(t))return 'b';
+  if(/^\^?b/.test(t))return 'k';
+  if(/^\^?(k|pf|ps|psh|tf|peh|poh|esh|sn|cl)/.test(t))return 's';
+  if(/^\^?(t|ts|tss|f|sh|ch|kch)/.test(t))return 'h';
+  return '';
+}
+function drawPats(){
+  var host=$('#pat-list'); host.innerHTML='';
+  var set=P.filter(function(p){
+    if(patQ){ var h=(p.name+' '+p.ref+' '+p.level+' '+p.notation+' '+
+      TV('patterns',p.id,p.name)+' '+TV('level',p.level,p.level)).toLowerCase();
+      return h.indexOf(patQ)>=0 }
+    return p.level===patCur });
+  if(!set.length){ host.appendChild(el('p','pat-empty',T('pat.empty','No pattern matches that search.')));
+    return }
+  set.forEach(function(p){
+    var c=el('div','pat'), top=el('div','pat-top');
+    var pb=el('button','play'); pb.type='button'; pb.innerHTML=playIcon();
+    pb.setAttribute('aria-label',T('a11y.play','Play')+' '+TV('patterns',p.id,p.name));
+    pb.addEventListener('click',function(){playPattern(p,pb)});
+    top.appendChild(pb);
+    var pn=el('span','pn');
+    pn.appendChild(el('b',null,TV('patterns',p.id,p.name)));
+    pn.appendChild(el('span','n',
+      TV('ref',p.ref,p.ref)+(patQ?' · '+TV('level',p.level,p.level):'')+
+      (p.off?' · '+p.off[1].toFixed(1)+'s':'')+
+      (p.ac&&p.ac.ev_rate?' · '+p.ac.ev_rate.toFixed(1)+'/s':'')));
+    top.appendChild(pn);
+    c.appendChild(top);
+    if(p.legend&&p.legend.length){
+      c.appendChild(el('p','legend-note',
+        p.legend.map(function(l){return TV('legend',l,l)}).join(' · ')));
+    }
+    var st=el('div','steps');
+    p.notation.split(' / ').forEach(function(line,li){
+      if(li>0)st.appendChild(el('span','step br'));
+      line.split(/\s+/).forEach(function(tok){
+        if(tok)st.appendChild(el('span','step '+stepClass(tok),tok));
+      });
+    });
+    c.appendChild(st);
+    if(p.wave&&p.wave.length){
+      var wb=el('div','wavebox');
+      p.wave.forEach(function(v){var i=el('i');i.style.height=Math.max(2,v*100)+'%';wb.appendChild(i)});
+      c.appendChild(wb);
+    }
+    host.appendChild(c);
+  });
+}
+$('#pq').addEventListener('input',function(e){patQ=e.target.value.toLowerCase().trim();drawPats()});
+BUILDERS.patterns=function(){
+  var tabs=$('#pat-tabs'); tabs.innerHTML='';
+  PLEVELS.forEach(function(L){
+    var b=el('tab'==='x'?'button':'button','tab',
+      TV('level',L,L)+' ('+P.filter(function(p){return p.level===L}).length+')');
+    b.type='button'; b.setAttribute('role','tab');
+    b.setAttribute('aria-selected',L===patCur?'true':'false');
+    b.addEventListener('click',function(){
+      patCur=L; patQ=''; $('#pq').value='';
+      tabs.querySelectorAll('.tab').forEach(function(t){
+        t.setAttribute('aria-selected',t===b?'true':'false')});
+      drawPats();
+    });
+    tabs.appendChild(b);
+  });
+  drawPats();
+  buildSeq();
+};
+function buildSeq(){
+  var STEPS=16, LANES=4;
+  var byId={}; S.forEach(function(s){byId[s.id]=s});
+  var pick=function(re,fb){ var f=S.filter(function(s){return re.test(s.id)});
+    return (f[0]||S.filter(function(s){return s.role===fb})[0]||S[0]).id };
+  var defaults=[pick(/^hi-hat$/,'hat'),pick(/^k-snare-out$/,'snare'),
+                pick(/^pf-snare$/,'snare'),pick(/^kick$/,'kick')];
+  var lanes=[];
+  for(var i=0;i<LANES;i++)lanes.push({id:defaults[i],steps:new Array(STEPS).fill(false)});
+  lanes[3].steps[0]=lanes[3].steps[8]=lanes[3].steps[10]=true;
+  lanes[1].steps[4]=lanes[1].steps[12]=true;
+  lanes[0].steps[2]=lanes[0].steps[6]=lanes[0].steps[10]=lanes[0].steps[14]=true;
+  var head=$('#seq-head'); head.innerHTML='';
+  head.appendChild(el('span',null,''));
+  for(var k=0;k<STEPS;k++)head.appendChild(el('span',null,(k%4===0)?String(k/4+1):'·'));
+  var laneHost=$('#seq-lanes'); laneHost.innerHTML='';
+  var SEL=S.slice().sort(function(a,b){return SNAME(a).localeCompare(SNAME(b),LANG==='zh'?'zh':'en')});
+  var cellEls=[];
+  lanes.forEach(function(L,li){
+    var row=el('div','lane');
+    var sel=el('select');
+    sel.setAttribute('aria-label',T('seq.lane','Sound for lane')+' '+(li+1));
+    SEL.forEach(function(s){var o=el('option',null,SNAME(s)+' — '+ROLELABEL(s.role));
+      o.value=s.id; if(s.id===L.id)o.selected=true; sel.appendChild(o)});
+    sel.addEventListener('change',function(){L.id=sel.value; preload()});
+    row.appendChild(sel);
+    var arr=[];
+    for(var j=0;j<STEPS;j++){
+      (function(j){
+        var b=el('button','cellbtn'+(j%4===0?' beat':'')); b.type='button';
+        b.setAttribute('aria-pressed',L.steps[j]?'true':'false');
+        b.setAttribute('aria-label',T('seq.lane','Lane')+' '+(li+1)+' · '+(j+1));
+        b.addEventListener('click',function(){
+          L.steps[j]=!L.steps[j]; b.setAttribute('aria-pressed',L.steps[j]?'true':'false');
+          if(L.steps[j])trig(L,0);
+        });
+        row.appendChild(b); arr.push(b);
+      })(j);
+    }
+    cellEls.push(arr); laneHost.appendChild(row);
+  });
+  function preload(){
+    var files={};
+    lanes.forEach(function(L){var s=byId[L.id]; if(s&&s.grp)files[D.sprites.sounds[s.grp].file]=1});
+    Object.keys(files).forEach(function(f){AudioEngine.preload(f)});
+  }
+  function trig(L,when){
+    var s=byId[L.id]; if(!s||!s.off)return;
+    var c=AudioEngine.ctx(); if(!c||!AudioEngine.ready())return;
+    AudioEngine.trigger(D.sprites.sounds[s.grp].file,s.off[0],Math.min(s.off[1],0.5),
+      when||c.currentTime,0.9);
+  }
+  var playing=false,timer=null,step=0,nextT=0,bpm=+$('#seq-bpm').value;
+  var bpmEl=$('#seq-bpm'), bpmV=$('#seq-bpm-v'), status=$('#seq-status'), btn=$('#seq-play');
+  bpmV.textContent=bpm+' bpm';
+  bpmEl.oninput=function(){bpm=+bpmEl.value;bpmV.textContent=bpm+' bpm'};
+  function stepDur(){return 60/bpm/4}
+  function paint(st){cellEls.forEach(function(arr){arr.forEach(function(b,j){
+    b.classList.toggle('cur',j===st)})})}
+  function schedule(){
+    var c=AudioEngine.ctx(); if(!c)return;
+    while(nextT < c.currentTime+0.12){
+      var st=step;
+      lanes.forEach(function(L){if(L.steps[st])trig(L,nextT)});
+      (function(st,t){setTimeout(function(){paint(st)},Math.max(0,(t-c.currentTime)*1000))})(st,nextT);
+      nextT+=stepDur(); step=(step+1)%STEPS;
+    }
+  }
+  btn.onclick=function(){
+    if(playing){ playing=false; clearInterval(timer); timer=null;
+      btn.textContent=T('seq.play','Play loop');
+      cellEls.forEach(function(a){a.forEach(function(b){b.classList.remove('cur')})});
+      return }
+    var c=AudioEngine.ctx();
+    if(!c||!AudioEngine.ready()){
+      status.textContent=T('seq.nowebaudio','This browser cannot schedule sample-accurate audio — use the play buttons instead.');
+      return }
+    preload();
+    status.textContent=T('seq.loading','loading samples…');
+    setTimeout(function(){status.textContent=''},1400);
+    playing=true; step=0; nextT=c.currentTime+0.12;
+    btn.textContent=T('seq.stop','Stop');
+    timer=setInterval(schedule,25);
+  };
+  $('#seq-clear').onclick=function(){
+    lanes.forEach(function(L,li){ L.steps=new Array(STEPS).fill(false);
+      cellEls[li].forEach(function(b){b.setAttribute('aria-pressed','false')}) });
+  };
+  if(!(window.AudioContext||window.webkitAudioContext)){
+    btn.disabled=true;
+    $('#seq-status').textContent=T('seq.nowebaudio2','Web Audio is unavailable in this browser; the loop builder needs it.');
+  }
+}
+
+/* ---------------- notation key + about + footer ---------------- */
+var SBN_KEYS=[
+  ['b','kick, unforced'],['B','kick, forced — capitals mean more pressure'],
+  ['t','closed hi-hat'],['ts','open hi-hat'],['k','K snare'],['Pf','PF snare'],
+  ['Psh','PSCH snare'],['^','inward — the sound is made on the inhale'],
+  ['h','aspiration, extra breath on the release'],
+  ['BB','an oscillation: a doubled capital is a continuous cycle'],
+  ['~','whistle'],['+','simultaneous — two sources at once'],
+  ['/','beat division'],['-','rest'],['tb','two sounds inside one beat (a duplet)'],
+  ['{ }','encloses a whole pattern']
+];
+var ABOUT=[
+  ['about.rec.h','Recordings','about.rec.p',
+   'All 200 sound recordings and 94 pattern recordings come from beatboxer.ir by Seyed Morteza '+
+   'Kamali, published under CC BY-NC 4.0. Audio here is re-encoded to mono and packed into sprite '+
+   'files for playback; nothing else about it was changed. Non-commercial use only, attribution '+
+   'required.'],
+  ['about.meas.h','Measurement','about.meas.p',
+   'Every figure on this site was computed from the source audio: short-time Fourier analysis for '+
+   'the spectrum, percentiles of spectral energy for the frequency bands, normalised '+
+   'autocorrelation over voiced frames for the fundamental, and envelope analysis on the first '+
+   'onset for attack and decay. Method and code live in the repository.'],
+  ['about.phon.h','Phonetics','about.phon.p',
+   'Grounded in Proctor, Bresch, Byrd, Nayak & Narayanan (2013), Paralinguistic mechanisms of '+
+   'production in human beatboxing, JASA 133(2); Patil, Greer, Blaylock & Narayanan, Non-pulmonic '+
+   'initiation in human beatboxing, ICPhS 2023; Standard Beatbox Notation from humanbeatbox.com; '+
+   'and the IPA chart with its Extensions (extIPA).'],
+  ['about.contrib.h','Contributing','about.contrib.p',
+   'The catalogue is a starting point, not a finished taxonomy: classifications are phonetic '+
+   'readings of community sound names and several deserve argument. Pattern names are ours, not '+
+   'the scene’s. Corrections, better recordings and missing sounds are all welcome — open an '+
+   'issue on github.com/beeb-ox.']
+];
+var LINKS={'beatboxer.ir':'https://www.beatboxer.ir/all-beatbox-sounds/',
+  'CC BY-NC 4.0':'https://creativecommons.org/licenses/by-nc/4.0/',
+  'github.com/beeb-ox':'https://github.com/beeb-ox','humanbeatbox.com':'https://www.humanbeatbox.com/articles/standard-beatbox-notation-sbn/'};
+function linkify(text){
+  var html=esc(text);
+  Object.keys(LINKS).forEach(function(k){
+    html=html.split(esc(k)).join('<a href="'+LINKS[k]+'">'+esc(k)+'</a>');
+  });
+  return html;
+}
+function buildKeys(){
+  var kg=$('#keygrid'); if(!kg)return; kg.innerHTML='';
+  SBN_KEYS.forEach(function(kv){
+    var d=el('div'); d.appendChild(el('code',null,kv[0]));
+    d.appendChild(el('span',null,TV('sbn',kv[0],kv[1]))); kg.appendChild(d);
+  });
+  [['#aboutgrid'],['#footgrid']].forEach(function(sel){
+    var g=$(sel[0]); if(!g)return; g.innerHTML='';
+    ABOUT.forEach(function(a){
+      var d=el('div');
+      d.appendChild(el('h4',null,T(a[0],a[1])));
+      var p=el('p'); p.innerHTML=linkify(T(a[2],a[3])); d.appendChild(p);
+      g.appendChild(d);
+    });
+  });
+}
+BUILDERS.notation=function(){ buildKeys() };
+
+/* ---------------- boot ---------------- */
+function buildChrome(){
+  applyI18n();
+  buildNav();
+  buildPageNav();
+  buildKeys();
+}
+buildChrome();
+onRoute();
+})();
+</script>
+
+</body>
+</html>

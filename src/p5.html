@@ -1,0 +1,224 @@
+/* ---------------- routes + nav ---------------- */
+var ROUTES=[
+  {id:'home',path:'/',navKey:'nav.home',navEn:'Home',
+   titleKey:'home.title.plain',titleEn:'Beatbox Sound Atlas',
+   blurbKey:'home.blurb',blurbEn:'What the human mouth can do as a drum machine, measured.'},
+  {id:'atlas',path:'/atlas',navKey:'nav.atlas',navEn:'The atlas',
+   titleKey:'atlas.title',titleEn:'The atlas',
+   blurbKey:'card.atlas',blurbEn:'All 200 sounds, filterable, each with a full specimen card.'},
+  {id:'coverage',path:'/coverage',navKey:'nav.coverage',navEn:'Coverage',
+   titleKey:'cov.title',titleEn:'Articulatory coverage',
+   blurbKey:'card.coverage',blurbEn:'The IPA grid with beatbox overlaid, and the vocal tract mapped.'},
+  {id:'acoustics',path:'/acoustics',navKey:'nav.acoustics',navEn:'Acoustics',
+   titleKey:'ac.title',titleEn:'Pitch and spectrum',
+   blurbKey:'card.acoustics',blurbEn:'Measured pitch and spectral energy against real instruments.'},
+  {id:'limits',path:'/limits',navKey:'nav.limits',navEn:'Hard limits',
+   titleKey:'lim.title',titleEn:'Hard limits',
+   blurbKey:'card.limits',blurbEn:'What the mouth cannot do, and the physics behind each wall.'},
+  {id:'patterns',path:'/patterns',navKey:'nav.patterns',navEn:'Patterns',
+   titleKey:'pat.title',titleEn:'Patterns to play',
+   blurbKey:'card.patterns',blurbEn:'A 16-step loop builder plus 94 recorded patterns with notation.'},
+  {id:'notation',path:'/notation',navKey:'nav.notation',navEn:'Notation & sources',
+   titleKey:'not.title',titleEn:'Notation key',
+   blurbKey:'card.notation',blurbEn:'How to read SBN and IPA here, where the audio came from, what is wrong.'}
+];
+var BUILT={};
+function routeById(id){for(var i=0;i<ROUTES.length;i++)if(ROUTES[i].id===id)return ROUTES[i];return null}
+function curRouteId(){
+  var h=(location.hash||'').replace(/^#/,'');
+  for(var i=0;i<ROUTES.length;i++)if(ROUTES[i].path===h)return ROUTES[i].id;
+  return 'home';
+}
+function buildNav(){
+  var nav=$('#mainnav'); nav.innerHTML='';
+  var cur=curRouteId();
+  ROUTES.forEach(function(r){
+    var a=el('a',null,T(r.navKey,r.navEn)); a.href='#'+r.path;
+    if(r.id===cur)a.setAttribute('aria-current','page');
+    a.addEventListener('click',function(){nav.classList.remove('open');
+      $('#navtoggle').setAttribute('aria-expanded','false')});
+    nav.appendChild(a);
+  });
+}
+$('#navtoggle').addEventListener('click',function(){
+  var nav=$('#mainnav'); var open=nav.classList.toggle('open');
+  this.setAttribute('aria-expanded',open?'true':'false');
+});
+function buildPageNav(){
+  document.querySelectorAll('[data-pagenav]').forEach(function(box){
+    box.innerHTML='';
+    var id=box.dataset.pagenav;
+    var i=ROUTES.map(function(r){return r.id}).indexOf(id);
+    var prev=ROUTES[i-1], next=ROUTES[i+1];
+    if(prev){ var a=el('a','prev'); a.href='#'+prev.path;
+      a.appendChild(el('span',null,T('nav.prev','← Previous')));
+      a.appendChild(el('b',null,T(prev.navKey,prev.navEn))); box.appendChild(a) }
+    else { box.appendChild(el('span')) }
+    if(next){ var b=el('a','next'); b.href='#'+next.path;
+      b.appendChild(el('span',null,T('nav.next','Next →')));
+      b.appendChild(el('b',null,T(next.navKey,next.navEn))); box.appendChild(b) }
+  });
+}
+var BUILDERS={};
+function show(id){
+  document.querySelectorAll('[data-page]').forEach(function(n){
+    n.classList.toggle('on', n.dataset.page===id);
+  });
+  if(BUILDERS[id] && !BUILT[id]){ BUILT[id]=true; BUILDERS[id]() }
+  buildNav();
+  var r=routeById(id);
+  document.title = (r&&r.id!=='home' ? T(r.titleKey,r.titleEn)+' · ' : '')+'Beatbox Sound Atlas';
+}
+function onRoute(){ var id=curRouteId(); show(id);
+  if(!window.__firstRoute){window.__firstRoute=true} else window.scrollTo(0,0) }
+window.addEventListener('hashchange',onRoute);
+
+/* ---------------- language switch ---------------- */
+$('#lang').addEventListener('click',function(){
+  LANG = LANG==='zh' ? 'en' : 'zh';
+  try{localStorage.setItem('bbx-lang',LANG)}catch(e){}
+  applyI18n();
+  /* drop every built page and rebuild the visible one */
+  Object.keys(BUILT).forEach(function(k){delete BUILT[k]});
+  ['#keylist','#figs','#homecards','#cov','#tally','#ch-pitch','#ch-spec','#anatsvg',
+   '#zonelist','#limit-list','#pat-tabs','#pat-list','#seq-head','#seq-lanes','#keygrid',
+   '#footgrid','#aboutgrid','#list','#f-fam','#f-dir','#f-role','#f-manner','#f-place',
+   '#f-cat','#f-diff'].forEach(function(sel){var n=$(sel); if(n)n.innerHTML=''});
+  buildChrome();
+  show(curRouteId());
+});
+
+/* ---------------- home ---------------- */
+BUILDERS.home=function(){
+  var figs=[
+    [S.length, T('fig.sounds','sounds recorded, measured and classified')],
+    [COV.nCells+' / '+(COV.cells-COV.imposs),
+      T('fig.cells','articulatory cells occupied, of those anatomically possible')],
+    [Object.keys(D.sprites.sounds).length, T('fig.families','sound families, from kicks to whistles')],
+    [COV.noLung, T('fig.nolung','sounds that need no lung air at all')],
+    [P.length, T('fig.patterns','patterns with notation and audio')],
+    [COV.bbOnly, T('fig.bbonly','cells beatbox uses that no language does')]
+  ];
+  var box=$('#figs'); box.innerHTML='';
+  figs.forEach(function(f){var d=el('div','fig');
+    d.appendChild(el('b',null,String(f[0]))); d.appendChild(el('span',null,f[1])); box.appendChild(d)});
+  var kl=$('#keylist'); kl.innerHTML='';
+  FAMS.forEach(function(f){
+    var n=S.filter(function(s){return s.prim===f}).length;
+    var r=el('div','keyrow');
+    var sw=el('span','sw2'); sw.style.background=famColor(f); r.appendChild(sw);
+    var mid=el('span'); mid.appendChild(el('b',null,FAMLABEL(f)));
+    mid.appendChild(el('em',null,FAMDESC(f))); r.appendChild(mid);
+    r.appendChild(el('span','n',String(n)));
+    kl.appendChild(r);
+  });
+  var hc=$('#homecards'); hc.innerHTML='';
+  ROUTES.slice(1).forEach(function(r,i){
+    var a=el('a','homecard'); a.href='#'+r.path;
+    a.appendChild(el('span','num','0'+(i+1)));
+    a.appendChild(el('b',null,T(r.titleKey,r.titleEn)));
+    a.appendChild(el('p',null,T(r.blurbKey,r.blurbEn)));
+    a.appendChild(el('span','go',T('card.go','Open →')));
+    hc.appendChild(a);
+  });
+};
+
+/* ---------------- atlas: filters ---------------- */
+var F={q:'',fam:new Set(),dir:new Set(),role:new Set(),manner:new Set(),place:new Set(),
+       cat:new Set(),diff:new Set()};
+function countBy(key,val){
+  return S.filter(function(s){
+    if(key==='fam')return s.prim===val;
+    if(key==='dir')return s.dirs.indexOf(val)>=0;
+    if(key==='role')return s.role===val;
+    if(key==='manner')return s.gmanner===val;
+    if(key==='place')return s.gplace===val;
+    if(key==='cat')return s.cat===val;
+    if(key==='diff')return s.diff===val;
+    return false}).length;
+}
+function chipSet(host,key,items,swatch){
+  var box=$(host); box.innerHTML='';
+  items.forEach(function(it){
+    var b=el('button','chip'); b.type='button';
+    b.setAttribute('aria-pressed', F[key].has(it.v)?'true':'false');
+    if(swatch){var sw=el('span','sw'); sw.style.background=famColor(it.v); b.appendChild(sw)}
+    b.appendChild(document.createTextNode(it.l));
+    b.appendChild(el('span','n',String(countBy(key,it.v))));
+    if(it.t)b.title=it.t;
+    b.dataset.key=key; b.dataset.val=it.v;
+    b.addEventListener('click',function(){
+      var on=b.getAttribute('aria-pressed')==='true';
+      b.setAttribute('aria-pressed',on?'false':'true');
+      if(on)F[key].delete(it.v); else F[key].add(it.v);
+      renderList();
+    });
+    box.appendChild(b);
+  });
+}
+function buildChips(){
+  chipSet('#f-fam','fam',FAMS.map(function(f){return{v:f,l:FAMLABEL(f),t:FAMDESC(f)}}),true);
+  chipSet('#f-dir','dir',[{v:'out',l:T('dir.out','Egressive (out)')},
+    {v:'in',l:T('dir.in','Ingressive (in)')},{v:'none',l:T('dir.none','None')}]);
+  chipSet('#f-role','role',ROLES.filter(function(r){return countBy('role',r)>0})
+    .map(function(r){return{v:r,l:ROLELABEL(r)}}));
+  chipSet('#f-manner','manner',D.manners.filter(function(m){return countBy('manner',m)>0})
+    .map(function(m){return{v:m,l:MANNER(m)}}));
+  chipSet('#f-place','place',D.places.filter(function(p){return countBy('place',p)>0})
+    .map(function(p){return{v:p,l:PLACE(p)}}));
+  var cats=[]; S.forEach(function(s){if(cats.indexOf(s.cat)<0)cats.push(s.cat)});
+  chipSet('#f-cat','cat',cats.map(function(c){return{v:c,l:CAT(c)}}));
+  chipSet('#f-diff','diff',[1,2,3,4,5].map(function(d){return{v:d,l:'★'.repeat(d)}}));
+}
+$('#q').addEventListener('input',function(e){F.q=e.target.value.toLowerCase().trim();renderList()});
+$('#reset').addEventListener('click',function(){
+  F.q='';$('#q').value='';
+  ['fam','dir','role','manner','place','cat','diff'].forEach(function(k){F[k].clear()});
+  document.querySelectorAll('.chip[aria-pressed="true"]').forEach(function(b){
+    b.setAttribute('aria-pressed','false')});
+  renderList();
+});
+function setFilter(key,val){
+  ['fam','dir','role','manner','place','cat','diff'].forEach(function(k){F[k].clear()});
+  F[key].add(val); F.q=''; $('#q').value='';
+  location.hash='#/atlas';
+  BUILT.atlas=true; buildChips(); renderList();
+  document.querySelectorAll('.chip').forEach(function(b){
+    b.setAttribute('aria-pressed', (b.dataset.key===key&&b.dataset.val===String(val))?'true':'false')});
+  setTimeout(function(){window.scrollTo(0,0)},0);
+}
+function setCellFilter(m,p){
+  ['fam','dir','role','cat','diff'].forEach(function(k){F[k].clear()});
+  F.manner.clear(); F.place.clear(); F.manner.add(m); F.place.add(p);
+  F.q=''; $('#q').value='';
+  location.hash='#/atlas';
+  BUILT.atlas=true; buildChips(); renderList();
+  document.querySelectorAll('.chip').forEach(function(b){
+    var on=(b.dataset.key==='manner'&&b.dataset.val===m)||(b.dataset.key==='place'&&b.dataset.val===p);
+    b.setAttribute('aria-pressed',on?'true':'false')});
+  setTimeout(function(){window.scrollTo(0,0)},0);
+}
+function focusSound(s){
+  ['fam','dir','role','manner','place','cat','diff'].forEach(function(k){F[k].clear()});
+  openId=s.id; F.q=SNAME(s).toLowerCase(); $('#q').value=SNAME(s);
+  location.hash='#/atlas';
+  BUILT.atlas=true; buildChips(); renderList();
+  setTimeout(function(){window.scrollTo(0,0)},0);
+}
+function match(s){
+  if(F.fam.size&&!F.fam.has(s.prim))return false;
+  if(F.dir.size&&!s.dirs.some(function(d){return F.dir.has(d)}))return false;
+  if(F.role.size&&!F.role.has(s.role))return false;
+  if(F.manner.size&&!F.manner.has(s.gmanner))return false;
+  if(F.place.size&&!F.place.has(s.gplace))return false;
+  if(F.cat.size&&!F.cat.has(s.cat))return false;
+  if(F.diff.size&&!F.diff.has(s.diff))return false;
+  if(F.q){
+    var h=(s.name+' '+s.alias.join(' ')+' '+s.sbn+' '+s.ipa+' '+s.inst+' '+s.place+' '+
+           s.manner+' '+s.cat+' '+s.role+' '+s.howto+' '+SNAME(s)+' '+
+           TS(s.id,'howto','')+' '+compose('inst',s.inst)+' '+CAT(s.cat)).toLowerCase();
+    if(h.indexOf(F.q)<0)return false;
+  }
+  return true;
+}
+BUILDERS.atlas=function(){ buildChips(); renderList() };

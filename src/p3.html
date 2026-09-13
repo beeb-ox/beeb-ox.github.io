@@ -1,0 +1,298 @@
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#/" data-route="/">
+      <span class="dot"></span><b>Beatbox Sound Atlas</b>
+      <span data-i18n="brand.org">beeb ox · open beatbox research</span>
+    </a>
+    <nav class="mainnav" id="mainnav" aria-label="Sections"></nav>
+    <div class="topbar-tools">
+      <button class="iconbtn navtoggle" id="navtoggle" type="button" aria-label="Sections"
+        aria-expanded="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <button class="iconbtn lang" id="lang" type="button" aria-label="Switch language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>
+          <path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"/></svg>
+        <span id="lang-label">中文</span>
+      </button>
+      <button class="iconbtn" id="theme" type="button" aria-label="Switch colour theme">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="view">
+
+<!-- ========================= HOME ========================= -->
+<div data-page="home">
+  <header class="mast">
+    <div class="wrap mast-in">
+      <div class="mast-body">
+        <div>
+          <h1 data-i18n-html="home.title">Beatbox<br>Sound&nbsp;<em>Atlas</em></h1>
+          <p class="prose lede" data-i18n="home.lede">Every sound the archive holds, measured and
+            classified the way a phonetician would classify it: where in the mouth it is made, which
+            airstream drives it, what it does acoustically, and which instrument it stands in for.
+            Two hundred recordings were analysed directly — the pitch, brightness, attack and decay
+            figures on this site are measured from the audio, not estimated. The point of the
+            exercise is the edge: where the human mouth reaches an instrument's territory, and where
+            it simply cannot go.</p>
+        </div>
+        <aside class="keycard">
+          <p class="eyebrow" data-i18n="home.keytitle">Six ways to move air</p>
+          <div id="keylist"></div>
+          <p class="keyfoot" data-i18n="home.keyfoot">Colour on every chart and card follows this
+            key. Speech uses four of these mechanisms; beatboxing uses all six, and two of them
+            leave the lungs free.</p>
+        </aside>
+      </div>
+      <div class="figs" id="figs"></div>
+    </div>
+  </header>
+  <section class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="home.explore">Start anywhere</h2>
+      <p class="sub" data-i18n="home.exploresub">Seven sections. The atlas is the catalogue; the
+        rest are arguments made out of it.</p>
+    </div>
+    <div class="homecards" id="homecards"></div>
+  </section>
+</div>
+
+<!-- ========================= ATLAS ========================= -->
+<div data-page="atlas">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.atlas">Section 01 · The catalogue</span>
+      <h2 data-i18n="atlas.title">The atlas</h2>
+      <p class="prose" data-i18n="atlas.intro">Two hundred sounds. Filter them, play them, and open
+        any one for its full specimen card: the IPA reading, the airstream mechanism, the measured
+        acoustics, how it is produced, and whether any spoken language uses the same articulation.
+        Colour throughout encodes the airstream mechanism; the arrow marks airflow direction.</p>
+    </div>
+    <div class="atlas">
+      <aside class="rail">
+        <div>
+          <label class="fl" for="q" data-i18n="f.search">Search</label>
+          <input class="search" id="q" type="search" placeholder="name, IPA, instrument…"
+            data-i18n-ph="f.searchph" autocomplete="off">
+        </div>
+        <div><label class="fl" data-i18n="f.fam">Airstream mechanism</label>
+          <div class="chips" id="f-fam"></div></div>
+        <div><label class="fl" data-i18n="f.dir">Airflow</label>
+          <div class="chips" id="f-dir"></div></div>
+        <div><label class="fl" data-i18n="f.role">Musical role</label>
+          <div class="chips" id="f-role"></div></div>
+        <div><label class="fl" data-i18n="f.manner">Manner</label>
+          <div class="chips" id="f-manner"></div></div>
+        <div><label class="fl" data-i18n="f.place">Place</label>
+          <div class="chips" id="f-place"></div></div>
+        <div><label class="fl" data-i18n="f.cat">Family</label>
+          <div class="chips" id="f-cat"></div></div>
+        <div><label class="fl" data-i18n="f.diff">Difficulty</label>
+          <div class="chips" id="f-diff"></div></div>
+        <div class="rail-foot">
+          <span id="count" class="mono">200</span>
+          <button class="linkbtn" id="reset" type="button" data-i18n="f.clear">Clear all</button>
+        </div>
+      </aside>
+      <div>
+        <div class="list" id="list"></div>
+        <p class="figcaption" id="empty" style="display:none;padding:22px 4px;color:var(--muted)"
+          data-i18n="atlas.empty">No sound matches those filters.</p>
+      </div>
+    </div>
+    <div class="pagenav" data-pagenav="atlas"></div>
+  </section>
+</div>
+
+<!-- ========================= COVERAGE ========================= -->
+<div data-page="coverage">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.coverage">Section 02 · Coverage</span>
+      <h2 data-i18n="cov.title">Articulatory coverage</h2>
+      <p class="prose" data-i18n="cov.intro">Place of articulation across the top, manner down the
+        side — the layout of an IPA consonant chart. Every cell is one way of making a sound. A
+        shaded cell means spoken languages use that combination as a phoneme somewhere in the world.
+        A coloured cell means this archive contains it, and the number is how many sounds. Cells
+        outlined in ink are made by beatboxers but by no known language. Cells in pink are ruled out
+        by anatomy: no human can make them at all. Hover a ruled-out cell to see why, and click any
+        coloured cell to filter the atlas to it.</p>
+    </div>
+    <div class="gridwrap"><table class="cov" id="cov"></table></div>
+    <div class="legend">
+      <span><i style="background:var(--grid-speech)"></i><span data-i18n="cov.l1">used in spoken language</span></span>
+      <span><i style="background:var(--pulmonic)"></i><span data-i18n="cov.l2">in this archive</span></span>
+      <span><i style="background:var(--surface);box-shadow:inset 0 0 0 2px var(--ink)"></i><span data-i18n="cov.l3">beatbox only</span></span>
+      <span><i style="background:var(--grid-none);border:1px solid var(--rule-2)"></i><span data-i18n="cov.l4">producible, unused</span></span>
+      <span><i style="background:var(--grid-x);border:1px solid var(--grid-x-line)"></i><span data-i18n="cov.l5">anatomically impossible</span></span>
+    </div>
+    <div class="tally" id="tally"></div>
+  </section>
+  <section class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="anat.title">Where in the mouth</h2>
+      <p class="sub" data-i18n="anat.sub">A mid-sagittal schematic of the vocal tract. Click a zone
+        to filter the atlas to sounds articulated there.</p>
+    </div>
+    <div class="anat">
+      <div class="chartcard"><div id="anatsvg"></div></div>
+      <div>
+        <p class="eyebrow" style="margin-bottom:10px" data-i18n="anat.per">Sounds per place of articulation</p>
+        <div class="zonelist" id="zonelist"></div>
+        <p class="prose" style="font-size:14.5px;margin-top:16px" data-i18n="anat.note">The
+          distribution is lopsided on purpose. Beatboxing leans on the lips and the tongue tip
+          because those are the two articulators fast enough to keep sixteenth notes, and free enough
+          to work while the throat holds a bass note underneath.</p>
+      </div>
+    </div>
+    <div class="pagenav" data-pagenav="coverage"></div>
+  </section>
+</div>
+
+<!-- ========================= ACOUSTICS ========================= -->
+<div data-page="acoustics">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.acoustics">Section 03 · Measured sound</span>
+      <h2 data-i18n="ac.title">Pitch and spectrum</h2>
+      <p class="prose" data-i18n="ac.intro">Both charts on this page are measurements, not
+        estimates. Every recording was decoded and analysed: the fundamental by autocorrelation over
+        the voiced frames of each file, the energy band by percentiles of the mean power spectrum.
+        Read together they say where the mouth reaches an instrument's territory and where it
+        falls short.</p>
+    </div>
+    <div class="sec-head">
+      <h2 data-i18n="ac.pitch">Pitch reach</h2>
+      <p class="sub" data-i18n="ac.pitchsub">Measured fundamental of every pitched sound, against
+        the playing ranges of real instruments. Logarithmic axis; one octave per equal step.</p>
+    </div>
+    <figure class="chartcard wide">
+      <div id="ch-pitch"></div>
+      <figcaption data-i18n="ac.pitchcap">Instrument bars are nominal playing ranges of the
+        fundamental. Dots are individual archive recordings, placed at the median fundamental
+        measured over the voiced frames of each file. Unpitched sounds — kicks, hats, most snares
+        and clicks — have no fundamental and are excluded here; they appear in the spectral chart
+        below.</figcaption>
+    </figure>
+    <div class="sec-head" style="margin-top:48px">
+      <h2 data-i18n="ac.spec">Spectral footprint</h2>
+      <p class="sub" data-i18n="ac.specsub">Where each sound puts its energy. Bars span the 5th to
+        95th percentile of measured spectral energy, with the median marked.</p>
+    </div>
+    <figure class="chartcard wide">
+      <div id="ch-spec"></div>
+      <figcaption data-i18n="ac.speccap">Percussion reference ranges at the top are the frequency
+        bands those instruments actually occupy in a mix. Below them, archive sounds are grouped by
+        musical role and ordered by median frequency. This is the chart that shows the hi-hat
+        imitation landing squarely on target while the cymbal falls short.</figcaption>
+    </figure>
+    <div class="pagenav" data-pagenav="acoustics"></div>
+  </section>
+</div>
+
+<!-- ========================= LIMITS ========================= -->
+<div data-page="limits">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.limits">Section 04 · The edge</span>
+      <h2 data-i18n="lim.title">Hard limits</h2>
+      <p class="prose" data-i18n="lim.intro">What the mouth cannot do, with the numbers from this
+        archive next to the physical reason. Every figure below is computed from the recordings, and
+        where something is not measurable from this dataset the card says so rather than guessing.</p>
+    </div>
+    <div class="limits" id="limit-list"></div>
+    <div class="pagenav" data-pagenav="limits"></div>
+  </section>
+</div>
+
+<!-- ========================= PATTERNS ========================= -->
+<div data-page="patterns">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.patterns">Section 05 · Patterns</span>
+      <h2 data-i18n="pat.title">Patterns to play</h2>
+      <p class="prose" data-i18n="pat.intro">Build a loop out of the archive's own recordings, then
+        work through ninety-four recorded patterns with their notation — from six beginner bars to
+        fifty technical ones.</p>
+    </div>
+    <div class="sec-head">
+      <h2 data-i18n="seq.title">Pattern builder</h2>
+      <p class="sub" data-i18n="seq.sub">Four lanes, sixteen steps. Pick any sound from the archive
+        per lane and build a loop out of real recordings.</p>
+    </div>
+    <div class="seq">
+      <div class="seq-top">
+        <button class="btn" id="seq-play" type="button" data-i18n="seq.play">Play loop</button>
+        <button class="btn ghost" id="seq-clear" type="button" data-i18n="seq.clear">Clear</button>
+        <label style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted)">
+          <span data-i18n="seq.tempo">Tempo</span>
+          <input class="slider" id="seq-bpm" type="range" min="60" max="180" value="96" step="1">
+          <span class="mono" id="seq-bpm-v" style="width:56px">96 bpm</span>
+        </label>
+        <span class="mono" id="seq-status" style="font-size:11.5px;color:var(--faint)"></span>
+      </div>
+      <div class="seq-grid">
+        <div class="seq-head" id="seq-head"></div>
+        <div id="seq-lanes"></div>
+      </div>
+    </div>
+    <div class="sec-head" style="margin-top:48px">
+      <h2 data-i18n="pat.lib">Pattern library</h2>
+      <p class="sub" data-i18n="pat.libsub">The source archive numbers these patterns; the names
+        here describe what each one does. The original number is kept under every name.</p>
+    </div>
+    <div class="pat-bar">
+      <div class="tabs" id="pat-tabs" role="tablist"></div>
+      <label class="pat-search"><span class="sr" data-i18n="pat.searchsr">Search patterns</span>
+        <input class="search" id="pq" type="search" placeholder="search patterns…"
+          data-i18n-ph="pat.searchph" autocomplete="off">
+      </label>
+    </div>
+    <div class="pats" id="pat-list"></div>
+    <div class="pagenav" data-pagenav="patterns"></div>
+  </section>
+</div>
+
+<!-- ========================= NOTATION ========================= -->
+<div data-page="notation">
+  <section class="wrap">
+    <div class="pagehead">
+      <span class="kicker" data-i18n="kicker.notation">Section 06 · How to read this</span>
+      <h2 data-i18n="not.title">Notation key</h2>
+      <p class="prose" data-i18n="not.intro">Standard Beatbox Notation is the community shorthand
+        used in the pattern library and on every specimen card. It is not a standard in the
+        institutional sense — it grew out of forum posts — but it is what beatboxers actually
+        write.</p>
+    </div>
+    <div class="keygrid" id="keygrid"></div>
+    <p class="prose" style="margin-top:20px" data-i18n-html="not.ipa">IPA transcriptions on the
+      specimen cards use the standard diacritics: <span class="ipa">ʼ</span> for an ejective,
+      <span class="ipa">↓</span> for ingressive airflow, <span class="ipa">ˤ</span> for
+      pharyngealisation, <span class="ipa">̥</span> for voicelessness, and the click letters
+      <span class="ipa">ʘ ǀ ǃ ǂ ǁ</span>. They are phonetic approximations of a musical gesture,
+      not claims that a beatbox sound is a phoneme.</p>
+    <div class="sec-head" style="margin-top:48px">
+      <h2 data-i18n="not.about">About the data</h2>
+      <p class="sub" data-i18n="not.aboutsub">Where the recordings came from, how they were
+        measured, and what this catalogue gets wrong.</p>
+    </div>
+    <div class="foot" id="aboutgrid"></div>
+    <div class="pagenav" data-pagenav="notation"></div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap foot" id="footgrid"></div>
+</footer>
+
+<div class="nowplaying" id="np"><b id="np-name"></b><span class="mono" id="np-meta"></span></div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>

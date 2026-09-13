@@ -1,0 +1,202 @@
+/* ---------------- acoustics ---------------- */
+BUILDERS.acoustics=function(){ buildPitch(); buildSpec() };
+function buildPitch(){
+  var host=$('#ch-pitch'); host.innerHTML='';
+  var pitched=S.filter(function(s){return s.ac.f0>0 && s.ac.voiced>=0.35});
+  var LO=25,HI=5200,W=980,PL=190,PR=26,PT=26,PB=34,rowH=19,gap=26,famH=30;
+  var H=PT+D.instr.length*rowH+gap+FAMS.length*famH+PB+14;
+  var iw=W-PL-PR, lo=Math.log(LO), hi=Math.log(HI);
+  var X=function(f){return PL+iw*(Math.log(f)-lo)/(hi-lo)};
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.pitch','Measured fundamental frequency of archive sounds against instrument ranges')});
+  svg.style.display='block'; svg.style.minWidth='640px';
+  [25,50,100,200,400,800,1600,3200,5000].forEach(function(f){
+    svg.appendChild(sv('line',{x1:X(f),y1:PT-8,x2:X(f),y2:H-PB+4,stroke:'var(--rule)','stroke-width':1}));
+    var t=sv('text',{x:X(f),y:H-PB+17,'text-anchor':'middle','font-size':10,fill:'var(--muted)'});
+    t.textContent=fmtHz(f)+(f===25?' Hz':''); svg.appendChild(t);
+  });
+  var y=PT;
+  var lab=sv('text',{x:PL,y:PT-12,'font-size':10.5,fill:'var(--faint)','font-weight':600});
+  lab.textContent=T('pitch.band1','INSTRUMENT PLAYING RANGE (fundamental)'); svg.appendChild(lab);
+  D.instr.forEach(function(ins){
+    var t=sv('text',{x:PL-10,y:y+rowH/2+3.5,'text-anchor':'end','font-size':11,fill:'var(--ink-2)'});
+    t.textContent=TV('instr',ins.n,ins.n); svg.appendChild(t);
+    var x0=X(ins.lo),x1=X(ins.hi);
+    svg.appendChild(sv('rect',{x:x0,y:y+4,width:Math.max(3,x1-x0),height:rowH-9,rx:3.5,
+      fill:ins.k==='perc'?'var(--rule-2)':'var(--ink-2)',opacity:ins.k==='perc'?0.85:0.3}));
+    var lv=sv('text',{x:x1+6,y:y+rowH/2+3.5,'font-size':9.5,fill:'var(--faint)'});
+    lv.textContent=fmtHz(ins.lo)+'–'+fmtHz(ins.hi); svg.appendChild(lv);
+    y+=rowH;
+  });
+  y+=gap;
+  var lab2=sv('text',{x:PL,y:y-12,'font-size':10.5,fill:'var(--faint)','font-weight':600});
+  lab2.textContent=T('pitch.band2','ARCHIVE: MEASURED FUNDAMENTAL')+' ('+pitched.length+')';
+  svg.appendChild(lab2);
+  FAMS.forEach(function(f){
+    var set=pitched.filter(function(s){return s.prim===f});
+    var t=sv('text',{x:PL-10,y:y+famH/2+3.5,'text-anchor':'end','font-size':11,fill:'var(--ink-2)'});
+    t.textContent=FAMLABEL(f); svg.appendChild(t);
+    var t2=sv('text',{x:PL-10,y:y+famH/2+15,'text-anchor':'end','font-size':9,fill:'var(--faint)'});
+    t2.textContent=set.length+' '+(set.length===1?T('u.sound','sound'):T('u.sounds','sounds'));
+    svg.appendChild(t2);
+    svg.appendChild(sv('line',{x1:PL,y1:y+famH/2,x2:PL+iw,y2:y+famH/2,
+      stroke:'var(--rule)','stroke-width':1}));
+    set.sort(function(a,b){return a.ac.f0-b.ac.f0});
+    set.forEach(function(s,i){
+      var c=sv('circle',{cx:X(s.ac.f0),cy:y+famH/2+((i%3)-1)*5.4,r:4.2,fill:famColor(f),
+        opacity:0.75,stroke:'var(--surface)','stroke-width':1.4});
+      c.style.cursor='pointer';
+      c.addEventListener('mouseenter',function(e){ c.setAttribute('r',6);
+        showTip(e.clientX,e.clientY,'<b>'+esc(SNAME(s))+'</b><span class="m">'+
+          Math.round(s.ac.f0)+' Hz · '+esc(FAMLABEL(f))+' '+arrow(s)+'</span>'+
+          esc(compose('inst',s.inst)))});
+      c.addEventListener('mouseleave',function(){c.setAttribute('r',4.2);hideTip()});
+      c.addEventListener('click',function(){focusSound(s)});
+      svg.appendChild(c);
+    });
+    y+=famH;
+  });
+  var loF=Math.min.apply(null,pitched.map(function(s){return s.ac.f0}));
+  var hiF=Math.max.apply(null,pitched.map(function(s){return s.ac.f0}));
+  [[loF,T('pitch.lowest','lowest measured'),1],[hiF,T('pitch.highest','highest measured'),-1]]
+   .forEach(function(m){
+    svg.appendChild(sv('line',{x1:X(m[0]),y1:PT-2,x2:X(m[0]),y2:H-PB-2,
+      stroke:'var(--glottalic)','stroke-width':1.4,'stroke-dasharray':'3 3'}));
+    var t=sv('text',{x:X(m[0])+6*m[2],y:H-PB-7,'font-size':9.5,fill:'var(--glottalic)',
+      'font-weight':600,'text-anchor':m[2]>0?'start':'end'});
+    t.textContent=m[1]+': '+Math.round(m[0])+' Hz'; svg.appendChild(t);
+  });
+  host.appendChild(svg);
+}
+function buildSpec(){
+  var host=$('#ch-spec'); host.innerHTML='';
+  var LO=28,HI=17000;
+  var groups=[{k:'__ref',l:T('spec.ref','Percussion reference')}].concat(
+    ['kick','snare','hat','cymbal','bass','bass+melody','melody','fx'].map(function(r){
+      return {k:r,l:ROLELABEL(r)}}));
+  var W=1400,PL=186,PR=132,PT=34,PB=34,bh=2.2,bg=1.0,gh=26,refBh=7,refBg=4.5;
+  var H=PT+D.spectral.length*(refBh+refBg)+gh;
+  groups.forEach(function(g){ if(g.k==='__ref')return;
+    H += S.filter(function(s){return s.role===g.k}).length*(bh+bg)+gh });
+  H+=PB;
+  var iw=W-PL-PR, lo=Math.log(LO), hi=Math.log(HI);
+  var X=function(f){return PL+iw*(Math.log(Math.max(LO,f))-lo)/(hi-lo)};
+  var svg=sv('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',role:'img',
+    'aria-label':T('a11y.spec','Spectral energy band of every archive sound, grouped by musical role')});
+  svg.style.display='block'; svg.style.minWidth='640px';
+  [30,60,125,250,500,1000,2000,4000,8000,16000].forEach(function(f){
+    svg.appendChild(sv('line',{x1:X(f),y1:PT-10,x2:X(f),y2:H-PB+4,stroke:'var(--rule)','stroke-width':1}));
+    var t=sv('text',{x:X(f),y:H-PB+17,'text-anchor':'middle','font-size':10,fill:'var(--muted)'});
+    t.textContent=fmtHz(f)+(f===30?' Hz':''); svg.appendChild(t);
+    var t2=sv('text',{x:X(f),y:PT-15,'text-anchor':'middle','font-size':9,fill:'var(--faint)'});
+    t2.textContent=fmtHz(f); svg.appendChild(t2);
+  });
+  var y=PT, band=0;
+  groups.forEach(function(g){
+    var count = g.k==='__ref' ? D.spectral.length
+      : S.filter(function(s){return s.role===g.k}).length;
+    var bandH = g.k==='__ref' ? count*(refBh+refBg) : count*(bh+bg);
+    if(band%2===1) svg.appendChild(sv('rect',{x:PL-6,y:y-7,width:iw+12,height:bandH+10,
+      fill:'var(--ink)',opacity:0.026}));
+    band++;
+    var cy=y+bandH/2;
+    var gl=sv('text',{x:PL-14,y:cy-1,'text-anchor':'end','font-size':11.5,fill:'var(--ink-2)',
+      'font-weight':600}); gl.textContent=g.l; svg.appendChild(gl);
+    var n0=sv('text',{x:PL-14,y:cy+12,'text-anchor':'end','font-size':9.5,fill:'var(--faint)'});
+    n0.textContent = g.k==='__ref' ? T('spec.real','real instruments')
+      : count+' '+(count===1?T('u.sound','sound'):T('u.sounds','sounds'));
+    svg.appendChild(n0);
+    if(g.k==='__ref'){
+      D.spectral.forEach(function(r){
+        var x0=X(r.lo),x1=X(r.hi);
+        svg.appendChild(sv('rect',{x:x0,y:y,width:Math.max(2,x1-x0),height:refBh,rx:2.5,
+          fill:'var(--ink-2)',opacity:0.5}));
+        var t=sv('text',{x:x1+7,y:y+refBh-0.6,'font-size':9.4,fill:'var(--muted)'});
+        t.textContent=TV('instr',r.n,r.n); svg.appendChild(t);
+        y+=refBh+refBg;
+      });
+    } else {
+      S.filter(function(s){return s.role===g.k})
+       .sort(function(a,b){return a.ac.f50-b.ac.f50})
+       .forEach(function(s){
+        var x0=X(s.ac.f05),x1=X(s.ac.f95);
+        var r=sv('rect',{x:x0,y:y,width:Math.max(2,x1-x0),height:bh,rx:1.1,
+          fill:famColor(s.prim),opacity:0.78});
+        r.style.cursor='pointer';
+        var md=sv('rect',{x:X(s.ac.f50)-0.9,y:y-0.9,width:1.8,height:bh+1.8,
+          fill:famColor(s.prim),opacity:1});
+        var hit=sv('rect',{x:PL,y:y-0.7,width:iw,height:bh+bg+0.7,fill:'transparent'});
+        hit.style.cursor='pointer';
+        var enter=function(e){ r.setAttribute('opacity',1);
+          showTip(e.clientX,e.clientY,'<b>'+esc(SNAME(s))+'</b><span class="m">'+
+            fmtHz(s.ac.f05)+'–'+fmtHz(s.ac.f95)+' Hz · '+T('spec.median','median')+' '+
+            fmtHz(s.ac.f50)+'</span>'+esc(compose('inst',s.inst)))};
+        var leave=function(){ r.setAttribute('opacity',0.78); hideTip() };
+        [r,hit].forEach(function(nd){
+          nd.addEventListener('mouseenter',enter); nd.addEventListener('mousemove',enter);
+          nd.addEventListener('mouseleave',leave);
+          nd.addEventListener('click',function(){focusSound(s)})});
+        svg.appendChild(r); svg.appendChild(md); svg.appendChild(hit);
+        y+=bh+bg;
+      });
+    }
+    y+=gh;
+  });
+  host.appendChild(svg);
+}
+
+/* ---------------- hard limits ---------------- */
+BUILDERS.limits=function(){
+  var pitched=S.filter(function(s){return s.ac.f0>0 && s.ac.voiced>=0.35});
+  var lowest=pitched.reduce(function(a,b){return b.ac.f0<a.ac.f0?b:a});
+  var highest=pitched.reduce(function(a,b){return b.ac.f0>a.ac.f0?b:a});
+  var cym=S.filter(function(s){return s.role==='cymbal'});
+  var longestCym=cym.reduce(function(a,b){return b.ac.decay_ms>a.ac.decay_ms?b:a});
+  var bright=S.reduce(function(a,b){return b.ac.centroid>a.ac.centroid?b:a});
+  var poly=S.filter(function(s){return /\+/.test(s.role)||
+    /polyphon|two-pitch|two-source|three-source/i.test(s.manner)});
+  var fastest=S.reduce(function(a,b){return (b.ac.ev_rate>a.ac.ev_rate&&b.ac.dur>2)?b:a});
+  function fill(str,map){ return str.replace(/\{(\w+)\}/g,function(_,k){
+    return map[k]==null?'':String(map[k])}) }
+  var V={lowHz:Math.round(lowest.ac.f0), lowName:SNAME(lowest),
+    nPitched:pitched.length, cymS:(longestCym.ac.decay_ms/1000).toFixed(2),
+    cymName:SNAME(longestCym), brightHz:fmtHz(bright.ac.centroid), brightName:SNAME(bright),
+    highHz:Math.round(highest.ac.f0), imposs:COV.imposs, cells:COV.cells,
+    noLung:COV.noLung, poly:poly.length, rate:fastest.ac.ev_rate.toFixed(1),
+    rateName:SNAME(fastest)};
+  var items=[
+    {n:V.lowHz+' Hz', h:T('lim.1.h','The bottom octave is missing'),
+     p:fill(T('lim.1.p','The lowest pitch measured anywhere in this archive is {lowHz} Hz, from {lowName}. A five-string bass guitar reaches 31 Hz and a TR-808 kick is commonly tuned to 40. Subharmonic phonation buys the voice roughly an octave below its modal range, but amplitude collapses as it goes and the folds cannot be made longer or heavier on demand.'),V),
+     v:fill(T('lim.1.v','measured: lowest fundamental across {nPitched} pitched recordings'),V)},
+    {n:V.cymS+' s', h:T('lim.2.h','Cymbals will not ring'),
+     p:fill(T('lim.2.p','The longest cymbal decay in the archive is {cymS} seconds, from {cymName}. A real 18-inch crash rings for two to four seconds because a metal plate stores energy and releases it slowly. Breath noise has no store: when the air stops, the sound stops.'),V),
+     v:T('lim.2.v','measured: time from peak to −20 dB on the first onset')},
+    {n:V.brightHz+' Hz', h:T('lim.3.h','The top end is thinner than it sounds'),
+     p:fill(T('lim.3.p','The brightest sound here, {brightName}, centres at {brightHz} Hz — genuinely in hi-hat territory. But the highest pitched sound tops out at {highHz} Hz, below a piccolo’s top note, and nothing in the archive carries usable energy above about 16 kHz where real cymbals still have content.'),V),
+     v:T('lim.3.v','measured: spectral centroid and fundamental across all 200 recordings')},
+    {n:'2–3', h:T('lim.4.h','Polyphony stops at three voices'),
+     p:T('lim.4.p','The mouth has exactly three independent sound sources: the vocal folds, a buccal or lingual oscillator, and a whistle. Combining all three at once is the ceiling, reached by a handful of sounds here. A string quartet has four players and an orchestra sixty; one performer cannot voice a triad with independent timbres.'),
+     v:fill(T('lim.4.v','derived: {poly} sounds in the archive stack two or more simultaneous sources'),V)},
+    {n:V.imposs+' '+T('u.cells','cells'), h:T('lim.5.h','Some articulations are simply unbuilt'),
+     p:fill(T('lim.5.p','On the coverage chart, {imposs} of {cells} place-and-manner combinations are ruled out by anatomy rather than by practice. There is no lateral channel at the lips, no cavity behind the velar closure of a click, and the glottis cannot be both the piston of an ejective and its valve. No amount of training opens these.'),V),
+     v:T('lim.5.v','anatomical: see the coverage chart for the reason on each cell')},
+    {n:V.noLung+' '+T('u.sounds','sounds'), h:T('lim.6.h','Breath is the real constraint — and the clever workaround'),
+     p:fill(T('lim.6.p','{noLung} of the 200 sounds need no lung air at all: they run on tongue air, cheek air, or the inhale. That is not a curiosity, it is the whole engineering solution. It is why a beatboxer can hold a bass line under a sixteenth-note pattern for minutes, and why a purely pulmonic performer cannot.'),V),
+     v:T('lim.6.v','derived: sounds whose airstream mechanism excludes the lungs')},
+    {n:V.rate+'/s', h:T('lim.7.h','Articulation rate has a mechanical ceiling'),
+     p:fill(T('lim.7.p','The fastest sustained roll measured here runs at {rate} events per second ({rateName}). Ordinary speech manages six to eight syllables per second; rolls beat that only because the tongue tip or lip travels a fraction of the distance. Push further and the articulator cannot reset in time.'),V),
+     v:T('lim.7.v','measured: onset detection with a 60 ms minimum gap, on recordings over 2 s')},
+    {n:'0 dB', h:T('lim.8.h','Loudness is not in this dataset'),
+     p:T('lim.8.p','These recordings carry no calibration, so nothing here can tell you how loud a mouth kick is against a real bass drum. The honest answer is that it is not close: a kick drum moves a large membrane and a 30-litre shell of air. Live beatboxing exists because the microphone does, and any claim otherwise on this page would be made up.'),
+     v:T('lim.8.v','not measurable from this archive — stated as a known gap')}
+  ];
+  var box=$('#limit-list'); box.innerHTML='';
+  items.forEach(function(it){
+    var d=el('div','limit');
+    d.appendChild(el('span','n',it.n));
+    d.appendChild(el('h4',null,it.h));
+    d.appendChild(el('p',null,it.p));
+    d.appendChild(el('p','v',it.v));
+    box.appendChild(d);
+  });
+};

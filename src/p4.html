@@ -1,0 +1,229 @@
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script>
+(function(){
+"use strict";
+var D=window.BBX, S=D.sounds, P=D.patterns, I=window.BBX_I18N||{};
+var FAMS=['pulmonic','glottalic','lingual','buccal','aerodynamic','external'];
+var FAM_EN={pulmonic:'Pulmonic',glottalic:'Glottalic',lingual:'Lingual (click)',
+  buccal:'Buccal',aerodynamic:'Aerodynamic',external:'External'};
+var FAMDESC_EN={
+  pulmonic:'Powered by the lungs — the mechanism behind almost all speech.',
+  glottalic:'Powered by the larynx acting as a piston: ejectives and implosives.',
+  lingual:'Powered by the tongue rarefying a sealed pocket: clicks.',
+  buccal:'Powered by the cheeks and tongue alone. The lungs stay free.',
+  aerodynamic:'A whistle: a narrow jet exciting a cavity, with no vibrating tissue.',
+  external:'No airstream at all — the energy comes from outside the body.'};
+var ROLES=['kick','snare','hat','cymbal','bass','melody','fx','bass+melody'];
+var ROLE_EN={kick:'Kick',snare:'Snare',hat:'Hi-hat',cymbal:'Cymbal',bass:'Bass',
+  melody:'Melodic',fx:'Effect','bass+melody':'Bass + melody'};
+var AIR_EN={PE:'pulmonic egressive',PI:'pulmonic ingressive',GE:'glottalic egressive (ejective)',
+  GI:'glottalic ingressive (implosive)',LI:'lingual ingressive (click)',LE:'lingual egressive',
+  BE:'buccal egressive',BI:'buccal ingressive',AE:'aerodynamic (whistle)',
+  AI:'aerodynamic ingressive'};
+var $=function(s){return document.querySelector(s)};
+var el=function(t,c,x){var e=document.createElement(t);if(c)e.className=c;
+  if(x!=null)e.textContent=x;return e};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){
+  return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})};
+var famColor=function(f){return 'var(--'+f+')'};
+var fmtHz=function(v){return v>=1000?(v/1000).toFixed(v>=10000?0:1)+'k':Math.round(v)+''};
+var SVGNS='http://www.w3.org/2000/svg';
+function sv(t,a){var e=document.createElementNS(SVGNS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+
+/* ---------------- i18n ---------------- */
+var LANG='en';
+try{var sl=localStorage.getItem('bbx-lang'); if(sl==='zh'||sl==='en')LANG=sl;}catch(e){}
+function dict(g){return (I[LANG]&&I[LANG][g])||null}
+function T(k,en){ if(LANG==='en')return en; var d=dict('ui'); var v=d&&d[k];
+  return (v==null||v==='')?en:v }
+function TV(g,k,en){ if(LANG==='en')return en; var d=dict(g); var v=d&&d[k];
+  return (v==null||v==='')?en:v }
+function TS(id,f,en){ if(LANG==='en')return en; var d=dict('sounds'); var s=d&&d[id];
+  var v=s&&s[f]; return (v==null||v==='')?en:v }
+function TD(g,en){ if(LANG==='en')return en; var d=dict(g); var v=d&&d[en];
+  return (v==null||v==='')?en:v }
+/* Technical terms compose the same way in both languages (modifier first), so a small
+   atom dictionary covers hundreds of phrases consistently. A phrase override wins. */
+function compose(group,en){
+  if(LANG==='en')return en;
+  var ph=dict(group+'Phrase'); if(ph&&ph[en])return ph[en];
+  var d=dict(group+'Atom'); if(!d)return en;
+  var parts=en.split(/(\s*\+\s*|\s*→\s*|\s*\/\s*)/), out='', any=false;
+  for(var i=0;i<parts.length;i++){
+    var p=parts[i];
+    if(/^\s*\+\s*$/.test(p)){out+=' + ';continue}
+    if(/^\s*→\s*$/.test(p)){out+=' → ';continue}
+    if(/^\s*\/\s*$/.test(p)){out+='／';continue}
+    p=p.trim(); if(!p)continue;
+    var m=/^([^(]*?)\s*\(([^)]*)\)$/.exec(p);
+    if(m){
+      var head=m[1].trim();
+      var h=head?(d[head.toLowerCase()]||head):'';
+      if(head&&d[head.toLowerCase()])any=true;
+      var ms=m[2].split(',').map(function(x){
+        var k='('+x.trim().toLowerCase()+')', v=d[k]; if(v)any=true; return v||x.trim()});
+      out+=h+'（'+ms.join('、')+'）';
+    } else {
+      var v2=d[p.toLowerCase()]; if(v2)any=true; out+=v2||p;
+    }
+  }
+  return any?out:en;
+}
+var FAMLABEL=function(f){return TV('fam',f,FAM_EN[f])};
+var FAMDESC=function(f){return TV('famDesc',f,FAMDESC_EN[f])};
+var ROLELABEL=function(r){return TV('role',r,ROLE_EN[r]||r)};
+var SNAME=function(s){return TS(s.id,'name',s.name)};
+var PLACE=function(p){return TV('place',p,p[0].toUpperCase()+p.slice(1))};
+var MANNER=function(m){return TV('manner',m,m[0].toUpperCase()+m.slice(1))};
+var CAT=function(c){return TV('cat',c,c)};
+
+function applyI18n(root){
+  (root||document).querySelectorAll('[data-i18n]').forEach(function(n){
+    if(n.dataset.en==null)n.dataset.en=n.textContent.replace(/\s+/g,' ').trim();
+    n.textContent=T(n.dataset.i18n,n.dataset.en);
+  });
+  (root||document).querySelectorAll('[data-i18n-html]').forEach(function(n){
+    if(n.dataset.enHtml==null)n.dataset.enHtml=n.innerHTML;
+    var k=n.dataset.i18nHtml, d=dict('html'), v=(LANG!=='en'&&d)?d[k]:null;
+    n.innerHTML=(v==null||v==='')?n.dataset.enHtml:v;
+  });
+  (root||document).querySelectorAll('[data-i18n-ph]').forEach(function(n){
+    if(n.dataset.enPh==null)n.dataset.enPh=n.getAttribute('placeholder')||'';
+    n.setAttribute('placeholder',T(n.dataset.i18nPh,n.dataset.enPh));
+  });
+  document.documentElement.lang = LANG==='zh'?'zh':'en';
+  $('#lang-label').textContent = LANG==='zh'?'EN':'中文';
+  $('#lang').setAttribute('aria-label', LANG==='zh'?'Switch to English':'切换到中文');
+}
+
+/* ---------------- theme ---------------- */
+try{var st=localStorage.getItem('bbx-theme'); if(st)document.documentElement.dataset.theme=st;}catch(e){}
+$('#theme').addEventListener('click',function(){
+  var cur=document.documentElement.dataset.theme;
+  if(!cur)cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  var nxt=cur==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=nxt;
+  try{localStorage.setItem('bbx-theme',nxt)}catch(e){}
+});
+
+/* ---------------- tooltip ---------------- */
+var tip=$('#tip');
+function showTip(x,y,html){tip.innerHTML=html;tip.classList.add('on');
+  var r=tip.getBoundingClientRect();
+  var lx=Math.min(Math.max(8,x+13),innerWidth-r.width-8);
+  var ly=y-r.height-12; if(ly<8)ly=y+18;
+  tip.style.left=lx+'px';tip.style.top=ly+'px';}
+function hideTip(){tip.classList.remove('on')}
+
+/* ---------------- audio ---------------- */
+var AudioEngine=(function(){
+  var ctx=null,bufs={},pending={},fallback={},active=[],useFallback=false,rafId=null;
+  function getCtx(){ if(!ctx){var C=window.AudioContext||window.webkitAudioContext;
+    if(!C){useFallback=true;return null} ctx=new C();}
+    if(ctx.state==='suspended')ctx.resume(); return ctx;}
+  function load(file){
+    if(bufs[file])return Promise.resolve(bufs[file]);
+    if(pending[file])return pending[file];
+    var c=getCtx(); if(!c)return Promise.reject('no-webaudio');
+    pending[file]=fetch(file).then(function(r){
+        if(!r.ok)throw new Error('http '+r.status); return r.arrayBuffer()})
+      .then(function(ab){return new Promise(function(res,rej){
+        var p=c.decodeAudioData(ab,res,rej); if(p&&p.then)p.then(res,rej)})})
+      .then(function(b){bufs[file]=b;delete pending[file];return b})
+      .catch(function(e){delete pending[file];useFallback=true;throw e});
+    return pending[file];
+  }
+  function fbEl(file){ if(!fallback[file]){var a=new Audio(file);a.preload='auto';fallback[file]=a}
+    return fallback[file] }
+  function stopAll(){ active.forEach(function(s){try{s.stop()}catch(e){}}); active=[];
+    for(var f in fallback){try{fallback[f].pause()}catch(e){}}
+    if(rafId){cancelAnimationFrame(rafId);rafId=null} }
+  function playFallback(file,start,dur,onEnd){
+    var a=fbEl(file);
+    var go=function(){ a.play().catch(function(){});
+      var tick=function(){ if(a.paused)return;
+        if(a.currentTime>=start+dur-0.01){a.pause();if(onEnd)onEnd();return}
+        rafId=requestAnimationFrame(tick)};
+      rafId=requestAnimationFrame(tick) };
+    if(a.readyState>=2){ try{a.currentTime=start}catch(e){} go() }
+    else { a.addEventListener('loadeddata',function h(){a.removeEventListener('loadeddata',h);
+      try{a.currentTime=start}catch(e){} go()},{once:true}); a.load() }
+    return function(){a.pause();if(rafId)cancelAnimationFrame(rafId)};
+  }
+  return {
+    ready:function(){return !useFallback && !!getCtx()},
+    preload:function(f){return load(f).catch(function(){})},
+    play:function(file,start,dur,onEnd,maxDur){
+      stopAll();
+      var d=maxDur?Math.min(dur,maxDur):dur, stopped=false;
+      if(useFallback)return playFallback(file,start,d,onEnd);
+      var c=getCtx(); if(!c)return playFallback(file,start,d,onEnd);
+      load(file).then(function(b){
+        if(stopped)return;
+        var s=c.createBufferSource(); s.buffer=b;
+        var g=c.createGain(); g.gain.value=1;
+        s.connect(g); g.connect(c.destination);
+        s.onended=function(){if(onEnd)onEnd()};
+        s.start(0,start,d); active.push(s);
+        g.gain.setValueAtTime(1,c.currentTime+Math.max(0,d-0.03));
+        g.gain.linearRampToValueAtTime(0,c.currentTime+d);
+      }).catch(function(){ if(!stopped)playFallback(file,start,d,onEnd) });
+      return function(){stopped=true;stopAll()};
+    },
+    trigger:function(file,start,dur,when,gain){
+      var c=getCtx(); if(!c||useFallback)return;
+      var b=bufs[file]; if(!b)return;
+      var s=c.createBufferSource(); s.buffer=b;
+      var g=c.createGain(); g.gain.value=gain==null?1:gain;
+      s.connect(g); g.connect(c.destination);
+      var d=Math.min(dur,0.55);
+      s.start(when,start,d);
+      g.gain.setValueAtTime(g.gain.value,when+Math.max(0,d-0.05));
+      g.gain.linearRampToValueAtTime(0,when+d);
+    },
+    ctx:getCtx, stopAll:stopAll
+  };
+})();
+
+var np=$('#np'),npName=$('#np-name'),npMeta=$('#np-meta');
+var curBtn=null,curStop=null;
+function clearPlay(){ if(curBtn)curBtn.classList.remove('on'); curBtn=null;
+  np.classList.remove('on'); if(curStop){curStop();curStop=null} }
+function playSound(s,btn){
+  if(curBtn===btn){AudioEngine.stopAll();clearPlay();return}
+  clearPlay();
+  var g=D.sprites.sounds[s.grp]; if(!g||!s.off)return;
+  btn.classList.add('on'); curBtn=btn;
+  npName.textContent=SNAME(s);
+  npMeta.textContent=(s.ac.dur?s.ac.dur.toFixed(2)+'s':'')+
+    (s.ac.f0?'  ·  '+Math.round(s.ac.f0)+' Hz':'');
+  np.classList.add('on');
+  curStop=AudioEngine.play(g.file,s.off[0],s.off[1],function(){clearPlay()});
+}
+function playPattern(p,btn){
+  if(curBtn===btn){AudioEngine.stopAll();clearPlay();return}
+  clearPlay();
+  var g=D.sprites.patterns[p.grp]; if(!g||!p.off)return;
+  btn.classList.add('on'); curBtn=btn;
+  npName.textContent=TV('patterns',p.id,p.name)+'  ·  '+TV('level',p.level,p.level);
+  npMeta.textContent=p.off[1].toFixed(1)+'s';
+  np.classList.add('on');
+  curStop=AudioEngine.play(g.file,p.off[0],p.off[1],function(){clearPlay()});
+}
+function playIcon(){return '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.2 10.3 6 2.5 10.8Z"/></svg>'}
+function arrow(s){return s.dirs.indexOf('in')>=0?(s.dirs.length>1?'↕':'↓'):(s.dirs[0]==='none'?'·':'↑')}
+
+/* ---------------- coverage stats (needed by several pages) ---------------- */
+var COV=(function(){
+  var cells=0,imposs=0,speech=0,bbCells={},bbOnly=0;
+  D.manners.forEach(function(m){ var row=D.grid[m];
+    for(var i=0;i<D.places.length;i++){cells++;
+      if(row[i]==='X')imposs++; else if(row[i]==='S')speech++} });
+  S.forEach(function(s){var k=s.gmanner+'|'+s.gplace; bbCells[k]=(bbCells[k]||0)+1});
+  Object.keys(bbCells).forEach(function(k){ var p=k.split('|');
+    if(D.grid[p[0]][D.places.indexOf(p[1])]==='P')bbOnly++ });
+  return {cells:cells,imposs:imposs,speech:speech,bbCells:bbCells,
+          nCells:Object.keys(bbCells).length,bbOnly:bbOnly,
+          noLung:S.filter(function(s){return s.fams.indexOf('pulmonic')<0}).length};
+})();

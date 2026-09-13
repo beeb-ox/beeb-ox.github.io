@@ -1,0 +1,239 @@
+/* ---------------- patterns: library + builder ---------------- */
+var PLEVELS=[]; P.forEach(function(p){if(PLEVELS.indexOf(p.level)<0)PLEVELS.push(p.level)});
+var patCur=PLEVELS[0], patQ='';
+function stepClass(tok){
+  var t=tok.toLowerCase();
+  if(/^bb|^brr|^bm/.test(t))return 'b';
+  if(/^\^?b/.test(t))return 'k';
+  if(/^\^?(k|pf|ps|psh|tf|peh|poh|esh|sn|cl)/.test(t))return 's';
+  if(/^\^?(t|ts|tss|f|sh|ch|kch)/.test(t))return 'h';
+  return '';
+}
+function drawPats(){
+  var host=$('#pat-list'); host.innerHTML='';
+  var set=P.filter(function(p){
+    if(patQ){ var h=(p.name+' '+p.ref+' '+p.level+' '+p.notation+' '+
+      TV('patterns',p.id,p.name)+' '+TV('level',p.level,p.level)).toLowerCase();
+      return h.indexOf(patQ)>=0 }
+    return p.level===patCur });
+  if(!set.length){ host.appendChild(el('p','pat-empty',T('pat.empty','No pattern matches that search.')));
+    return }
+  set.forEach(function(p){
+    var c=el('div','pat'), top=el('div','pat-top');
+    var pb=el('button','play'); pb.type='button'; pb.innerHTML=playIcon();
+    pb.setAttribute('aria-label',T('a11y.play','Play')+' '+TV('patterns',p.id,p.name));
+    pb.addEventListener('click',function(){playPattern(p,pb)});
+    top.appendChild(pb);
+    var pn=el('span','pn');
+    pn.appendChild(el('b',null,TV('patterns',p.id,p.name)));
+    pn.appendChild(el('span','n',
+      TV('ref',p.ref,p.ref)+(patQ?' · '+TV('level',p.level,p.level):'')+
+      (p.off?' · '+p.off[1].toFixed(1)+'s':'')+
+      (p.ac&&p.ac.ev_rate?' · '+p.ac.ev_rate.toFixed(1)+'/s':'')));
+    top.appendChild(pn);
+    c.appendChild(top);
+    if(p.legend&&p.legend.length){
+      c.appendChild(el('p','legend-note',
+        p.legend.map(function(l){return TV('legend',l,l)}).join(' · ')));
+    }
+    var st=el('div','steps');
+    p.notation.split(' / ').forEach(function(line,li){
+      if(li>0)st.appendChild(el('span','step br'));
+      line.split(/\s+/).forEach(function(tok){
+        if(tok)st.appendChild(el('span','step '+stepClass(tok),tok));
+      });
+    });
+    c.appendChild(st);
+    if(p.wave&&p.wave.length){
+      var wb=el('div','wavebox');
+      p.wave.forEach(function(v){var i=el('i');i.style.height=Math.max(2,v*100)+'%';wb.appendChild(i)});
+      c.appendChild(wb);
+    }
+    host.appendChild(c);
+  });
+}
+$('#pq').addEventListener('input',function(e){patQ=e.target.value.toLowerCase().trim();drawPats()});
+BUILDERS.patterns=function(){
+  var tabs=$('#pat-tabs'); tabs.innerHTML='';
+  PLEVELS.forEach(function(L){
+    var b=el('tab'==='x'?'button':'button','tab',
+      TV('level',L,L)+' ('+P.filter(function(p){return p.level===L}).length+')');
+    b.type='button'; b.setAttribute('role','tab');
+    b.setAttribute('aria-selected',L===patCur?'true':'false');
+    b.addEventListener('click',function(){
+      patCur=L; patQ=''; $('#pq').value='';
+      tabs.querySelectorAll('.tab').forEach(function(t){
+        t.setAttribute('aria-selected',t===b?'true':'false')});
+      drawPats();
+    });
+    tabs.appendChild(b);
+  });
+  drawPats();
+  buildSeq();
+};
+function buildSeq(){
+  var STEPS=16, LANES=4;
+  var byId={}; S.forEach(function(s){byId[s.id]=s});
+  var pick=function(re,fb){ var f=S.filter(function(s){return re.test(s.id)});
+    return (f[0]||S.filter(function(s){return s.role===fb})[0]||S[0]).id };
+  var defaults=[pick(/^hi-hat$/,'hat'),pick(/^k-snare-out$/,'snare'),
+                pick(/^pf-snare$/,'snare'),pick(/^kick$/,'kick')];
+  var lanes=[];
+  for(var i=0;i<LANES;i++)lanes.push({id:defaults[i],steps:new Array(STEPS).fill(false)});
+  lanes[3].steps[0]=lanes[3].steps[8]=lanes[3].steps[10]=true;
+  lanes[1].steps[4]=lanes[1].steps[12]=true;
+  lanes[0].steps[2]=lanes[0].steps[6]=lanes[0].steps[10]=lanes[0].steps[14]=true;
+  var head=$('#seq-head'); head.innerHTML='';
+  head.appendChild(el('span',null,''));
+  for(var k=0;k<STEPS;k++)head.appendChild(el('span',null,(k%4===0)?String(k/4+1):'·'));
+  var laneHost=$('#seq-lanes'); laneHost.innerHTML='';
+  var SEL=S.slice().sort(function(a,b){return SNAME(a).localeCompare(SNAME(b),LANG==='zh'?'zh':'en')});
+  var cellEls=[];
+  lanes.forEach(function(L,li){
+    var row=el('div','lane');
+    var sel=el('select');
+    sel.setAttribute('aria-label',T('seq.lane','Sound for lane')+' '+(li+1));
+    SEL.forEach(function(s){var o=el('option',null,SNAME(s)+' — '+ROLELABEL(s.role));
+      o.value=s.id; if(s.id===L.id)o.selected=true; sel.appendChild(o)});
+    sel.addEventListener('change',function(){L.id=sel.value; preload()});
+    row.appendChild(sel);
+    var arr=[];
+    for(var j=0;j<STEPS;j++){
+      (function(j){
+        var b=el('button','cellbtn'+(j%4===0?' beat':'')); b.type='button';
+        b.setAttribute('aria-pressed',L.steps[j]?'true':'false');
+        b.setAttribute('aria-label',T('seq.lane','Lane')+' '+(li+1)+' · '+(j+1));
+        b.addEventListener('click',function(){
+          L.steps[j]=!L.steps[j]; b.setAttribute('aria-pressed',L.steps[j]?'true':'false');
+          if(L.steps[j])trig(L,0);
+        });
+        row.appendChild(b); arr.push(b);
+      })(j);
+    }
+    cellEls.push(arr); laneHost.appendChild(row);
+  });
+  function preload(){
+    var files={};
+    lanes.forEach(function(L){var s=byId[L.id]; if(s&&s.grp)files[D.sprites.sounds[s.grp].file]=1});
+    Object.keys(files).forEach(function(f){AudioEngine.preload(f)});
+  }
+  function trig(L,when){
+    var s=byId[L.id]; if(!s||!s.off)return;
+    var c=AudioEngine.ctx(); if(!c||!AudioEngine.ready())return;
+    AudioEngine.trigger(D.sprites.sounds[s.grp].file,s.off[0],Math.min(s.off[1],0.5),
+      when||c.currentTime,0.9);
+  }
+  var playing=false,timer=null,step=0,nextT=0,bpm=+$('#seq-bpm').value;
+  var bpmEl=$('#seq-bpm'), bpmV=$('#seq-bpm-v'), status=$('#seq-status'), btn=$('#seq-play');
+  bpmV.textContent=bpm+' bpm';
+  bpmEl.oninput=function(){bpm=+bpmEl.value;bpmV.textContent=bpm+' bpm'};
+  function stepDur(){return 60/bpm/4}
+  function paint(st){cellEls.forEach(function(arr){arr.forEach(function(b,j){
+    b.classList.toggle('cur',j===st)})})}
+  function schedule(){
+    var c=AudioEngine.ctx(); if(!c)return;
+    while(nextT < c.currentTime+0.12){
+      var st=step;
+      lanes.forEach(function(L){if(L.steps[st])trig(L,nextT)});
+      (function(st,t){setTimeout(function(){paint(st)},Math.max(0,(t-c.currentTime)*1000))})(st,nextT);
+      nextT+=stepDur(); step=(step+1)%STEPS;
+    }
+  }
+  btn.onclick=function(){
+    if(playing){ playing=false; clearInterval(timer); timer=null;
+      btn.textContent=T('seq.play','Play loop');
+      cellEls.forEach(function(a){a.forEach(function(b){b.classList.remove('cur')})});
+      return }
+    var c=AudioEngine.ctx();
+    if(!c||!AudioEngine.ready()){
+      status.textContent=T('seq.nowebaudio','This browser cannot schedule sample-accurate audio — use the play buttons instead.');
+      return }
+    preload();
+    status.textContent=T('seq.loading','loading samples…');
+    setTimeout(function(){status.textContent=''},1400);
+    playing=true; step=0; nextT=c.currentTime+0.12;
+    btn.textContent=T('seq.stop','Stop');
+    timer=setInterval(schedule,25);
+  };
+  $('#seq-clear').onclick=function(){
+    lanes.forEach(function(L,li){ L.steps=new Array(STEPS).fill(false);
+      cellEls[li].forEach(function(b){b.setAttribute('aria-pressed','false')}) });
+  };
+  if(!(window.AudioContext||window.webkitAudioContext)){
+    btn.disabled=true;
+    $('#seq-status').textContent=T('seq.nowebaudio2','Web Audio is unavailable in this browser; the loop builder needs it.');
+  }
+}
+
+/* ---------------- notation key + about + footer ---------------- */
+var SBN_KEYS=[
+  ['b','kick, unforced'],['B','kick, forced — capitals mean more pressure'],
+  ['t','closed hi-hat'],['ts','open hi-hat'],['k','K snare'],['Pf','PF snare'],
+  ['Psh','PSCH snare'],['^','inward — the sound is made on the inhale'],
+  ['h','aspiration, extra breath on the release'],
+  ['BB','an oscillation: a doubled capital is a continuous cycle'],
+  ['~','whistle'],['+','simultaneous — two sources at once'],
+  ['/','beat division'],['-','rest'],['tb','two sounds inside one beat (a duplet)'],
+  ['{ }','encloses a whole pattern']
+];
+var ABOUT=[
+  ['about.rec.h','Recordings','about.rec.p',
+   'All 200 sound recordings and 94 pattern recordings come from beatboxer.ir by Seyed Morteza '+
+   'Kamali, published under CC BY-NC 4.0. Audio here is re-encoded to mono and packed into sprite '+
+   'files for playback; nothing else about it was changed. Non-commercial use only, attribution '+
+   'required.'],
+  ['about.meas.h','Measurement','about.meas.p',
+   'Every figure on this site was computed from the source audio: short-time Fourier analysis for '+
+   'the spectrum, percentiles of spectral energy for the frequency bands, normalised '+
+   'autocorrelation over voiced frames for the fundamental, and envelope analysis on the first '+
+   'onset for attack and decay. Method and code live in the repository.'],
+  ['about.phon.h','Phonetics','about.phon.p',
+   'Grounded in Proctor, Bresch, Byrd, Nayak & Narayanan (2013), Paralinguistic mechanisms of '+
+   'production in human beatboxing, JASA 133(2); Patil, Greer, Blaylock & Narayanan, Non-pulmonic '+
+   'initiation in human beatboxing, ICPhS 2023; Standard Beatbox Notation from humanbeatbox.com; '+
+   'and the IPA chart with its Extensions (extIPA).'],
+  ['about.contrib.h','Contributing','about.contrib.p',
+   'The catalogue is a starting point, not a finished taxonomy: classifications are phonetic '+
+   'readings of community sound names and several deserve argument. Pattern names are ours, not '+
+   'the scene’s. Corrections, better recordings and missing sounds are all welcome — open an '+
+   'issue on github.com/beeb-ox.']
+];
+var LINKS={'beatboxer.ir':'https://www.beatboxer.ir/all-beatbox-sounds/',
+  'CC BY-NC 4.0':'https://creativecommons.org/licenses/by-nc/4.0/',
+  'github.com/beeb-ox':'https://github.com/beeb-ox','humanbeatbox.com':'https://www.humanbeatbox.com/articles/standard-beatbox-notation-sbn/'};
+function linkify(text){
+  var html=esc(text);
+  Object.keys(LINKS).forEach(function(k){
+    html=html.split(esc(k)).join('<a href="'+LINKS[k]+'">'+esc(k)+'</a>');
+  });
+  return html;
+}
+function buildKeys(){
+  var kg=$('#keygrid'); if(!kg)return; kg.innerHTML='';
+  SBN_KEYS.forEach(function(kv){
+    var d=el('div'); d.appendChild(el('code',null,kv[0]));
+    d.appendChild(el('span',null,TV('sbn',kv[0],kv[1]))); kg.appendChild(d);
+  });
+  [['#aboutgrid'],['#footgrid']].forEach(function(sel){
+    var g=$(sel[0]); if(!g)return; g.innerHTML='';
+    ABOUT.forEach(function(a){
+      var d=el('div');
+      d.appendChild(el('h4',null,T(a[0],a[1])));
+      var p=el('p'); p.innerHTML=linkify(T(a[2],a[3])); d.appendChild(p);
+      g.appendChild(d);
+    });
+  });
+}
+BUILDERS.notation=function(){ buildKeys() };
+
+/* ---------------- boot ---------------- */
+function buildChrome(){
+  applyI18n();
+  buildNav();
+  buildPageNav();
+  buildKeys();
+}
+buildChrome();
+onRoute();
+})();
+</script>

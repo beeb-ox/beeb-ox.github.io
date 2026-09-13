@@ -1,0 +1,2169 @@
+[
+ {
+  "id": "beginner-1",
+  "name": "Kick–Snare Foundation",
+  "ref": "Pattern 1",
+  "notation": "B B Pf B BB Pf",
+  "legend": [],
+  "level": "Basic",
+  "ord": 1,
+  "page": "Basic Patterns",
+  "grp": "beginner",
+  "off": [
+   0.0,
+   2.563
+  ],
+  "src": "patterns/beginner/1.mp3",
+  "ac": {
+   "dur": 2.547,
+   "centroid": 1979,
+   "f0": 181.8,
+   "ev_rate": 2.75,
+   "events": 7
+  }
+ },
+ {
+  "id": "beginner-2",
+  "name": "Boots and Cats",
+  "ref": "Pattern 2",
+  "notation": "B t Pf t tt Pf",
+  "legend": [],
+  "level": "Basic",
+  "ord": 1,
+  "page": "Basic Patterns",
+  "grp": "beginner",
+  "off": [
+   2.683,
+   2.518
+  ],
+  "src": "patterns/beginner/2.mp3",
+  "ac": {
+   "dur": 2.5,
+   "centroid": 3125,
+   "f0": 231.8,
+   "ev_rate": 1.6,
+   "events": 4
+  }
+ },
+ {
+  "id": "beginner-3",
+  "name": "Boots and Cats, Doubled",
+  "ref": "Pattern 3",
+  "notation": "B t t B Pf B t t B B t Pf",
+  "legend": [],
+  "level": "Basic",
+  "ord": 1,
+  "page": "Basic Patterns",
+  "grp": "beginner",
+  "off": [
+   5.322,
+   3.951
+  ],
+  "src": "patterns/beginner/3.mp3",
+  "ac": {
+   "dur": 3.933,
+   "centroid": 2022,
+   "f0": 225.2,
+   "ev_rate": 2.29,
+   "events": 9
+  }
+ },
+ {
+  "id": "beginner-4",
+  "name": "Straight Eights",
+  "ref": "Pattern 4",
+  "notation": "B t K t B B t K t",
+  "legend": [],
+  "level": "Basic",
+  "ord": 1,
+  "page": "Basic Patterns",
+  "grp": "beginner",
+  "off": [
+   9.393,
+   3.323
+  ],
+  "src": "patterns/beginner/4.mp3",
+  "ac": {
+   "dur": 3.3,
+   "centroid": 2085,
+   "f0": 285.0,
+   "ev_rate": 1.82,
+   "events": 6
+  }
+ },
+ {
+  "id": "beginner-5",
+  "name": "Double-Snare Turnaround",
+  "ref": "Pattern 5",
+  "notation": "B t K KK B K",
+  "legend": [],
+  "level": "Basic",
+  "ord": 1,
+  "page": "Basic Patterns",
+  "grp": "beginner",
+  "off": [
+   12.835,
+   2.567
+  ],
+  "src": "patterns/beginner/5.mp3",
+  "ac": {
+   "dur": 2.551,
+   "centroid": 1964,
+   "f0": 259.8,
+   "ev_rate": 2.35,
+   "events": 6
+  }
+ },
+ {
+  "id": "beginner-6",
+  "name": "Bmg Backbeat",
+  "ref": "Pattern 6",
+  "notation": "B t Bmg t B B t B Bmg ts",
+  "legend": [],
+  "level": "Basic",
+  "ord": 1,
+  "page": "Basic Patterns",
+  "grp": "beginner",
+  "off": [
+   15.523,
+   2.832
+  ],
+  "src": "patterns/beginner/6.mp3",
+  "ac": {
+   "dur": 2.813,
+   "centroid": 3996,
+   "f0": 184.3,
+   "ev_rate": 2.49,
+   "events": 7
+  }
+ },
+ {
+  "id": "wunknown-intermediate-1",
+  "name": "Sixteenth Hat Bed",
+  "ref": "Pattern 1",
+  "notation": "Bs t t t K t t t t t K t t t",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   0.0,
+   10.969
+  ],
+  "src": "patterns/WunKnown/Intermediate/1.mp3",
+  "ac": {
+   "dur": 10.969,
+   "centroid": 6421,
+   "f0": 3000.0,
+   "ev_rate": 4.19,
+   "events": 46
+  }
+ },
+ {
+  "id": "wunknown-intermediate-2",
+  "name": "K–F Hat Weave",
+  "ref": "Pattern 2",
+  "notation": "B k t k f k t k t Kch f t B k t k f k t k t Kch f t B k t k t Kch f t",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   11.089,
+   14.567
+  ],
+  "src": "patterns/WunKnown/Intermediate/2.mp3",
+  "ac": {
+   "dur": 14.566,
+   "centroid": 3036,
+   "f0": 1621.8,
+   "ev_rate": 1.72,
+   "events": 25
+  }
+ },
+ {
+  "id": "wunknown-intermediate-3",
+  "name": "Bdb Kick-Roll Groove",
+  "ref": "Pattern 3",
+  "notation": "Bs t K t bdbK t bdbb K K t bdbK t K t bdb K t bdbb K K t Bd",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   25.775,
+   8.582
+  ],
+  "src": "patterns/WunKnown/Intermediate/3.mp3",
+  "ac": {
+   "dur": 8.565,
+   "centroid": 1886,
+   "f0": 2900.3,
+   "ev_rate": 4.55,
+   "events": 39
+  }
+ },
+ {
+  "id": "wunknown-intermediate-4",
+  "name": "Bdb Chain",
+  "ref": "Pattern 4",
+  "notation": "BdbBdbBdbBdbKch",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   34.478,
+   5.516
+  ],
+  "src": "patterns/WunKnown/Intermediate/4.mp3",
+  "ac": {
+   "dur": 5.584,
+   "centroid": 1594,
+   "f0": 3191.2,
+   "ev_rate": 6.27,
+   "events": 35
+  }
+ },
+ {
+  "id": "wunknown-intermediate-5",
+  "name": "Snare-Led Bdb Chain",
+  "ref": "Pattern 5",
+  "notation": "PfdBdbBdbBdbPfdBdbBdbBdbPfdBdb",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   40.114,
+   8.266
+  ],
+  "src": "patterns/WunKnown/Intermediate/5.mp3",
+  "ac": {
+   "dur": 8.249,
+   "centroid": 492,
+   "f0": 197.4,
+   "ev_rate": 2.42,
+   "events": 20
+  }
+ },
+ {
+  "id": "wunknown-intermediate-6",
+  "name": "Kick–Kick, Snare–Snare",
+  "ref": "Pattern 6",
+  "notation": "В В К К В В В К К В В В К К В В К К В В К К В",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   48.499,
+   9.594
+  ],
+  "src": "patterns/WunKnown/Intermediate/6.mp3",
+  "ac": {
+   "dur": 9.586,
+   "centroid": 1671,
+   "f0": 3064.2,
+   "ev_rate": 5.95,
+   "events": 57
+  }
+ },
+ {
+  "id": "wunknown-intermediate-7",
+  "name": "Peh Snare Turnaround",
+  "ref": "Pattern 7",
+  "notation": "B t K B t K B tKB t K tKPehKBKKBPehK",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   58.213,
+   8.674
+  ],
+  "src": "patterns/WunKnown/Intermediate/7.mp3",
+  "ac": {
+   "dur": 8.674,
+   "centroid": 1550,
+   "f0": 1219.0,
+   "ev_rate": 3.57,
+   "events": 31
+  }
+ },
+ {
+  "id": "wunknown-intermediate-8",
+  "name": "Peh and PF Alternation",
+  "ref": "Pattern 8",
+  "notation": "Bs tt Peh K Pft B t Peh K t Bt PF Peh K tt",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   67.007,
+   7.363
+  ],
+  "src": "patterns/WunKnown/Intermediate/8.mp3",
+  "ac": {
+   "dur": 7.346,
+   "centroid": 2259,
+   "f0": 860.2,
+   "ev_rate": 0.95,
+   "events": 7
+  }
+ },
+ {
+  "id": "wunknown-intermediate-9",
+  "name": "Open Slot Groove",
+  "ref": "Pattern 9",
+  "notation": "B (X) Bm t K t K (tkK)",
+  "legend": [
+   "X = any sound you feel fits",
+   "Bm = bass kick"
+  ],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   74.49,
+   13.837
+  ],
+  "src": "patterns/WunKnown/Intermediate/9.mp3",
+  "ac": {
+   "dur": 13.877,
+   "centroid": 2415,
+   "f0": 2931.6,
+   "ev_rate": 1.66,
+   "events": 23
+  }
+ },
+ {
+  "id": "wunknown-intermediate-10",
+  "name": "tkK Triplet Drive",
+  "ref": "Pattern 10",
+  "notation": "Bs tkKB K K Bs tkKB K K Bs tkKB K K B K Peh K B K Peh K",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   88.447,
+   15.122
+  ],
+  "src": "patterns/WunKnown/Intermediate/10.mp3",
+  "ac": {
+   "dur": 15.105,
+   "centroid": 1799,
+   "f0": 316.0,
+   "ev_rate": 5.83,
+   "events": 88
+  }
+ },
+ {
+  "id": "wunknown-intermediate-11",
+  "name": "Pfd Double-Time Run",
+  "ref": "Pattern 11",
+  "notation": "B dBB dBBPfdPfd PfdPfd B dbbPfdPfd bd",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   103.689,
+   8.997
+  ],
+  "src": "patterns/WunKnown/Intermediate/11.mp3",
+  "ac": {
+   "dur": 8.981,
+   "centroid": 661,
+   "f0": 203.9,
+   "ev_rate": 3.12,
+   "events": 28
+  }
+ },
+ {
+  "id": "wunknown-intermediate-12",
+  "name": "Peh Three-Step",
+  "ref": "Pattern 12",
+  "notation": "B K Peh B K Peh B K PF K Peh B K Peh B K",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   112.805,
+   4.521
+  ],
+  "src": "patterns/WunKnown/Intermediate/12.mp3",
+  "ac": {
+   "dur": 4.498,
+   "centroid": 1429,
+   "f0": 179.3,
+   "ev_rate": 6.67,
+   "events": 30
+  }
+ },
+ {
+  "id": "wunknown-intermediate-13",
+  "name": "Kickless Hat Study",
+  "ref": "Pattern 13",
+  "notation": "K f t K K f K f t K K f K f t f",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   117.446,
+   5.991
+  ],
+  "src": "patterns/WunKnown/Intermediate/13.mp3",
+  "ac": {
+   "dur": 5.975,
+   "centroid": 3302,
+   "f0": 3049.4,
+   "ev_rate": 5.52,
+   "events": 33
+  }
+ },
+ {
+  "id": "wunknown-intermediate-14",
+  "name": "Peh Rollover",
+  "ref": "Pattern 14",
+  "notation": "B k K Peh K B k K K PehktkKPehk",
+  "legend": [],
+  "level": "Intermediate",
+  "ord": 2,
+  "page": "14 Intermediate Patterns",
+  "grp": "wunknown",
+  "off": [
+   123.557,
+   4.99
+  ],
+  "src": "patterns/WunKnown/Intermediate/14.mp3",
+  "ac": {
+   "dur": 4.99,
+   "centroid": 1940,
+   "f0": 2917.7,
+   "ev_rate": 3.61,
+   "events": 18
+  }
+ },
+ {
+  "id": "wunknown-advanced-1",
+  "name": "Peh Backbeat",
+  "ref": "Pattern 1",
+  "notation": "B k K Peh K B k K K",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   128.668,
+   12.028
+  ],
+  "src": "patterns/WunKnown/Advanced/1.mp3",
+  "ac": {
+   "dur": 12.017,
+   "centroid": 1576,
+   "f0": 188.4,
+   "ev_rate": 2.58,
+   "events": 31
+  }
+ },
+ {
+  "id": "wunknown-advanced-2",
+  "name": "K Snare Ladder",
+  "ref": "Pattern 2",
+  "notation": "Bs B k K b k K K B k K B k K K B K",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   140.815,
+   12.253
+  ],
+  "src": "patterns/WunKnown/Advanced/2.mp3",
+  "ac": {
+   "dur": 12.253,
+   "centroid": 2231,
+   "f0": 1803.8,
+   "ev_rate": 1.55,
+   "events": 19
+  }
+ },
+ {
+  "id": "wunknown-advanced-3",
+  "name": "tk Sixteenth Machine",
+  "ref": "Pattern 3",
+  "notation": "BtktkTtktkKtktkBtktkTtktkBtktkKtktkKKK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   153.188,
+   14.0
+  ],
+  "src": "patterns/WunKnown/Advanced/3.mp3",
+  "ac": {
+   "dur": 14.0,
+   "centroid": 2857,
+   "f0": 2613.9,
+   "ev_rate": 2.21,
+   "events": 31
+  }
+ },
+ {
+  "id": "wunknown-advanced-4",
+  "name": "Doubled-Kick Sixteenths",
+  "ref": "Pattern 4",
+  "notation": "b b t t t t b b K K t t b b t t t t b b t t b b K K t t b b t t K K t t",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   167.309,
+   15.0
+  ],
+  "src": "patterns/WunKnown/Advanced/4.mp3",
+  "ac": {
+   "dur": 15.0,
+   "centroid": 2648,
+   "f0": 154.0,
+   "ev_rate": 6.93,
+   "events": 104
+  }
+ },
+ {
+  "id": "wunknown-advanced-5",
+  "name": "Bdb and tkK Interlock",
+  "ref": "Pattern 5",
+  "notation": "BdbtkKtkKbdbKK tkKbdbtkKtkKbdbKK tkKbdbtkKKK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   182.429,
+   13.402
+  ],
+  "src": "patterns/WunKnown/Advanced/5.mp3",
+  "ac": {
+   "dur": 13.402,
+   "centroid": 2294,
+   "f0": 1740.5,
+   "ev_rate": 5.52,
+   "events": 74
+  }
+ },
+ {
+  "id": "wunknown-advanced-6",
+  "name": "Peh Interlock",
+  "ref": "Pattern 6",
+  "notation": "Bs t b K t b BkKPehbKPehKbkKK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   195.951,
+   13.992
+  ],
+  "src": "patterns/WunKnown/Advanced/6.mp3",
+  "ac": {
+   "dur": 13.992,
+   "centroid": 2195,
+   "f0": 2484.1,
+   "ev_rate": 3.5,
+   "events": 49
+  }
+ },
+ {
+  "id": "wunknown-advanced-7",
+  "name": "Peh–tkK Cascade",
+  "ref": "Pattern 7",
+  "notation": "BstkKPehKtkKk tkKPehKbKPehKbkKPehKBKPehKbkKK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   210.062,
+   14.0
+  ],
+  "src": "patterns/WunKnown/Advanced/7.mp3",
+  "ac": {
+   "dur": 14.0,
+   "centroid": 2227,
+   "f0": 1857.4,
+   "ev_rate": 3.64,
+   "events": 51
+  }
+ },
+ {
+  "id": "wunknown-advanced-8",
+  "name": "Bdb Triplet Loop",
+  "ref": "Pattern 8",
+  "notation": "Bs bdbtkKbdbK bdbtkKbdbK Bdb",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   224.182,
+   12.0
+  ],
+  "src": "patterns/WunKnown/Advanced/8.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 2146,
+   "f0": 2662.9,
+   "ev_rate": 6.0,
+   "events": 72
+  }
+ },
+ {
+  "id": "wunknown-advanced-9",
+  "name": "Lip-Roll Bookends",
+  "ref": "Pattern 9",
+  "notation": "(bRrR) PfkKPehKfkKPehKfkKPehKBBPfkKPehKfkKPehKfkKPehKBBPfkKPehKfkK (BRR)",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   236.302,
+   13.0
+  ],
+  "src": "patterns/WunKnown/Advanced/9.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 2171,
+   "f0": 291.4,
+   "ev_rate": 3.69,
+   "events": 48
+  }
+ },
+ {
+  "id": "wunknown-advanced-10",
+  "name": "Duck Snare Groove",
+  "ref": "Pattern 10",
+  "notation": "tkK bk (KQ) bk K Peh K b tkK kK btk (KQ) bk K Peh K",
+  "legend": [
+   "(KQ) = K snare with a duck sound (big brr)"
+  ],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   249.423,
+   12.375
+  ],
+  "src": "patterns/WunKnown/Advanced/10.mp3",
+  "ac": {
+   "dur": 12.364,
+   "centroid": 1665,
+   "f0": 1500.4,
+   "ev_rate": 7.36,
+   "events": 91
+  }
+ },
+ {
+  "id": "wunknown-advanced-11",
+  "name": "b–f tkK Alternation",
+  "ref": "Pattern 11",
+  "notation": "btkKftkKbtkKftkKK(tkK) (x3) btkKftkKbtkKftkKK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   261.917,
+   10.937
+  ],
+  "src": "patterns/WunKnown/Advanced/11.mp3",
+  "ac": {
+   "dur": 10.998,
+   "centroid": 2488,
+   "f0": 1826.8,
+   "ev_rate": 4.73,
+   "events": 52
+  }
+ },
+ {
+  "id": "wunknown-advanced-12",
+  "name": "Peh Chain",
+  "ref": "Pattern 12",
+  "notation": "bkKPehkbKPehKbkKPfkKPehKbKPehKbkK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   272.974,
+   14.0
+  ],
+  "src": "patterns/WunKnown/Advanced/12.mp3",
+  "ac": {
+   "dur": 13.996,
+   "centroid": 1432,
+   "f0": 411.7,
+   "ev_rate": 2.21,
+   "events": 31
+  }
+ },
+ {
+  "id": "wunknown-advanced-13",
+  "name": "PK Turnaround",
+  "ref": "Pattern 13",
+  "notation": "BdbtkKPehKtkKPKbdbdbPehk",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   287.094,
+   9.992
+  ],
+  "src": "patterns/WunKnown/Advanced/13.mp3",
+  "ac": {
+   "dur": 9.976,
+   "centroid": 1750,
+   "f0": 1580.8,
+   "ev_rate": 9.22,
+   "events": 92
+  }
+ },
+ {
+  "id": "wunknown-advanced-14",
+  "name": "PK–Peh Long Run",
+  "ref": "Pattern 14",
+  "notation": "BdbtkKPehKtkKPKftkKPehPKftkKPehKPKftkKPehKPKftkK",
+  "legend": [],
+  "level": "Advanced",
+  "ord": 3,
+  "page": "14 Advanced Patterns",
+  "grp": "wunknown",
+  "off": [
+   297.206,
+   10.358
+  ],
+  "src": "patterns/WunKnown/Advanced/14.mp3",
+  "ac": {
+   "dur": 10.357,
+   "centroid": 2606,
+   "f0": 1939.5,
+   "ev_rate": 8.59,
+   "events": 89
+  }
+ },
+ {
+  "id": "cj-1",
+  "name": "TkK Foundation",
+  "ref": "Pattern 1",
+  "notation": "B TkK PehK TkK Pf TkK PehK TkK (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   0.0,
+   31.782
+  ],
+  "src": "patterns/CJ/1.mp3",
+  "ac": {
+   "dur": 31.998,
+   "centroid": 1811,
+   "f0": 1179.7,
+   "ev_rate": 2.13,
+   "events": 68
+  }
+ },
+ {
+  "id": "cj-2",
+  "name": "Bb Kk Insert",
+  "ref": "Pattern 2",
+  "notation": "B TkK PehK Bb Kk Pf TkK PehK Bb Kk  (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   31.902,
+   28.01
+  ],
+  "src": "patterns/CJ/2.mp3",
+  "ac": {
+   "dur": 28.025,
+   "centroid": 1534,
+   "f0": 343.9,
+   "ev_rate": 2.5,
+   "events": 70
+  }
+ },
+ {
+  "id": "cj-3",
+  "name": "Bb Kk Double Insert",
+  "ref": "Pattern 3",
+  "notation": "PTkK PehK Bb Kk PehK Pf TkK PehK Bb Kk PehK  (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   60.032,
+   29.193
+  ],
+  "src": "patterns/CJ/3.mp3",
+  "ac": {
+   "dur": 29.502,
+   "centroid": 1784,
+   "f0": 902.7,
+   "ev_rate": 2.37,
+   "events": 70
+  }
+ },
+ {
+  "id": "cj-4",
+  "name": "Bb Kk Cascade",
+  "ref": "Pattern 4",
+  "notation": "B PehK Bb Kk PehK Bb Kk PehK Bb PehK Bb Kk PehK Bb kk pf  (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   89.346,
+   36.652
+  ],
+  "src": "patterns/CJ/4.mp3",
+  "ac": {
+   "dur": 36.691,
+   "centroid": 1393,
+   "f0": 331.3,
+   "ev_rate": 1.88,
+   "events": 69
+  }
+ },
+ {
+  "id": "cj-5",
+  "name": "Mixed Peh Cascade",
+  "ref": "Pattern 5",
+  "notation": "B T K PehK Pf tk PehK Bb K PehK Bb K pf T k PehK  (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   126.117,
+   26.338
+  ],
+  "src": "patterns/CJ/5.mp3",
+  "ac": {
+   "dur": 26.577,
+   "centroid": 2159,
+   "f0": 1402.4,
+   "ev_rate": 3.09,
+   "events": 82
+  }
+ },
+ {
+  "id": "cj-6",
+  "name": "kk Ostinato",
+  "ref": "Pattern 6",
+  "notation": "B T B kk f T B kk pf T B kk f T B kk (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   152.575,
+   28.077
+  ],
+  "src": "patterns/CJ/6.mp3",
+  "ac": {
+   "dur": 28.441,
+   "centroid": 1398,
+   "f0": 657.1,
+   "ev_rate": 1.27,
+   "events": 36
+  }
+ },
+ {
+  "id": "cj-7",
+  "name": "kk and Peh Ostinato",
+  "ref": "Pattern 7",
+  "notation": "B T B kk PehK Bb kk pf T B kk PehK Bb kk  (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   180.772,
+   32.346
+  ],
+  "src": "patterns/CJ/7.mp3",
+  "ac": {
+   "dur": 32.994,
+   "centroid": 1308,
+   "f0": 340.5,
+   "ev_rate": 2.82,
+   "events": 93
+  }
+ },
+ {
+  "id": "cj-8",
+  "name": "Click and Q Groove",
+  "ref": "Pattern 8",
+  "notation": "B click q d f click qd Bmg click q d f click qd (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   213.238,
+   32.519
+  ],
+  "src": "patterns/CJ/8.mp3",
+  "ac": {
+   "dur": 32.768,
+   "centroid": 1263,
+   "f0": 1210.7,
+   "ev_rate": 1.59,
+   "events": 52
+  }
+ },
+ {
+  "id": "cj-9",
+  "name": "Lip Click Groove",
+  "ref": "Pattern 9",
+  "notation": "P click q d lip click q d Bmg click qd lip click qd (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   245.878,
+   32.876
+  ],
+  "src": "patterns/CJ/9.mp3",
+  "ac": {
+   "dur": 32.975,
+   "centroid": 1087,
+   "f0": 1224.1,
+   "ev_rate": 1.52,
+   "events": 50
+  }
+ },
+ {
+  "id": "cj-10",
+  "name": "Sucker Punch Clicks",
+  "ref": "Pattern 10",
+  "notation": "B click q SuckerPunch click q f click q SuckerPunch click q Bmg click q SuckerPunch click q f click q SuckerPunch click q (x2)",
+  "legend": [],
+  "level": "Technical — CJ",
+  "ord": 4,
+  "page": "CJ Technical Patterns",
+  "grp": "cj",
+  "off": [
+   278.873,
+   40.0
+  ],
+  "src": "patterns/CJ/10.mp3",
+  "ac": {
+   "dur": 50.279,
+   "centroid": 1306,
+   "f0": 1239.4,
+   "ev_rate": 1.35,
+   "events": 68
+  }
+ },
+ {
+  "id": "helium-30",
+  "name": "t(t) Inside Kch",
+  "ref": "Pattern 30",
+  "notation": "ps pf kch t(t) kch b kch pf kch t(t) / kch b kch pf t(t) kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   0.0,
+   10.796
+  ],
+  "src": "patterns/Helium/30.mp3",
+  "ac": {
+   "dur": 10.999,
+   "centroid": 964,
+   "f0": 230.2,
+   "ev_rate": 4.55,
+   "events": 50
+  }
+ },
+ {
+  "id": "helium-31",
+  "name": "K–Kch Shuttle",
+  "ref": "Pattern 31",
+  "notation": "b k kch pf k kch b kch b kch pf k kch b kch b / kch pf k kch b kch b kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   10.916,
+   13.0
+  ],
+  "src": "patterns/Helium/31.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1367,
+   "f0": 225.1,
+   "ev_rate": 4.23,
+   "events": 55
+  }
+ },
+ {
+  "id": "helium-32",
+  "name": "K–Kch with Dz Tag",
+  "ref": "Pattern 32",
+  "notation": "b k kch pf k kch peh kch b k kch pf k kch peh kch b k kch pf k kch peh kch b k kch pf k kch dz",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   24.036,
+   13.0
+  ],
+  "src": "patterns/Helium/32.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1107,
+   "f0": 246.5,
+   "ev_rate": 8.08,
+   "events": 105
+  }
+ },
+ {
+  "id": "helium-33",
+  "name": "Peh–K–Kch Run",
+  "ref": "Pattern 33",
+  "notation": "ps pf k kch peh kch b k kch pf k kch peh kch b k kch pf k kch peh kch b k kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   37.156,
+   12.0
+  ],
+  "src": "patterns/Helium/33.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1096,
+   "f0": 254.8,
+   "ev_rate": 8.33,
+   "events": 100
+  }
+ },
+ {
+  "id": "helium-34",
+  "name": "I–V Inward Run",
+  "ref": "Pattern 34",
+  "notation": "ps pf i v pf db pf i vb pf i v pf db pf i v pf d b pf i v d b pf d",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   49.276,
+   13.0
+  ],
+  "src": "patterns/Helium/34.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1022,
+   "f0": 248.8,
+   "ev_rate": 6.38,
+   "events": 83
+  }
+ },
+ {
+  "id": "helium-35",
+  "name": "Tb–Ft Kch Marathon",
+  "ref": "Pattern 35",
+  "notation": "ps tb kch ft kcht b kch ft b k kch peh kch b k kch ft kch t b kch ft b k kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   62.396,
+   11.958
+  ],
+  "src": "patterns/Helium/35.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1279,
+   "f0": 1228.4,
+   "ev_rate": 7.42,
+   "events": 89
+  }
+ },
+ {
+  "id": "helium-36",
+  "name": "Pf–Db Marathon",
+  "ref": "Pattern 36",
+  "notation": "pf t b kch f t kch t b k kch f t pf db k kch b kch ft kch t b k kch f d pf d",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   74.473,
+   12.945
+  ],
+  "src": "patterns/Helium/36.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1102,
+   "f0": 1125.3,
+   "ev_rate": 6.54,
+   "events": 85
+  }
+ },
+ {
+  "id": "helium-37",
+  "name": "K–Kch–D with Dz Tag",
+  "ref": "Pattern 37",
+  "notation": "b k kch d pf k kch peh kch b k kch pf k kch peh kch b k kch pf k kch peh kch b k kch pf k kch dz",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   87.538,
+   12.298
+  ],
+  "src": "patterns/Helium/37.mp3",
+  "ac": {
+   "dur": 12.268,
+   "centroid": 1130,
+   "f0": 263.8,
+   "ev_rate": 7.83,
+   "events": 96
+  }
+ },
+ {
+  "id": "helium-38",
+  "name": "Tk–Kch Ladder",
+  "ref": "Pattern 38",
+  "notation": "b tk kch pf b tk kch pf tk kch pf tk kch b kch pf tk kch b kch pf tk kch pf",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   99.957,
+   11.636
+  ],
+  "src": "patterns/Helium/38.mp3",
+  "ac": {
+   "dur": 11.695,
+   "centroid": 1329,
+   "f0": 255.8,
+   "ev_rate": 7.18,
+   "events": 84
+  }
+ },
+ {
+  "id": "helium-39",
+  "name": "Bdb–Bdpf Run",
+  "ref": "Pattern 39",
+  "notation": "ps t pf d bdb kch pf d bdpf d bdb kch pf d bdb kch pf d bdpf",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 4",
+  "grp": "helium",
+  "off": [
+   111.713,
+   12.0
+  ],
+  "src": "patterns/Helium/39.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 939,
+   "f0": 236.9,
+   "ev_rate": 8.25,
+   "events": 99
+  }
+ },
+ {
+  "id": "helium-20",
+  "name": "Bdpf Turnaround",
+  "ref": "Pattern 20",
+  "notation": "b f t pf kch t kch bdpf kch t",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   123.833,
+   12.0
+  ],
+  "src": "patterns/Helium/20.mp3",
+  "ac": {
+   "dur": 11.986,
+   "centroid": 1063,
+   "f0": 236.2,
+   "ev_rate": 0.42,
+   "events": 5
+  }
+ },
+ {
+  "id": "helium-21",
+  "name": "Bb–Peh Alternation",
+  "ref": "Pattern 21",
+  "notation": "ps t kch t kch bb kch t kch peh kch t kch bb / kch t kch bb kch t kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   135.953,
+   12.0
+  ],
+  "src": "patterns/Helium/21.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1350,
+   "f0": 213.4,
+   "ev_rate": 6.33,
+   "events": 76
+  }
+ },
+ {
+  "id": "helium-22",
+  "name": "Bb–Peh Alternation, Variant",
+  "ref": "Pattern 22",
+  "notation": "ps t kch t kch bb kch t kch peh kch t kch bt / kch t kch b t kch t kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   148.073,
+   12.0
+  ],
+  "src": "patterns/Helium/22.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1444,
+   "f0": 203.8,
+   "ev_rate": 6.42,
+   "events": 77
+  }
+ },
+ {
+  "id": "helium-23",
+  "name": "Pf–Kch Long Cycle",
+  "ref": "Pattern 23",
+  "notation": "b t kch pf b t kch pf t kch f kch t kch b / kch pf t kch b kch pf f kch t kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   160.193,
+   12.0
+  ],
+  "src": "patterns/Helium/23.mp3",
+  "ac": {
+   "dur": 11.999,
+   "centroid": 1457,
+   "f0": 254.4,
+   "ev_rate": 0.33,
+   "events": 4
+  }
+ },
+ {
+  "id": "helium-24",
+  "name": "Pf–Peh Long Cycle",
+  "ref": "Pattern 24",
+  "notation": "bt kch pf b t kch pf t kch peh kch t kch / b kch pft kch b kch pf t kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   172.313,
+   11.0
+  ],
+  "src": "patterns/Helium/24.mp3",
+  "ac": {
+   "dur": 11.0,
+   "centroid": 1402,
+   "f0": 240.2,
+   "ev_rate": 1.55,
+   "events": 17
+  }
+ },
+ {
+  "id": "helium-25",
+  "name": "B–Pf Kch Shuttle",
+  "ref": "Pattern 25",
+  "notation": "b t kch pf kch b kch b kch pf kch b kch b / kch pf kch b kch b kch pf t kch bt kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   183.433,
+   14.0
+  ],
+  "src": "patterns/Helium/25.mp3",
+  "ac": {
+   "dur": 14.0,
+   "centroid": 1129,
+   "f0": 227.4,
+   "ev_rate": 1.5,
+   "events": 21
+  }
+ },
+ {
+  "id": "helium-26",
+  "name": "Ps–D Peh Shuttle",
+  "ref": "Pattern 26",
+  "notation": "ps d b kch t kch peh kch b kch t b kch t / kch b k kch t kch peh kch b kch t b kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   197.553,
+   12.0
+  ],
+  "src": "patterns/Helium/26.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1332,
+   "f0": 219.8,
+   "ev_rate": 6.58,
+   "events": 79
+  }
+ },
+ {
+  "id": "helium-27",
+  "name": "Three-Cell Kch Loop",
+  "ref": "Pattern 27",
+  "notation": "b t kch b t kch b t kch t kch b / kch t kch b kch t kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   209.673,
+   13.0
+  ],
+  "src": "patterns/Helium/27.mp3",
+  "ac": {
+   "dur": 12.999,
+   "centroid": 1688,
+   "f0": 1451.7,
+   "ev_rate": 0.08,
+   "events": 1
+  }
+ },
+ {
+  "id": "helium-28",
+  "name": "Ps–D Triple Cell",
+  "ref": "Pattern 28",
+  "notation": "ps d b kch ps d b kch ps d b kch pf kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   222.793,
+   16.0
+  ],
+  "src": "patterns/Helium/28.mp3",
+  "ac": {
+   "dur": 16.0,
+   "centroid": 1519,
+   "f0": 206.9,
+   "ev_rate": 5.44,
+   "events": 87
+  }
+ },
+ {
+  "id": "helium-29",
+  "name": "t(t) Four-Cell",
+  "ref": "Pattern 29",
+  "notation": "b t(t) pf b t(t) pf b t(t) pf t(t)",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 3",
+  "grp": "helium",
+  "off": [
+   238.913,
+   12.98
+  ],
+  "src": "patterns/Helium/29.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1196,
+   "f0": 239.5,
+   "ev_rate": 5.38,
+   "events": 70
+  }
+ },
+ {
+  "id": "helium-10",
+  "name": "Ps–D–B Cell",
+  "ref": "Pattern 10",
+  "notation": "ps d b kch ps d b kch pf kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   252.013,
+   12.0
+  ],
+  "src": "patterns/Helium/10.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1024,
+   "f0": 223.1,
+   "ev_rate": 8.08,
+   "events": 97
+  }
+ },
+ {
+  "id": "helium-11",
+  "name": "Ps–D–B Cell with Hats",
+  "ref": "Pattern 11",
+  "notation": "ps d b kch t ps d b kch pf kch t",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   264.133,
+   11.0
+  ],
+  "src": "patterns/Helium/11.mp3",
+  "ac": {
+   "dur": 11.0,
+   "centroid": 876,
+   "f0": 218.7,
+   "ev_rate": 8.0,
+   "events": 88
+  }
+ },
+ {
+  "id": "helium-12",
+  "name": "Kch Pair Ladder",
+  "ref": "Pattern 12",
+  "notation": "ps pf b kch kch pf kch kch b kch pf / b kch kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   275.253,
+   13.0
+  ],
+  "src": "patterns/Helium/12.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 875,
+   "f0": 216.8,
+   "ev_rate": 1.85,
+   "events": 24
+  }
+ },
+ {
+  "id": "helium-13",
+  "name": "Kch Pair Ladder, Inverted",
+  "ref": "Pattern 13",
+  "notation": "b kch pf b kch kch pf kch kch b kch / pf b kch kch pf kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   288.373,
+   11.0
+  ],
+  "src": "patterns/Helium/13.mp3",
+  "ac": {
+   "dur": 11.0,
+   "centroid": 764,
+   "f0": 212.4,
+   "ev_rate": 6.27,
+   "events": 69
+  }
+ },
+ {
+  "id": "helium-14",
+  "name": "Kch–t–b Rotation",
+  "ref": "Pattern 14",
+  "notation": "ps pf kch t kch b kch pf kch t kch b kch pf / kch t kch b kch pf kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   299.493,
+   12.0
+  ],
+  "src": "patterns/Helium/14.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1132,
+   "f0": 227.8,
+   "ev_rate": 6.67,
+   "events": 80
+  }
+ },
+ {
+  "id": "helium-15",
+  "name": "Kch Rotation, Long",
+  "ref": "Pattern 15",
+  "notation": "b kch pf kch b kch kch pf kch b kch kch / pf kch b kch kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   311.613,
+   18.0
+  ],
+  "src": "patterns/Helium/15.mp3",
+  "ac": {
+   "dur": 17.991,
+   "centroid": 814,
+   "f0": 223.8,
+   "ev_rate": 0.06,
+   "events": 1
+  }
+ },
+ {
+  "id": "helium-16",
+  "name": "Bt–Ft Mirror",
+  "ref": "Pattern 16",
+  "notation": "bt kch b t(t) ft kch ft(t)",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   329.733,
+   12.8
+  ],
+  "src": "patterns/Helium/16.mp3",
+  "ac": {
+   "dur": 12.999,
+   "centroid": 1799,
+   "f0": 2260.5,
+   "ev_rate": 0.77,
+   "events": 10
+  }
+ },
+ {
+  "id": "helium-17",
+  "name": "Bt Mirror",
+  "ref": "Pattern 17",
+  "notation": "bt kch b t(t) b t kch b t(t)",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   342.653,
+   11.926
+  ],
+  "src": "patterns/Helium/17.mp3",
+  "ac": {
+   "dur": 11.999,
+   "centroid": 1854,
+   "f0": 2286.9,
+   "ev_rate": 2.33,
+   "events": 28
+  }
+ },
+ {
+  "id": "helium-18",
+  "name": "Ft(t) Weave",
+  "ref": "Pattern 18",
+  "notation": "b ft(t) b kch t ft(t) b kch f t kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   354.7,
+   14.0
+  ],
+  "src": "patterns/Helium/18.mp3",
+  "ac": {
+   "dur": 14.0,
+   "centroid": 1746,
+   "f0": 2345.2,
+   "ev_rate": 3.43,
+   "events": 48
+  }
+ },
+ {
+  "id": "helium-19",
+  "name": "K–Kch–D Cycle",
+  "ref": "Pattern 19",
+  "notation": "b k kch d of k kch d f k kch d / pf k kch d",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 2",
+  "grp": "helium",
+  "off": [
+   368.82,
+   11.916
+  ],
+  "src": "patterns/Helium/19.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1207,
+   "f0": 1457.2,
+   "ev_rate": 7.92,
+   "events": 95
+  }
+ },
+ {
+  "id": "helium-40",
+  "name": "Pf–Kch Rotation",
+  "ref": "Pattern 40",
+  "notation": "ps pf k kch pf kch b kch pf k kch pf kch b kch pf k kch pf kch b kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   380.856,
+   13.0
+  ],
+  "src": "patterns/Helium/40.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 935,
+   "f0": 222.2,
+   "ev_rate": 3.46,
+   "events": 45
+  }
+ },
+ {
+  "id": "helium-41",
+  "name": "Fft(t) Tag",
+  "ref": "Pattern 41",
+  "notation": "b t(t) pf b t(t) fft(t) pf",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   393.976,
+   13.0
+  ],
+  "src": "patterns/Helium/41.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1405,
+   "f0": 249.4,
+   "ev_rate": 3.85,
+   "events": 50
+  }
+ },
+ {
+  "id": "helium-42",
+  "name": "Bbt(t) Tag",
+  "ref": "Pattern 42",
+  "notation": "b t(t) pf db t(t) bbt(t) pf",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   407.096,
+   13.0
+  ],
+  "src": "patterns/Helium/42.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1301,
+   "f0": 247.6,
+   "ev_rate": 5.38,
+   "events": 70
+  }
+ },
+ {
+  "id": "helium-43",
+  "name": "Peh–Kch Marathon",
+  "ref": "Pattern 43",
+  "notation": "bt kch pf t kch peh kch b kch pf kch peh kch b kch peh kch pf t kch peh kch b kch pf kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   420.216,
+   13.0
+  ],
+  "src": "patterns/Helium/43.mp3",
+  "ac": {
+   "dur": 13.0,
+   "centroid": 1244,
+   "f0": 241.9,
+   "ev_rate": 7.77,
+   "events": 101
+  }
+ },
+ {
+  "id": "helium-44",
+  "name": "Peh–Kch Marathon, Variant",
+  "ref": "Pattern 44",
+  "notation": "b t kch pf t kch peh kch b kch peh kch pf t kch b kch pf t kch peh kch b kch peh kch pf",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   433.336,
+   12.0
+  ],
+  "src": "patterns/Helium/44.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1437,
+   "f0": 248.5,
+   "ev_rate": 6.33,
+   "events": 76
+  }
+ },
+ {
+  "id": "helium-45",
+  "name": "Iv Ostinato",
+  "ref": "Pattern 45",
+  "notation": "b iv f iv pf iv f ivo iv biv pf iv f iv",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   445.456,
+   12.2
+  ],
+  "src": "patterns/Helium/45.mp3",
+  "ac": {
+   "dur": 12.2,
+   "centroid": 1056,
+   "f0": 240.8,
+   "ev_rate": 5.33,
+   "events": 65
+  }
+ },
+ {
+  "id": "helium-46",
+  "name": "Dbt(t) Two-Bar",
+  "ref": "Pattern 46",
+  "notation": "ps dbt(t) ps dbt(t) b t(t) pf db(t)t pf / db k kch peh kch b kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   457.776,
+   23.0
+  ],
+  "src": "patterns/Helium/46.mp3",
+  "ac": {
+   "dur": 23.0,
+   "centroid": 1287,
+   "f0": 263.7,
+   "ev_rate": 6.74,
+   "events": 155
+  }
+ },
+ {
+  "id": "helium-47",
+  "name": "Bdb Two-Bar",
+  "ref": "Pattern 47",
+  "notation": "ps d bdb kch ps d bdb kch peh kch b kch pf / d bdb kch pf d bdb kch peh kch b kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   480.896,
+   11.979
+  ],
+  "src": "patterns/Helium/47.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1099,
+   "f0": 235.9,
+   "ev_rate": 8.0,
+   "events": 96
+  }
+ },
+ {
+  "id": "helium-48",
+  "name": "Dbt(t) Short Cell",
+  "ref": "Pattern 48",
+  "notation": "b t(t) pf dbt(t) pf dbt(t)",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   492.996,
+   11.0
+  ],
+  "src": "patterns/Helium/48.mp3",
+  "ac": {
+   "dur": 11.0,
+   "centroid": 1352,
+   "f0": 255.7,
+   "ev_rate": 5.0,
+   "events": 55
+  }
+ },
+ {
+  "id": "helium-49",
+  "name": "Bk–Peh Repeat Block",
+  "ref": "Pattern 49",
+  "notation": "bk kch peh kch bk kch pfk kch peh kch (bk kch peh kch b kch peh kch pfk kch peh kch) x 3 b kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   504.116,
+   12.0
+  ],
+  "src": "patterns/Helium/49.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1063,
+   "f0": 260.4,
+   "ev_rate": 7.08,
+   "events": 85
+  }
+ },
+ {
+  "id": "helium-50",
+  "name": "Tft(t) Two-Bar",
+  "ref": "Pattern 50",
+  "notation": "ps tft(t) ps tft(t) pf d b k kch peh kch t / kch b kch pf d b k kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 5",
+  "grp": "helium",
+  "off": [
+   516.236,
+   21.0
+  ],
+  "src": "patterns/Helium/50.mp3",
+  "ac": {
+   "dur": 21.0,
+   "centroid": 1467,
+   "f0": 304.5,
+   "ev_rate": 7.29,
+   "events": 153
+  }
+ },
+ {
+  "id": "helium-1",
+  "name": "Kch Foundation",
+  "ref": "Pattern 1",
+  "notation": "b kch pf kch b kch b pf kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   537.356,
+   11.57
+  ],
+  "src": "patterns/Helium/1.mp3",
+  "ac": {
+   "dur": 11.912,
+   "centroid": 828,
+   "f0": 220.3,
+   "ev_rate": 0.25,
+   "events": 3
+  }
+ },
+ {
+  "id": "helium-2",
+  "name": "Ps–Db Opening",
+  "ref": "Pattern 2",
+  "notation": "ps dbkch ps dbckh t / b t kch b t kch t bb kch t",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   549.046,
+   12.0
+  ],
+  "src": "patterns/Helium/2.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1326,
+   "f0": 205.8,
+   "ev_rate": 5.33,
+   "events": 64
+  }
+ },
+ {
+  "id": "helium-3",
+  "name": "t(t) Flam Groove",
+  "ref": "Pattern 3",
+  "notation": "b t(t) pf t b t(t) b pf t(t)",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   561.166,
+   12.0
+  ],
+  "src": "patterns/Helium/3.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1174,
+   "f0": 228.9,
+   "ev_rate": 3.33,
+   "events": 40
+  }
+ },
+ {
+  "id": "helium-4",
+  "name": "t(t) Flam, Tighter",
+  "ref": "Pattern 4",
+  "notation": "b t(t) pf b t(t) b pf t(t)",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   573.286,
+   12.0
+  ],
+  "src": "patterns/Helium/4.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 936,
+   "f0": 220.5,
+   "ev_rate": 2.5,
+   "events": 30
+  }
+ },
+ {
+  "id": "helium-5",
+  "name": "Kch–t Sixteenth Run",
+  "ref": "Pattern 5",
+  "notation": "ps pf kch t kch t kch pf kch t kch t kch pf / kch t kch t kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   585.406,
+   12.0
+  ],
+  "src": "patterns/Helium/5.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1161,
+   "f0": 227.5,
+   "ev_rate": 6.0,
+   "events": 72
+  }
+ },
+ {
+  "id": "helium-6",
+  "name": "Peh Inside Kch",
+  "ref": "Pattern 6",
+  "notation": "ps pf kch peh kch b kch pf kch peh kch b kch / pf kch peh kch b kch pf kch kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   597.526,
+   17.0
+  ],
+  "src": "patterns/Helium/6.mp3",
+  "ac": {
+   "dur": 17.0,
+   "centroid": 891,
+   "f0": 224.9,
+   "ev_rate": 5.59,
+   "events": 95
+  }
+ },
+ {
+  "id": "helium-7",
+  "name": "Ft Hat Weave",
+  "ref": "Pattern 7",
+  "notation": "b ft kch t ftf kch f kch t kch t ff / kch t ftf kch f kch t kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   614.647,
+   12.0
+  ],
+  "src": "patterns/Helium/7.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1630,
+   "f0": 2231.7,
+   "ev_rate": 3.33,
+   "events": 40
+  }
+ },
+ {
+  "id": "helium-8",
+  "name": "Double-Hat Kch Bar",
+  "ref": "Pattern 8",
+  "notation": "b tt kch t pf kch t b kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   626.767,
+   12.0
+  ],
+  "src": "patterns/Helium/8.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 1073,
+   "f0": 215.0,
+   "ev_rate": 2.0,
+   "events": 24
+  }
+ },
+ {
+  "id": "helium-9",
+  "name": "Double-Hat Kch Bar, Take Two",
+  "ref": "Pattern 9",
+  "notation": "b tt kch t pf kch t b kch peh kch",
+  "legend": [],
+  "level": "Technical — Helium",
+  "ord": 5,
+  "page": "Helium Technical Pattern Part 1",
+  "grp": "helium",
+  "off": [
+   638.887,
+   12.0
+  ],
+  "src": "patterns/Helium/9.mp3",
+  "ac": {
+   "dur": 12.0,
+   "centroid": 945,
+   "f0": 254.5,
+   "ev_rate": 0.25,
+   "events": 3
+  }
+ }
+]
